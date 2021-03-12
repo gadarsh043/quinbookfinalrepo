@@ -11,6 +11,7 @@ import register from '@/views/register.vue'
 import login from '@/views/login.vue'
 import notification from '@/views/notification.vue'
 import friendprofile from '@/views/friendprofile.vue'
+import ownfeed from '@/views/ownfeed.vue'
 
 
 Vue.use(VueRouter)
@@ -60,6 +61,11 @@ const routes = [
     path: '/friendprofile',
     name: 'friendprofile',
     component: friendprofile
+  },
+  {
+    path: '/ownfeed',
+    name: 'ownfeed',
+    component: ownfeed
   },
   {
     path: '/login',

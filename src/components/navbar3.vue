@@ -56,7 +56,7 @@ export default {
 
 <style scoped>
 #navbar {
-    background-color:#7cad3e;
+    background-color:#251d1d;
     height: 60px;
     width: 100%;
     display: flex;
@@ -87,6 +87,7 @@ export default {
     border: solid black 1px;
     margin: 3px;
     height: 30px;
+    background-color: white;
 }
 .notification {
   position: relative;
@@ -96,7 +97,6 @@ export default {
 .notification .notificationtiptext {
   visibility: hidden;
   width: 120px;
-  background-color: black;
   color: #fff;
   text-align: center;
   border-radius: 6px;
@@ -121,7 +121,6 @@ export default {
 .profile .profiletiptext {
   visibility: hidden;
   width: 120px;
-  background-color: black;
   color: #fff;
   text-align: center;
   border-radius: 6px;

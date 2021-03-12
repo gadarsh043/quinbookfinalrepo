@@ -1,6 +1,6 @@
 <template>
   <div id="navbar">
-      <div class="logo">
+      <div class="logo" @click="clicklogo">
         <span ><img src="../assets/logo-color.png" alt="logo" srcset="" width="40px" height="40px" id="quinlogo"></span>
       </div>
       <div class="searchbar" style="padding: 10px 99px;
@@ -56,6 +56,9 @@ export default {
         this.$router.push('/notification')
       },
       profiletiptext(){
+        this.$router.push('/ownfeed')
+      },
+      clicklogo(){
         this.$router.push('/feed')
       }
     }
