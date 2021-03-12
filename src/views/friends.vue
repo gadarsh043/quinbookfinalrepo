@@ -8,10 +8,16 @@
       <profilecover class="userdetails"/>
       <div class="userfriends">
         <h1 style="padding-left: 256px;margin: 20px;" @click="showfriends">Show Me My Friends</h1>
-        <div class="friends" v-for="i in friends" :key="i.id" style="margin: 30px 211px;">
-            <div class="friendprofile" @click="friendprofile">
-                <img src="../assets/friends.svg" width="23" height="23">
-              <p> {{i.userName}} </p>
+        <div class="friends" v-for="friend in friends" :key="friend.id" style="margin: 30px 211px;">
+            <div class="friendprofile" @click="friendprofile(friend.userName)">
+                
+                <span v-if="friend.profilePic">
+                  <img :src='friend.profilePic' alt="avatar" width="23" height="23">
+                </span>
+                <span v-else>
+                  <img src="../assets/friends.svg" width="23" height="23">
+                </span>
+              <h1> {{friend.userName}} </h1>
             </div>
         </div>
       </div>
@@ -24,6 +30,7 @@
 import Navbar from '../components/navbar.vue'
 import profilecover from '../components/profile-cover.vue'
 import axios from 'axios'
+//import { use } from 'vue/types/umd' ==> auto imports and causes error
 export default {
   name:'friends',
     data () {
@@ -38,7 +45,7 @@ export default {
  methods : {
    showfriends(){
      axios
-      .get('/fetchFriendList',{ headers: { Authorization: localStorage.getItem('sessionID') } })
+      .get('http://10.177.68.60:8082/fetchFriendList',{ headers: { sessionId: localStorage.getItem('sessionID') } })
       .then(response => {
         console.log(response)
         this.friends = response.data
@@ -47,9 +54,13 @@ export default {
         console.log(error)
       })
    },
-   friendprofile(){
+   friendprofile (userName) {
+     localStorage.setItem('friendName',userName)
      this.$router.push('/friendprofile')
    }
+ },
+ mounted () {
+   this.showfriends()
  }
 }
 </script>

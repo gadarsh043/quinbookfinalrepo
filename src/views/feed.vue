@@ -118,7 +118,7 @@ export default {
   mounted() {
     axios
       .get(
-        `http://10.177.68.6:8081/events?userNameList=test1&userNameList=test2&userNameList=test1`,{ headers: { Authorization: localStorage.getItem('sessionID') } })
+        `http://10.177.68.6:8089/events?userNameList=test1&userNameList=test2&userNameList=test1`,{ headers: { Authorization: localStorage.getItem('sessionID') } })
       .then((response) => {
         console.log(response);
         this.events = response.data;
