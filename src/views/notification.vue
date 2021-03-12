@@ -7,7 +7,7 @@
           <button class="signup" @click="onsubmit">Old</button>
       </div>
       <div class="feed" id ="feed" style="margin: 0px 6px;">
-            <div id="notifications-container"  v-if="notificationHistory">
+            <div id="notifications-container"  v-if="notificationHistory.length">
                 <div class="post" v-for="notification in notificationHistory" :key="notification.id">
                     <div class="plaf" >
                         <span v-if="notification.postedBy.profilePic">
@@ -33,13 +33,12 @@
                         </div>
                     </div>
                 </div>
-          </div>
-          <div v-else>
+            </div>
+            <div v-else>
               <center>
                    <h2>No Recent Notifications</h2>
               </center>
-               
-          </div>
+            </div>
       </div>
       <div class="butn"></div>
   </div>

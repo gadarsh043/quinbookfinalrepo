@@ -11,7 +11,7 @@
         <div class="friends" v-for="friend in friends" :key="friend.id" style="margin: 30px 211px;">
             <div class="friendprofile" @click="friendprofile(friend.userName)">
                 
-                <span v-if="friend.profilePic">
+                <span  v-if="friend.profilePic"> 
                   <img :src='friend.profilePic' alt="avatar" width="23" height="23">
                 </span>
                 <span v-else>
@@ -35,6 +35,7 @@ export default {
   name:'friends',
     data () {
         return{
+          
           friends:''
         }
     },
