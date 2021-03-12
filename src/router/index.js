@@ -80,7 +80,7 @@ const routes = [
   {
     path: '*',
     name: 'errorpage',
-    components: errorpage
+    component: errorpage
   }
 ]
 

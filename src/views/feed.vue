@@ -183,7 +183,7 @@ export default {
      this.userName =  localStorage.getItem('myName')
     axios
       .get(
-        `http://10.177.68.9:8085/feed/fetchFriendList?userName=${this.myName}`)
+      `http://10.177.68.9:8085/feed/fetchFriendList?userName=${this.myName}`)
       .then((response) => {
         console.log(response);
         this.friendList = response.data;
@@ -191,8 +191,8 @@ export default {
         axios
       .post(
         `http://10.177.68.6:8081/events`, this.friendList)
-      .then((response) => {
-        console.log(response);
+        .then((response) => {
+          console.log(response);
         this.events = response.data;
       })
       .catch((error) => {

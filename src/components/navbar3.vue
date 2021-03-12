@@ -19,7 +19,7 @@
                     <div class="dropdown-content">
                         <a href="/editprofile">Edit Profile</a>
                         <a href="#">Settings</a>
-                        <a href="/login">Logout</a>
+                        <a @click="logoutuser">Logout</a>
                     </div>
                 </div>
         </div>
@@ -49,6 +49,16 @@ export default {
       },
       profiletiptext(){
         this.$router.push('/feed')
+      },
+      logoutUser(){
+         var obj = {
+           sessionId : localStorage.getItem('sessionID')
+         }
+         axios.post("http://10.177.68.66:8090/logout",obj).then(res => {
+           console.log("loggin out navbar 3")
+           localStorage.removeItem('sessionID')
+            this.$router.push("/login")
+         }).catch(err=>console.log(err))
       }
     }
 }

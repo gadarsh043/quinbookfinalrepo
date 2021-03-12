@@ -20,7 +20,7 @@
 <script scoped>
 import Navbar from '../components/navbar.vue'
 import profilecover from '../components/profile-cover.vue'
-import axios from 'axios'
+//import axios from 'axios'
 export default {
   name:'userphotos',
     data () {
@@ -37,15 +37,20 @@ export default {
  methods : {
  },
  mounted(){
-   axios
-   .get('',{ headers: { Authorization: localStorage.getItem('sessionID') } }) 
-   .then(response => {
-     console.log(response)
-     this.info = response.data
-   })
-   .catch(error =>{
-     console.log(error)
-   })
+  //  axios
+  //  .get('',{ headers: { Authorization: localStorage.getItem('sessionID') } }) 
+  //  .then(response => {
+  //    console.log(response)
+  //    this.info = response.data
+  //  })
+  //  .catch(error =>{
+  //    console.log(error)
+  //  })
+   var userName = localStorage.getItem('friendName')
+   console.log(userName)
+   localStorage.removeItem('friendName')
+   
+
  }
 }
 </script>
