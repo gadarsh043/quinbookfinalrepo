@@ -72,7 +72,7 @@ export default {
   },
  methods : {
    search(){
-     localStorage.setItem('seatchterm',this.searchtext)
+     localStorage.setItem('searchterm',this.searchtext)
      axios
       .get('http://10.177.68.5:8090/user/getUserName/'+ localStorage.getItem('searchterm'),{ headers: { Authorization: localStorage.getItem('sessionID') } })
       .then(response => {

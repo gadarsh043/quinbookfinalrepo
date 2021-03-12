@@ -19,7 +19,7 @@
                     <div class="dropdown-content">
                         <a href="/editprofile">Edit Profile</a>
                         <a href="#">Settings</a>
-                        <a @click="logoutuser">Logout</a>
+                        <a @click="logoutUser">Logout</a>
                     </div>
                 </div>
         </div>
@@ -30,6 +30,7 @@
 
 <script> 
 // import search from '../components/search.vue'
+import axios from 'axios'
 export default {
     components:{
         // search
@@ -55,8 +56,9 @@ export default {
            sessionId : localStorage.getItem('sessionID')
          }
          axios.post("http://10.177.68.66:8090/logout",obj).then(res => {
-           console.log("loggin out navbar 3")
+           console.log("loggin out navbar" + res)
            localStorage.removeItem('sessionID')
+           localStorage.clear()
             this.$router.push("/login")
          }).catch(err=>console.log(err))
       }
