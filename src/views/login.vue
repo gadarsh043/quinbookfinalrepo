@@ -105,6 +105,7 @@ export default {
           }
           if (res.data.sessionID !== '' && res.data.isRegistered) {
             console.log('inThis')
+            localStorage.setItem('myName', res.data.userName) 
             this.$router.push('/feed')
           } else {
             this.$router.push('/login')
@@ -135,6 +136,7 @@ export default {
           }
           // if sessionId and isRegister exits
           if (res.data.sessionID !== '' && res.data.isRegistered) {
+            localStorage.setItem('myName', res.data.userName) 
             this.$router.push('/feed')
           } else {
             this.$router.push('/login')

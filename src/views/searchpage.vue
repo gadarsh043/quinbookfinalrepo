@@ -17,17 +17,17 @@
                 <br>
                   <img src="../assets/user.svg" width="23" height="23">
                   <br>
-                <p> G Adarsh</p>
+                <p>{{i.userName}}</p>
                 <!-- <p> {{i.}} </p> -->
               </div>
               <div class="iconsforaddblock" style="display:flex">
                 <div class="AddFriendUnFriend" style="padding: 21px;">
                   <span class="AUtiptext" >AddFriend/Un</span>
-                  <img :id="i" src="http://localhost:8080/img/user-add.5047d004.svg" style="padding: 17px;" @click="changeImageadddis(i)">
+                  <img :id="i" src="http://localhost:8081/img/user-add.5047d004.svg" style="padding: 17px;" @click="changeImageadddis(i)">
                 </div>
                 <div  class="Block/UnBlock" style="padding: 21px;">
                 <span class="BUtiptext" >Block/Un</span>
-                <img :id="i+'i'" src="http://localhost:8080/img/user-block.80ef950f.svg" style="padding: 17px;" @click="changeImageblockun(i)">
+                <img :id="i+'i'" src="http://localhost:8081/img/user-block.80ef950f.svg" style="padding: 17px;" @click="changeImageblockun(i)">
                 </div>
               </div>
             </div> 
@@ -39,7 +39,7 @@
 </template>
 
 <script scoped>
-import Navbar from '../components/navbar.vue'
+import Navbar from '../components/navbar3.vue'
 import profilecover from '../components/profile-cover.vue'
 import axios from 'axios'
 export default {
@@ -60,6 +60,7 @@ export default {
     this.$alert('Please Confirm to proceed')
       .get('http://10.177.68.5:8090/user/getUserName/'+ x,{ headers: { Authorization: localStorage.getItem('sessionID') } })
       console.log(x)
+      console.log(localStorage.getItem('sessionID'))
       .then(response => {
         console.log(response)
         this.friends = response.data
@@ -85,20 +86,20 @@ export default {
    },
    changeImageadddis(id) {
         var image = document.getElementById(id);
-        if (image.src.match("http://localhost:8080/img/user-add.5047d004.svg")) {
-            image.src = "http://localhost:8080/img/user-remove.7fad484d.svg";
+        if (image.src.match("http://localhost:8081/img/user-add.5047d004.svg")) {
+            image.src = "http://localhost:8081/img/user-remove.7fad484d.svg";
         }
         else {
-            image.src = "http://localhost:8080/img/user-add.5047d004.svg";
+            image.src = "http://localhost:8081/img/user-add.5047d004.svg";
         }
     },
     changeImageblockun(id) {
         var image = document.getElementById(id+'i');
-        if (image.src.match("http://localhost:8080/img/user-block.80ef950f.svg")) {
-            image.src = "http://localhost:8080/img/user-check.33597ea2.svg";
+        if (image.src.match("http://localhost:8081/img/user-block.80ef950f.svg")) {
+            image.src = "http://localhost:8081/img/user-unblock.33597ea2.svg";
         }
         else {
-            image.src = "http://localhost:8080/img/user-block.80ef950f.svg";
+            image.src = "http://localhost:8081/img/user-block.80ef950f.svg";
         }
     }
  }

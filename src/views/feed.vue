@@ -5,7 +5,6 @@
       <h1>Todays Events</h1>
       <!-- //Todo: implement list of events -->
       <div class="events" v-for="i in events" :key="i.id">
-        <!-- {{ i.fullName }}'s {{ i.years }}th {{ i.eventType.substring(6) }}! -->
         {{ i.fullName }}'s {{ i.years }}th {{ i.eventType }}!
       </div>
     </div>
@@ -16,28 +15,41 @@
           alt="Avatar"
           class="avatar"
         />
-        <div>
+        <div >
           <input
             type="text"
-            name="How you doing"
+            name="postCaption"
+            v-model="postCaption"
             class="timeline"
             placeholder="How you doin' ?"
           />
           <button class="btn" @click="onsubmit"></button>
           <div style="display: flex">
             <img
-              src="../assets/video.svg"
-              style="margin: 0px 105px"
+              src="../assets/map-pin.svg"
+              style="margin: 0px 105px; cursor: pointer"
               width="30"
               height="30"
+              :locTypeImage="locTypeImage"
+              @click="showLocation"
+              v-if="locTypeImage"
             />
-            <img
+            <input 
+            type="text" 
+            name="location"
+            v-model="location"
+            placeholder="Location..."
+            v-else
+            />
+            <!-- <img
               src="../assets/photo.svg"
               style="margin: 0px 72px"
               width="30"
               height="30"
-            />
-            <button style="margin: 0px 100px">Post</button>
+            /> -->
+            <input type="file" @change="previewImage" accept="image/*">
+            <img class="preview" :src="img" width="120px" height="120px" v-if="img">
+            <button style="margin: 0px 100px" @click="postThis">Post</button>
           </div>
         </div>
       </div>
@@ -50,8 +62,8 @@
               alt="Avatar"
             />
             <div class="likeanddis" >
-              1<img :id="i" src="../assets/thumbs-upB.svg" style="margin: 24px" @click="changeImagelike(i)">
-              1<img :id="i+'i'" src="http://localhost:8080/img/thumbs-down.76c1523f.svg" style="margin: 24px" @click="changeImagedislike(i)">
+              1<img :id="i" src="http://localhost:8081/img/thumbs-up.7c39be07.svg" style="margin: 24px" @click="changeImagelike(i)">
+              1<img :id="i+'i'" src="http://localhost:8081/img/thumbs-down.76c1523f.svg" style="margin: 24px" @click="changeImagedislike(i)">
               <div class="commentdiv" style="float">
                 <img
                   src="../assets/comment.svg"
@@ -67,7 +79,8 @@
             </div>
           </div>
           <div class="feed" style="height: 400px">
-            <p>feeds {{ i }}</p>
+            <p>{{i}}</p>
+            <p> {{ i.postCaption }}</p>
           </div>
         </div>
       </div>
@@ -84,51 +97,117 @@ export default {
       fullName: "",
       eventType: "",
       img: "",
+      imgList: [],
       years: 0,
       events: 5,
-      userName: "ravi",
+      friendList: [],
+      userName: "",
       date: "",
       location: "",
       postCaption: "",
+      sessionId: '',
+      locTypeImage: false // this should be true
     };
   },
   components: {
     navbar,
   },
   methods: {
+    ordinal(i){
+ var j = i % 10,
+        k = i % 100;
+    if (j == 1 && k != 11) {
+        return i + "st";
+    }
+    if (j == 2 && k != 12) {
+        return i + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return i + "rd";
+    }
+    return i + "th";
+    },
+    postThis(){
+      this.imgList.push(this.img)
+      console.log(this.imgList)
+      const obj = {
+        postCaption : this.postCaption,
+        postImages: this.imgList,
+        location: this.location
+      }
+      console.log(obj)
+        axios
+        .post(`http://10.177.68.40:8090/QuinBookPost/qbpost`,obj,{headers: {sessionId: localStorage.getItem('sessionID')}})
+        .then((response)=>{
+        console.log(response);
+        this.$alert('Post created!!')})
+        .catch((error) => {
+        this.errorMessage = error.errorMessage;
+        console.log(error);
+      });
+    },
     changeImagelike(id) {
         var image = document.getElementById(id);
-        if (image.src.match("http://localhost:8080/img/thumbs-up.7c39be07.svg")) {
-            image.src = "../assets/thumbs-upB.svg";
+        if (image.src.match("http://localhost:8081/img/thumbs-up.7c39be07.svg")) {
+            image.src = "http://localhost:8081/img/thumbs-upB.9679fb84.svg";
         }
         else {
-            image.src = "http://localhost:8080/img/thumbs-up.7c39be07.svg";
+            image.src = "http://localhost:8081/img/thumbs-up.7c39be07.svg";
         }
     },
     changeImagedislike(id) {
         var image = document.getElementById(id+'i');
-        if (image.src.match("http://localhost:8080/img/thumbs-down.76c1523f.svg")) {
-            image.src = "http://localhost:8080/img/thumbs-upB.9679fb84.svg";
+        if (image.src.match("http://localhost:8081/img/thumbs-down.76c1523f.svg")) {
+            image.src = "http://localhost:8081/img/thumbs-dred.9e7d0a8c.svg";
         }
         else {
-            image.src = "http://localhost:8080/img/thumbs-down.76c1523f.svg";
+            image.src = "http://localhost:8081/img/thumbs-down.76c1523f.svg";
+        }
+    },
+    showLocation(){
+      this.locTypeImage = false
+    }, 
+    previewImage: function(event) {
+        var input = event.target;
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = (event) => {
+                this.img = event.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+            console.log(this.img)
         }
     }
   },
   mounted() {
+     this.userName =  localStorage.getItem('myName')
     axios
       .get(
-        `http://10.177.68.6:8089/events?userNameList=test1&userNameList=test2&userNameList=test1`,{ headers: { Authorization: localStorage.getItem('sessionID') } })
+      `http://10.177.68.9:8085/feed/fetchFriendList?userName=${this.myName}`)
       .then((response) => {
         console.log(response);
+        this.friendList = response.data;
+        console.log(this.friendList)
+        axios
+      .post(
+        `http://10.177.68.6:8081/events`, this.friendList)
+        .then((response) => {
+          console.log(response);
         this.events = response.data;
       })
       .catch((error) => {
         this.errorMessage = error.errorMessage;
         console.log(error);
       });
+      })
+      .catch((error) => {
+        this.errorMessage = error.errorMessage;
+        console.log(error);
+      });
+      
+    
     axios
-      .get(`http://localhost:8085/feed/fetchUserSocial?userName=test1`,{ headers: { Authorization: localStorage.getItem('sessionID') } })
+      .get(`http://10.177.68.9:8085/feed/fetchUserSocial?userName=${this.myName}`)
       .then((response) => {
         console.log(response);
         this.feeds = response.data;
