@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="user" style="justify-content: center;">
-      <div > <br><h1 style="text-align: center;">Adarsh Khatri</h1> 
+      <div > <br><h1 style="text-align: center;">{{this.myFullName}}</h1> 
       <div class="afp buttons">
         <br>
         <button class="btn123" @click="onsubmit">About</button>
@@ -26,7 +26,7 @@ import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      
+      myFullName:''
     }
   },
   computed:{
@@ -42,7 +42,9 @@ methods:{
    onsubmit2 () {
       this.$router.push('/userphotos')
   }
-
+},
+mounted(){
+  this.myFullName = localStorage.getItem('myFullName')
 }
 }
 

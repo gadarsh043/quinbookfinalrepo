@@ -6,15 +6,20 @@
         <div class="feed" id ="feed" style="margin: 0px 6px;">
             <div class="post" v-for="i in info" :key="i.id" :id="i.postId">
                 <div class="plaf">
-                    <img class="avatar" :src="i.postImages[0]">
+                    <span  v-if="i.postImages[0]" class="avatar"> 
+                        <img :src="i.postImages[0]" alt="PostImage" class="avatar" style="border: solid white 2px;margin: 25px;">
+                    </span>
+                    <span v-else>
+                        <img src="https://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg" alt="Post Image" class="avatar">
+                    </span>
                     <div>
                         <input type="text" name="How you doing" :placeholder="i.postCaption" v-model="postCaption" class="timeline">
                     <div style="display:flex">
                         <input type="text" id="location" v-model="location" name="location" :placeholder="i.location" style="height: 19px;">
                         <input type="file" @change="previewImage" accept="image/*">
-                        <img class="preview" :src="postImages" width="120px" height="120px">
                         <button style="margin: 0px 100px; height: 25px;" @click="onupdate(i.postId)">Update</button>
-                        <button style="margin: 0px 99px 0px -88px; height: 25px;" @click="onsubmit">Delete</button>
+                        <button style="margin: 0px 99px 0px -88px; height: 25px;" @click="ondelete(i.postId)">Delete</button>
+                        <button style="margin: 0px 199px 0px -88px; height: 25px;display:none" @click="ondelete">Delete</button>
                     </div>
                 </div>
             </div>
@@ -34,7 +39,10 @@ export default {
             location: '',
             postCaption: '',
             postImages: '',
-            postId: ''
+            postId: '',
+            imgList:[],
+            myProfilePic:'',
+            img:''
     }},
     
     components:{
@@ -43,16 +51,34 @@ export default {
     
     methods : {
         onupdate(id){
-            const update ={
-                location: this.location,
-                postCaption: this.postCaption,
-                postImages: this.postImages,
+            this.imgList.push(this.img)
+            console.log(this.imgList)
+            const update = {
+                postCaption : this.postCaption,
+                postImages: this.imgList,
+                location: this.location
             }
             console.log(update)
             axios
                 .put('http://10.177.68.8:8090/QuinBookPost/updatePost/'+id,update, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
                 .then(response => {
                     console.log(response)
+                    this.postCaption='',
+                    this.imgList=[],
+                    this.location=''
+                })
+                .catch(error =>{
+                    console.log(error)
+                })
+        },
+        ondelete(id){
+            axios
+                .delete('http://10.177.68.8:8090/QuinBookPost/deleteqb/'+id, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
+                .then(response => {
+                    console.log(response)
+                    this.postCaption='',
+                    this.imgList=[],
+                    this.location=''
                 })
                 .catch(error =>{
                     console.log(error)
@@ -63,7 +89,7 @@ export default {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = (event) => {
-                    this.postImages = event.target.result;
+                    this.img = event.target.result;
                 }
                 reader.readAsDataURL(input.files[0]);
                 console.log(this.postImages)
@@ -76,6 +102,7 @@ export default {
       .then(response => {
         console.log(response)
         this.info = response.data
+        this.myProfilePic = localStorage.getItem('myProfilePic')
       })
       .catch(error =>{
         console.log(error)
@@ -124,5 +151,20 @@ export default {
     margin: 0px;
     border: grey 2px solid;
     margin-right: 100px
+}
+.avatar {
+  vertical-align: middle;
+  width: 104px;
+  height: 100px;
+  border-radius: 50%;
+  position: relative;
+  top: -26px;
+  margin-left: -2px;
+  cursor: pointer;
+}
+.avatar > img:hover {
+  transform: scale(1.3);
+  transition: transform 0.5s;
+  border: solid #000000 2px;
 }
 </style>

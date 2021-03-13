@@ -148,7 +148,7 @@ export default {
           return i + "th";
     },
     gotomyphotos(){
-      this.$router.push("/userphotos")
+      this.$router.push("/about")
     },
     postThis(){
       this.imgList.push(this.img)
@@ -160,7 +160,7 @@ export default {
       }
       console.log(obj)
         axios
-        .post(`http://10.177.68.40:8090/QuinBookPost/qbpost`,obj,{headers: {sessionId: localStorage.getItem('sessionId')}}) // meghana - sending post
+        .post(`http://10.177.68.8:8090/QuinBookPost/qbpost`,obj,{headers: {sessionId: localStorage.getItem('sessionId')}}) // meghana - sending post
         .then((response)=>{
         console.log(response);
         this.$alert('Post created!!')
@@ -212,7 +212,6 @@ export default {
      .get('http://10.177.68.4:8081/getDetails/userName?userName='+this.myName)// ishika - getting details
      .then(res => {
        console.log(res)
-        localStorage.setItem('myFullName',res.data.fullName)
         localStorage.setItem('myProfilePic',res.data.img)
         this.myProfilePic=localStorage.getItem('myProfilePic')
       })

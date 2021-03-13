@@ -1,99 +1,222 @@
 <template>
-  <div class="container">
-    <Navbar style="width: 100.3%;margin-bottom: 3px;" />
-    <div class="userprofile"> 
-      <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
-    </div><br>
-    <div class="user">
-      <profilecover class="userdetails"/>
-      <div class="userphotos">
-        <div class="photos" v-for="i in photos.id" :key="i.id">
-            <div v-bind:id="i" class="pic">
-              <img src="https://www.indiaeducation.net/imagesvr_ce/7180/AAEAAQAAAAAAAAgHAAAAJDU0ZDYwNzNjLTMwZGYtNGU4NC05OTA0LWMyOWZkNDhjZDc3Yw.jpg" height="175" width="235">
-            </div>
-        </div>
-      </div>
+    <div class="container">
+      <Navbar style="width:100.3%"/>
+    <div class="userprofile" style="margin: 3px 0px 0px 0px;">
+       <span  v-if="info.img"> 
+          <img :src="info.img" alt="Avatar" class="avatar" style="border: solid white 2px">
+        </span>
+        <span v-else>
+          <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
+        </span>
     </div>
+    <div class="user" style="padding: 15px 1px;height: 430px;">
+      <profilecover class="userdetails"/>
+      <div class="about" style="text-align: -webkit-center;overflow:scroll;">
+        <br>
+        <div>
+          <div class="education">
+            <!-- <img class='beautify-user-img' src='../assets/beautify.jpg'> -->
+             <!-- <img class="preview" :src="img" width="120px" height="120px"> -->
+             <p style="font-style: italic; font-size: xxx-large; font-family: cursive;">Personal Details</p><br>
+                <table>
+                  <tr>
+                    <th>First Name</th>---->
+                    <td> {{info.firstName}}</td>
+                  </tr>
+                  <tr>
+                    <th>Last Name</th>---->
+                    <td>{{info.lastName}}</td>
+                  </tr>
+                  <tr>
+                    <th>Phone Number</th>---->
+                    <td>{{info.phoneNo}}</td>
+                  </tr>
+                  <tr>
+                    <th>Gender</th>---->
+                    <td>{{info.gender}}</td>
+                  </tr>
+                  <tr>
+                    <th>Date Of Birth</th>---->
+                    <td>{{info.dateOfBirth}}</td>
+                  </tr>
+                  <tr>
+                    <th>Password</th>---->
+                    <td> Hidden </td>
+                  </tr>
+                  <tr>
+                    <th>Relationship Status</th>---->
+                    <td>{{info.relationshipStatus}}</td>
+                  </tr>
+                  <tr>
+                    <th>Marriage Anniversary</th>---->
+                    <td>{{info.marriageAnniversary}}</td>
+                  </tr>
+                  <tr>
+                    <th>Address</th>---->
+                    <td>{{info.address}}</td>
+                  </tr>
+                  <tr>
+                    <th>Hobbies</th>---->
+                    <td>{{info.hobbies}}</td>
+                  </tr>
+                
+                </table>
+                
+                <p style="font-style: italic; font-size: xxx-large; font-family: cursive;">Education</p><br>
+                
+                <table>
+                  <tr>
+                    <th>Secondary</th>---->
+                    <td>{{info.education10}}</td>
+                  </tr>
+                  <tr>
+                    <th>Higher Secondary</th>---->
+                    <td>{{info.education12}}</td>
+                  </tr>
+                  <tr>
+                    <th>University</th>---->
+                    <td>{{info.educationUni}}</td>
+                  </tr>
+                  </table>
+                  
+                  <p style="font-style: italic; font-size: xxx-large; font-family: cursive;">Co-orporate Life</p><br>
+                  
+                  <table>
+                  <tr>
+                    <th>Company Name</th>---->
+                    <td>{{info.companyName}}</td>
+                  </tr>
+                  <tr>
+                    <th>Job Profile</th>---->
+                    <td>{{info.Profile}}</td>
+                  </tr>
+                  <tr>
+                    <th>Job Start Date</th>---->
+                    <td>{{info.jobStartDate}}</td>
+                  </tr>
+                  <tr>
+                    <th>Job End Date</th>---->
+                    <td>{{info.jobEndDate}}</td>
+                  </tr>
+                  <tr>
+                    <th>Years of Experience</th>---->
+                    <td>{{info.Experience}}</td>
+                  </tr>
+                  <tr>
+                    <th>Job Location</th>---->
+                    <td>{{info.jobLocation}}</td>
+                  </tr>
+                </table>
+           
+      </div>
+      </div>
+        </div>  
+          </div>
     </div>
 </template>
-
-<script scoped>
+<script>
+import axios from 'axios'
 import Navbar from '../components/navbar.vue'
 import profilecover from '../components/profile-cover.vue'
-//import axios from 'axios'
 export default {
-  name:'userphotos',
-    data () {
-        return{
-            photos: {
-              id: 100
+  name: 'about',
+  data () {
+   return {
+     info:'',
+     firstName: '',
+     lastName: '',
+     phoneNo: '',
+     password: '',
+     userName: '',
+     gender: '',
+     dateOfBirth: '',
+     img: '',
+     relationshipStatus: '',
+     education10: '',
+     education12: '',
+     educationUni: '',
+     jobProfile: '',
+     companyName: '',
+     jobStartDate: '',
+     jobEndDate: '',
+     yearsOfExp: 0,
+     jobLocation: '',
+     address: '',
+     marriageAnniversary: '',
+     Hobbies: '',
+     myName:''
+   }
+  },
+  validate () {
+    
+  },
+  methods: {
+    } ,
+    previewImage: function(event) {
+            var input = event.target;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = (event) => {
+                    this.img = event.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+                console.log(this.img)
             }
-        }
-    },
+        },
+  
   components: {
-    profilecover: profilecover,
-    Navbar
- },
- methods : {
+     Navbar,
+     profilecover
  },
  mounted(){
-  //  axios
-  //  .get('',{ headers: { Authorization: localStorage.getItem('sessionID') } }) 
-  //  .then(response => {
-  //    console.log(response)
-  //    this.info = response.data
-  //  })
-  //  .catch(error =>{
-  //    console.log(error)
-  //  })
-   var userName = localStorage.getItem('friendName')
-   console.log(userName)
-   localStorage.removeItem('friendName')
-   
-
+   this.myName = localStorage.getItem('myFriendName')
+   axios
+   .get('http://10.177.68.4:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) //ishika - for about post
+   .then(response => {
+     console.log(response)
+     this.info = response.data
+     localStorage.removeItem('myFriendName')
+   })
+   .catch(error =>{
+     console.log(error)
+   })
+    
  }
 }
 </script>
-
 <style scoped>
-/* .pic > img:hover {
-  transform: scale(1.3);
-  transition: transform 0.5s;
-  border: solid #7cad3e 2px;
+.about{
+  width: 60%;
+  float: right;
+  height: 450px;
+  border: rgb(0, 0, 0) 2px solid;
+  overflow: hidden;
+}
+.table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+   
+}
+/* .user{
+  background-image: url('../assets/2.jpeg');
 } */
-.pic > img:hover {
-  width: 400px;
-  height: 400px;
-  border: solid #7cad3e 2px;
-  border-radius: 25px;
-}
-.userphotos{
-    width: 60%;
-    height: 50%;
-    display: flex;
-    flex-wrap: wrap;
-    border: solid black 2px;
-    overflow: scroll;
-}
-.photos{
-  margin: 2%;
-  width: 28%;
-  height: 40%;
-  text-align: center;
-  border: solid green 2px;
-  box-shadow: 3px 4px #7cad3e;
-  
-}
-.avatar:hover{
+/* .education{
+  background-image: url('../assets/3.jpeg');
+} */
+.beautify-user-img{
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    box-shadow: 0 0 10px 1px gray;
+  }
+ td{
+    -moz-box-shadow: 0 0 10px 1px gray;
+    -webkit-box-shadow: 0 0 10px 1px gray;
+    box-shadow: 0 0 10px 1px  #000000;
+    text-align: center;
+  }
+  .avatar:hover{
     display: none;
-}
-.photos:hover {
-  animation: shake 0.5s;
-  animation-iteration-count: infinite;
-}
-@keyframes shake {
-  0% { transform: translate(1px, 1px) rotate(0deg); }
-  50% { transform: translate(1px, 2px) rotate(0deg); }
-  100% { transform: translate(1px, -2px) rotate(-1deg); }
-}
+  }
 </style>

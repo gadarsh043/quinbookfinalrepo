@@ -172,6 +172,7 @@ export default {
         }
         console.log(profile)
         this.myName = localStorage.getItem('myName')
+        localStorage.setItem('myProfilePic',this.img)
         axios.put('http://10.177.68.4:8081/update/userName?userName='+this.myName,profile,{ headers: { sessionId: localStorage.getItem('sessionId') } }) // ishika - for edit profile
           .then(response =>{
             this.phoneNo= '',
