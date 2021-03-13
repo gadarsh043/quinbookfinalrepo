@@ -15,19 +15,30 @@
             <div class="friendrequest" style="padding: 0px 0px 0px 88px;">
               <div>
                 <br>
+                <span v-if="i.img">
+                  <img :src="i.img" alt="">
+                </span>
+                <span v-else>
                   <img src="../assets/user.svg" width="23" height="23">
+                </span>
                   <br>
-                <p> G Adarsh</p>
+                  <span v-if="i.fullName">
+                    <p>{{i.fullName}}</p>
+                  </span>
+                  <span v-else>
+                    <p>User</p>
+                  </span>
+                
                 <!-- <p> {{i.}} </p> -->
               </div>
               <div class="iconsforaddblock" style="display:flex">
                 <div class="AddFriendUnFriend" style="padding: 21px;">
                   <span class="AUtiptext" >AddFriend/Un</span>
-                  <img :id="i" src="http://localhost:8080/img/user-add.5047d004.svg" style="padding: 17px;" @click="changeImageadddis(i)">
+                  <img :id="i" src="http://localhost:8080/img/user-add.5047d004.svg" style="padding: 17px;" @click="changeImageadddis(i,i.userName)">
                 </div>
                 <div  class="Block/UnBlock" style="padding: 21px;">
-                <span class="BUtiptext" >Block/Un</span>
-                <img :id="i+'i'" src="http://localhost:8080/img/user-block.80ef950f.svg" style="padding: 17px;" @click="changeImageblockun(i)">
+                <span class="BUtiptext" >Block</span>
+                <img :id="i+'i'" src="http://localhost:8080/img/user-block.80ef950f.svg" style="padding: 17px;" @click="changeImageblockun(i,i.userName)">
                 </div>
               </div>
             </div> 
@@ -57,10 +68,10 @@ export default {
  mounted () {
     let x = localStorage.getItem('searchterm')
     axios
-    this.$alert('Please Confirm to proceed')
-      .get('http://10.177.68.5:8090/user/getUserName/'+ x,{ headers: { Authorization: localStorage.getItem('sessionID') } })
-      console.log(x)
+      .get('http://10.177.68.13:8090/user/getUserName/'+ x,{ headers: { sessionId: localStorage.getItem('sessionID') } })
       .then(response => {
+        this.$alert('Please Confirm to proceed')
+        console.log(x)
         console.log(response)
         this.friends = response.data
       })
@@ -73,7 +84,7 @@ export default {
    search(){
      localStorage.setItem('seatchterm',this.searchtext)
      axios
-      .get('http://10.177.68.5:8090/user/getUserName/'+ localStorage.getItem('searchterm'),{ headers: { Authorization: localStorage.getItem('sessionID') } })
+      .get('http://10.177.68.13:8090/user/getUserName/'+ this.searchtext,{ headers: { Authorization: localStorage.getItem('sessionID') } })
       .then(response => {
         console.log(response)
         this.friends = response.data
@@ -83,7 +94,22 @@ export default {
         console.log(error)
       })
    },
-   changeImageadddis(id) {
+   changeImageadddis(id,userName) {
+     var obj = {
+       sessionId: localStorage.getItem('sessionID'),
+       toWhom: userName,
+       selfDetails: {
+         userName: localStorage.getItem('myName'),
+         fullName: localStorage.getItem('myFullName'),
+         profilePic: localStorage.getItem('myProfilePic')
+       }
+     }
+     console.log(obj)
+     axios.post('http://10.177.68.2:8089/friendRequest',obj).then(res => {
+       console.log(res.data.message)
+     }).catch(err => {
+       console.log(err)
+     })
         var image = document.getElementById(id);
         if (image.src.match("http://localhost:8080/img/user-add.5047d004.svg")) {
             image.src = "http://localhost:8080/img/user-remove.7fad484d.svg";
@@ -92,7 +118,23 @@ export default {
             image.src = "http://localhost:8080/img/user-add.5047d004.svg";
         }
     },
-    changeImageblockun(id) {
+    changeImageblockun(id,userName) {
+      var obj = {
+       sessionId: localStorage.getItem('sessionID'),
+       friendUserName: userName,
+       selfDetails: {
+         userName: localStorage.getItem('myName'),
+         fullName: localStorage.getItem('myFullName'),
+         profilePic: localStorage.getItem('myProfilePic')
+       }
+     }
+     console.log(obj)
+      axios.post('http://10.177.68.2:8082/blockUser',obj,{headers: {sessionId: localStorage.getItem('sessionID')}})
+      .then(res => {
+       console.log(res.data.message)
+     }).catch(err => {
+       console.log(err)
+     })
         var image = document.getElementById(id+'i');
         if (image.src.match("http://localhost:8080/img/user-block.80ef950f.svg")) {
             image.src = "http://localhost:8080/img/user-check.33597ea2.svg";
