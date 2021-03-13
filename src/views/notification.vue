@@ -24,7 +24,8 @@
                             </span>
                             <span v-else-if="notification.eventType === 'FRNDREQ'">
                                 <h2><a href="">{{notification.userBaseProfile.fullName}}</a> has sent you a Friend Request</h2>
-                                <h3>You and {{notificationuser.BaseProfile.fullName}} are friends now!</h3>
+                                <!-- <h3>You and {{notificationuser.BaseProfile.fullName}} are friends now!</h3> -->
+                                <button @click="acceptRequest(notification.from)">Accept</button> <button>Reject</button>
                             </span>
                             <span v-else-if="notification.eventType === 'FRNDREQACC'">
                                 <h2>{{notification.acceptedBy.fullName}} has accepted your friend Request</h2>
@@ -75,7 +76,7 @@ export default {
             }
             
             console.log("for old notifications page")
-            axios.post("http://10.177.68.60:8089/notificationHistory",obj).then(res => {
+            axios.post("http://10.177.68.2:8089/notificationHistory",obj).then(res => {
                 this.notificationHistory = res.data.notificationHistory
                 console.log(this.notificationHistory)
                 })
@@ -87,11 +88,26 @@ export default {
             }
             
             console.log("for latest notifications page")
-            axios.post("http://10.177.68.60:8089/latestNotifications",obj).then(res => {
+            axios.post("http://10.177.68.2:8089/latestNotifications",obj).then(res => {
                 this.notificationHistory = res.data.latestNotifications
                  console.log(this.notificationHistory)
                 })
                 .catch(err=> console.log(err))
+        },
+        acceptRequest(friendName) {
+            var obj={
+                userName: localStorage.getItem('myName'),
+                friendUserName:friendName,
+                selfDetails: {
+                    userName: localStorage.getItem('myName'),
+                    fullName: localStorage.getItem('myFullName'),
+                    profilePic: localStorage.getItem('myProfilePic')
+                }
+            }
+            axios.post('http://10.177.68.2:8082/addFriends',obj,{ headers: {sessionId : localStorage.getItem('sessioID')}})
+            .then(console.log('req accepted')).catch(err => {
+                console.log(err)
+            })
         }
     },
     mounted() {

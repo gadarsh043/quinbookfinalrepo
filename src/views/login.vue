@@ -89,7 +89,7 @@ export default {
       }
       if (this.validate()) {
          console.log("dsdss")
-        axios.post('http://10.177.68.66:8090/login', obj, { headers: { Authorization: localStorage.getItem('sessionID') } }).then((res) => {
+        axios.post('http://10.177.68.7:8090/login', obj, { headers: { Authorization: localStorage.getItem('sessionID') } }).then((res) => {
           console.log("dsdss")
           localStorage.setItem('sessionID', res.data.sessionID) // check sessionID or sessionId
           this.$store.dispatch('setLoginAction', res.data.sessionID)
@@ -105,6 +105,18 @@ export default {
           }
           if (res.data.sessionID !== '' && res.data.isRegistered) {
             console.log('inThis')
+  
+            axios.get('http://10.177.68.4:8081/userName'+localStorage.getItem('myName')).then(
+              res => {
+                localStorage.setItem('myFullName',res.data.fullName)
+                localStorage.setItem('myProfilePic',res.data.img)
+              }
+            ).catch(
+              err=>{
+              console.log(err)
+              this.$router.push("/error")
+            })
+
             this.$router.push('/feed')
           } else {
             this.$router.push('/login')
@@ -131,10 +143,23 @@ export default {
           if (res.data.sessionID === '' && !res.data.isRegistered ) {
             alert('Not a registered user. Please register!')
             localStorage.removeItem('sessionID')
+            
             this.$router.push('/register')
           }
           // if sessionId and isRegister exits
           if (res.data.sessionID !== '' && res.data.isRegistered) {
+             
+            axios.get('http://10.177.68.4:8081/userName'+localStorage.getItem('myName')).then(
+              res => {
+                localStorage.setItem('myFullName',res.data.fullName)
+                localStorage.setItem('myProfilePic',res.data.img)
+              }
+            ).catch(
+              err=>{
+              console.log(err)
+              this.$router.push("/error")
+            })
+
             this.$router.push('/feed')
           } else {
             this.$router.push('/login')
