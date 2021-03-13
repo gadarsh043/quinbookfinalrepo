@@ -18,7 +18,6 @@
 </template>
 
 <script>
-//import commentsplus from './commentsplus.vue'
 export default {
     data () {
         return {
