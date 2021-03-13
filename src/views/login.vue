@@ -88,10 +88,11 @@ export default {
         password: this.password
       }
       if (this.validate()) {
-         console.log("dsdss")
-        axios.post('http://10.177.68.66:8090/login', obj, { headers: { Authorization: localStorage.getItem('sessionID') } }).then((res) => {
+         console.log("inside normal login")
+        axios.post('http://10.177.68.7:8090/login', obj) // noel - login
+        .then((res) => {
           console.log("dsdss")
-          localStorage.setItem('sessionID', res.data.sessionID) // check sessionID or sessionId
+          localStorage.setItem('sessionId', res.data.sessionID) // check sessionId - sessionId
           this.$store.dispatch('setLoginAction', res.data.sessionID)
           if (res.data.sessionID === '' && res.data.isRegistered) {
             this.$alert('Invalid Login Credentials!')
@@ -105,7 +106,7 @@ export default {
           }
           if (res.data.sessionID !== '' && res.data.isRegistered) {
             console.log('inThis')
-            localStorage.setItem('myName', res.data.userName) 
+            localStorage.setItem('myName', res.data.userName) //Login person username - myName
             this.$router.push('/feed')
           } else {
             this.$router.push('/login')
@@ -121,8 +122,9 @@ export default {
         password: ''
       }
       console.log('inside onGoogleLogin')
-        axios.post('http://10.177.68.66:8090/login', obj,{ headers: { Authorization: localStorage.getItem('sessionID') } }).then((res) => {
-          localStorage.setItem('sessionID', res.data.sessionID)
+        axios.post('http://10.177.68.7:8090/login', obj) // noel - login
+        .then((res) => {
+          localStorage.setItem('sessionId', res.data.sessionID) // my sessionId
           console.log(localStorage.getItem('sessionID'))
           if (res.data.sessionID === '' && res.data.isRegistered) {
             alert('Invalid Login Credentials!')
@@ -136,7 +138,7 @@ export default {
           }
           // if sessionId and isRegister exits
           if (res.data.sessionID !== '' && res.data.isRegistered) {
-            localStorage.setItem('myName', res.data.userName) 
+            localStorage.setItem('myName', res.data.userName) //Login person username - storing in localstorage
             this.$router.push('/feed')
           } else {
             this.$router.push('/login')
@@ -147,7 +149,7 @@ export default {
   },
   created () {
     if (localStorage.getItem('sessionID') !== null) {
-      this.$router.push('/login')
+      this.$router.push('/feed')
     }
   }
 }

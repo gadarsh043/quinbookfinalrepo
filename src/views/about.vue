@@ -2,7 +2,12 @@
     <div class="container">
       <Navbar style="width:100.3%"/>
     <div class="userprofile" style="margin: 3px 0px 0px 0px;">
-       <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
+       <span  v-if="info.img"> 
+          <img :src="info.img" alt="Avatar" class="avatar" style="border: solid white 2px">
+        </span>
+        <span v-else>
+          <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
+        </span>
     </div>
     <div class="user" style="padding: 15px 1px;height: 430px;">
       <profilecover class="userdetails"/>
@@ -11,48 +16,48 @@
         <div>
           <div class="education">
             <!-- <img class='beautify-user-img' src='../assets/beautify.jpg'> -->
-             <img class="preview" :src="img" width="120px" height="120px">
+             <!-- <img class="preview" :src="img" width="120px" height="120px"> -->
              <p style="font-style: italic; font-size: xxx-large; font-family: cursive;">Personal Details</p><br>
                 <table>
                   <tr>
                     <th>First Name</th>---->
-                    <td></td>
+                    <td> {{info.firstName}}</td>
                   </tr>
                   <tr>
                     <th>Last Name</th>---->
-                    <td></td>
+                    <td>{{info.lastName}}</td>
                   </tr>
                   <tr>
                     <th>Phone Number</th>---->
-                    <td></td>
+                    <td>{{info.phoneNo}}</td>
                   </tr>
                   <tr>
                     <th>Gender</th>---->
-                    <td></td>
+                    <td>{{info.gender}}</td>
                   </tr>
                   <tr>
                     <th>Date Of Birth</th>---->
-                    <td></td>
+                    <td>{{info.dateOfBirth}}</td>
                   </tr>
                   <tr>
                     <th>Password</th>---->
-                    <td></td>
+                    <td> Hidden </td>
                   </tr>
                   <tr>
                     <th>Relationship Status</th>---->
-                    <td></td>
+                    <td>{{info.relationshipStatus}}</td>
                   </tr>
                   <tr>
                     <th>Marriage Anniversary</th>---->
-                    <td></td>
+                    <td>{{info.marriageAnniversary}}</td>
                   </tr>
                   <tr>
                     <th>Address</th>---->
-                    <td></td>
+                    <td>{{info.address}}</td>
                   </tr>
                   <tr>
                     <th>Hobbies</th>---->
-                    <td></td>
+                    <td>{{info.hobbies}}</td>
                   </tr>
                 
                 </table>
@@ -62,15 +67,15 @@
                 <table>
                   <tr>
                     <th>Secondary</th>---->
-                    <td></td>
+                    <td>{{info.education10}}</td>
                   </tr>
                   <tr>
                     <th>Higher Secondary</th>---->
-                    <td></td>
+                    <td>{{info.education12}}</td>
                   </tr>
                   <tr>
                     <th>University</th>---->
-                    <td></td>
+                    <td>{{info.educationUni}}</td>
                   </tr>
                   </table>
                   
@@ -79,27 +84,27 @@
                   <table>
                   <tr>
                     <th>Company Name</th>---->
-                    <td></td>
+                    <td>{{info.companyName}}</td>
                   </tr>
                   <tr>
                     <th>Job Profile</th>---->
-                    <td></td>
+                    <td>{{info.Profile}}</td>
                   </tr>
                   <tr>
                     <th>Job Start Date</th>---->
-                    <td></td>
+                    <td>{{info.jobStartDate}}</td>
                   </tr>
                   <tr>
                     <th>Job End Date</th>---->
-                    <td></td>
+                    <td>{{info.jobEndDate}}</td>
                   </tr>
                   <tr>
                     <th>Years of Experience</th>---->
-                    <td></td>
+                    <td>{{info.Experience}}</td>
                   </tr>
                   <tr>
                     <th>Job Location</th>---->
-                    <td></td>
+                    <td>{{info.jobLocation}}</td>
                   </tr>
                 </table>
            
@@ -138,7 +143,8 @@ export default {
      jobLocation: '',
      address: '',
      marriageAnniversary: '',
-     Hobbies: ''
+     Hobbies: '',
+     myName:''
    }
   },
   validate () {
@@ -163,8 +169,9 @@ export default {
      profilecover
  },
  mounted(){
+   this.myName = localStorage.getItem('myName')
    axios
-   .get('http://10.177.68.6:8081/getDetails/userName?userName=test1',{ headers: { Authorization: localStorage.getItem('sessionID') } }) 
+   .get('http://10.177.68.4:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) //ishika - for about post
    .then(response => {
      console.log(response)
      this.info = response.data

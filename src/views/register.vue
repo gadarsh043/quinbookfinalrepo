@@ -39,11 +39,6 @@
             <input class="birthday" v-model="dob" type="date" name="date" @click="setdate()"/>
           </div>
           <br />
-          <!-- <div class="radio">
-              <input type="radio" id="radio01-01" name="demo01" /><label for="radio01-01">Male</label><br>
-              <input type="radio" class="radio01-02" name="demo01" /><label for="radio01-02">Female</label><br>
-              <input type="radio" id="radio01-03" name="demo01" /><label for="radio01-03">Other</label><br>
-          </div> -->
           <select v-model="gender" name="" id="">
             <option  value="">Male</option>
             <option value="">Female</option>
@@ -109,8 +104,9 @@ export default {
       };
       console.log("onsubmit")
       if (this.validate()) {
-        console.log("sdsssds")
-        axios.post("http://localhost:8081/register", obj).then((res) => {
+        console.log("on submit")
+        axios.post("http://10.177.68.4:8081/register", obj) // ishika ip
+        .then((res) => {
           console.log(res);
           this.$router.push("/login");
         });
@@ -118,7 +114,7 @@ export default {
     },
     created() {
       if (localStorage.getItem("sessionId") !== null) {
-        this.$router.push("/login");
+        this.$router.push("/feed");
       }
     },
   },
@@ -127,7 +123,6 @@ export default {
 <style scoped>
 body{
   background-image: url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014__340.jpg');
-  
 }
 * {
   margin: 0;

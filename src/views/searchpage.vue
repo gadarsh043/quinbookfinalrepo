@@ -58,7 +58,7 @@ export default {
     let x = localStorage.getItem('searchterm')
     axios
     this.$alert('Please Confirm to proceed')
-      .get('http://10.177.68.5:8090/user/getUserName/'+ x,{ headers: { Authorization: localStorage.getItem('sessionID') } })
+      .get('http://10.177.68.13:8090/user/getUserName/'+ x,{ headers: { sessionId: localStorage.getItem('sessionId') } }) //swastik - solr 
       console.log(x)
       console.log(localStorage.getItem('sessionID'))
       .then(response => {
@@ -74,7 +74,7 @@ export default {
    search(){
      localStorage.setItem('searchterm',this.searchtext)
      axios
-      .get('http://10.177.68.5:8090/user/getUserName/'+ localStorage.getItem('searchterm'),{ headers: { Authorization: localStorage.getItem('sessionID') } })
+      .get('http://10.177.68.13:8090/user/getUserName/'+ localStorage.getItem('searchterm'),{ headers: { sessionId: localStorage.getItem('sessionId') } }) //swastik - solr 
       .then(response => {
         console.log(response)
         this.friends = response.data

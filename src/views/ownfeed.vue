@@ -48,15 +48,15 @@ export default {
                 postCaption: this.postCaption,
                 postImages: this.postImages,
             }
-        console.log(update)
-         axios
-            .put('http://10.177.68.40:8090/QuinBookPost/updatePost/'+id,update, { headers: { sessionId: localStorage.getItem('sessionID') } })
-            .then(response => {
-                console.log(response)
-            })
-            .catch(error =>{
-                console.log(error)
-            })
+            console.log(update)
+            axios
+                .put('http://10.177.68.8:8090/QuinBookPost/updatePost/'+id,update, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(error =>{
+                    console.log(error)
+                })
         },
         previewImage: function(event) {
             var input = event.target;
@@ -68,10 +68,11 @@ export default {
                 reader.readAsDataURL(input.files[0]);
                 console.log(this.postImages)
             }
-        }},
+        }
+    },
    mounted(){
      axios
-      .get('http://10.177.68.40:8090/QuinBookPost/getAllPostByUserName/test7')
+      .get('http://10.177.68.8:8090/QuinBookPost/getAllPostByUserName/'+localStorage.getItem('myName')) // meghana - for getting my post
       .then(response => {
         console.log(response)
         this.info = response.data

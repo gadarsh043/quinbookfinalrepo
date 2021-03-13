@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="user" style="justify-content: center;">
-      <div > <br><h1 style="text-align: center;">G Adarsh</h1> 
+      <div > <br><h1 style="text-align: center;">Adarsh Khatri</h1> 
       <div class="afp buttons">
         <br>
         <button class="btn123" @click="onsubmit">About</button>

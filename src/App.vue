@@ -49,7 +49,9 @@ body{
   // background: linear-gradient(to right, #f06844 0%, #ee4c54 25%, #d45e95 50%, #9c6ca6 75%, #6583c1 100%);
   // background:  #c2092ed0;
   // background:rgba(128, 128, 128, 0.637);
-  background:#8db9ca;
+  // background:#8db9ca;
+  // background:#58cced;
+  background:#bfe6ff;
 }
 
 </style>

@@ -69,6 +69,7 @@ export default {
 }
 .userphotos{
     width: 60%;
+    height: 50%;
     display: flex;
     flex-wrap: wrap;
     border: solid black 2px;

@@ -2,7 +2,12 @@
     <div class="container">
       <Navbar style="width:100.3%"/>
     <div class="userprofile" style="margin: 3px 0px 0px 0px;">
-       <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
+       <span  v-if="info.img"> 
+          <img :src="info.img" alt="Avatar" class="avatar" style="border: solid white 2px">
+        </span>
+        <span v-else>
+          <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
+        </span>
     </div>
     <div class="user" style="padding: 15px 1px;height: 430px;">
       <profilecover class="userdetails"/>
@@ -14,11 +19,11 @@
                 <table>
                   <tr>
                     <th>First Name</th>
-                    <td><input type="text" id="firstName"  class="inputfield" required v-model="firstName" placeholder="Adarsh"></td>
+                    <td>{{info.firstName}}</td>
                   </tr>
                   <tr>
                     <th>Last Name</th>
-                    <td><input type="text" id="lastName"  class="inputfield" required v-model="lastName" placeholder="Khatri"></td>
+                    <td>{{info.lastName}}</td>
                   </tr>
                   <tr>
                     <th>Phone Number</th>
@@ -31,10 +36,6 @@
                   <tr>
                     <th>Date Of Birth</th>
                     <td><input class="inputfield" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" required id="dateOfBirth" v-model="dateOfBirth" placeholder="dd/mm/yy"></td>
-                  </tr>
-                  <tr>
-                    <th>Password</th>
-                    <td><input type="password" id="password"  class="inputfield" required v-model="password" placeholder="......."></td>
                   </tr>
                   <tr>
                     <th>Relationship Status</th>
@@ -50,7 +51,7 @@
                   </tr>
                   <tr>
                     <th>Hobbies</th>
-                    <td><input type="text" id="fname" name="hobbies" class="inputfield" v-model="hobbies" placeholder="Collecting Coins"></td>
+                    <td><input type="text" id="fname" name="hobbies" class="inputfield" v-model="Hobbies" placeholder="Collecting Coins"></td>
                   </tr>
                 
                 </table>
@@ -89,11 +90,11 @@
                   </tr>
                   <tr>
                     <th>Job End Date</th>
-                    <td><input class="inputfield" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="jobEndDate" v-model="jobEndDate" placeholder="dd/mm/yy"></td>
+                    <td>Present</td>
                   </tr>
                   <tr>
                     <th>Years of Experience</th>
-                    <td><input type="text" id="Experience" class="inputfield" v-model="Experience" placeholder="Work Experience"></td>
+                    <td><input type="text" id="Experience" class="inputfield" v-model="yearsOfExp" placeholder="Work Experience"></td>
                   </tr>
                   <tr>
                     <th>Job Location</th>
@@ -138,7 +139,9 @@ export default {
      jobLocation: '',
      address: '',
      marriageAnniversary: '',
-     Hobbies: ''
+     Hobbies: '',
+     myName:'',
+     imagechange:''
    }
   },
   validate () {
@@ -153,15 +156,13 @@ export default {
           education10: this.education10,
           education12: this.education12,
           educationUni: this.educationUni,
-          firstName: this.firstName,
           gender: this.gender,
-          hobbies: this.hobbies,
+          Hobbies: this.Hobbies,
           img: this.img,
           jobEndDate: this.jobEndDate,
           jobLocation: this.jobLocation,
           jobProfile: this.jobProfile,
           jobStartDate: this.jobStartDate,
-          lastName: this.lastName,
           marriageAnniversary: this.marriageAnniversary,
           password: this.password,
           phoneNo: this.phoneNo,
@@ -170,8 +171,28 @@ export default {
           yearsOfExp: this.yearsOfExp
         }
         console.log(profile)
-        axios.put('http://10.177.68.6:8081/update/userName?userName=test1',profile,{ headers: { Authorization: localStorage.getItem('sessionID') } })
+        this.myName = localStorage.getItem('myName')
+        axios.put('http://10.177.68.4:8081/update/userName?userName='+this.myName,profile,{ headers: { sessionId: localStorage.getItem('sessionId') } }) // ishika - for edit profile
           .then(response =>{
+            this.phoneNo= '',
+            this.password= '',
+            this.userName= '',
+            this.gender= '',
+            this.dateOfBirth= '',
+            this.img= '',
+            this.relationshipStatus= '',
+            this.education10= '',
+            this.education12= '',
+            this.educationUni= '',
+            this.jobProfile= '',
+            this.companyName= '',
+            this.jobStartDate= '',
+            this.jobEndDate= '',
+            this.yearsOfExp= 0,
+            this.jobLocation= '',
+            this.address= '',
+            this.marriageAnniversary= '',
+            this.Hobbies= '',
             console.log(response)
           })
           .catch(error =>{
@@ -203,8 +224,10 @@ export default {
      Navbar
  },
  mounted(){
+   this.myName = localStorage.getItem('myName')
+   console.log(this.myName)
    axios
-   .get('http://10.177.68.6:8081/getDetails/userName?userName=test1',{ headers: { Authorization: localStorage.getItem('sessionID') } }) 
+   .get('http://10.177.68.4:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) // ishika - getting my details
    .then(response => {
      console.log(response)
      this.info = response.data
