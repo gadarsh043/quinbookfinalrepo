@@ -57,6 +57,7 @@ export default {
          axios.post("http://10.177.68.66:8090/logout",obj).then(res => {
            console.log("loggin out navbar 3")
            localStorage.removeItem('sessionID')
+           localStorage.clear()
             this.$router.push("/login")
          }).catch(err=>console.log(err))
       }
