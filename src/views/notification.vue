@@ -104,7 +104,7 @@ export default {
                     profilePic: localStorage.getItem('myProfilePic')
                 }
             }
-            axios.post('http://10.177.68.2:8082/addFriends',obj,{ headers: {sessionId : localStorage.getItem('sessioID')}})
+            axios.post('http://10.177.68.2:8082/addFriends',obj,{ headers: {sessionId : localStorage.getItem('sessionID')}})
             .then(console.log('req accepted')).catch(err => {
                 console.log(err)
             })
