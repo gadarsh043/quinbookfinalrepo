@@ -70,24 +70,15 @@
               {{i.userName}}
             </span>
             <div class="likeanddis" >
-              {{i.likes}}<img :id="i" src="http://localhost:8081/img/thumbs-up.7c39be07.svg" style="margin: 24px" @click="changeImagelike(i)">
-              {{i.dislikes}}<img :id="i+'i'" src="http://localhost:8081/img/thumbs-down.76c1523f.svg" style="margin: 24px" @click="changeImagedislike(i)">
-              <div class="commentdiv" style="float">
-                <img
-                  src="../assets/comment.svg"
-                  style="margin: 20px"
-                  width="30"
-                  height="30"
-                />
-                <div class="commentinsidediv">
+              <like-dislike :postId="postId" :fullName="fullName" :myProfilePic="myProfilePic"></like-dislike>
+              <div class="commentinsidediv">
                   <input type="text" name="How you doing" class="small" />
                 </div>
-              </div>
             </div>
             <div>
               Posted On
               <p></p>
-              {{i.date.slice(0,10)}}
+              <!-- {{i.date.slice(0,10)}} -->
             </div>
             <br>
             <br>
@@ -112,13 +103,13 @@ export default {
   data() {
     return {
       myProfilePic:'',
-      feeds: 100,
+      feeds: 0,
       fullName: "",
       eventType: "",
       img: "",
       imgList: [],
       years: 0,
-      events: 5,
+      events: 0,
       friendList: [],
       userName: "",
       date: "",
@@ -207,9 +198,13 @@ export default {
     }
   },
   mounted() {
+    if(localStorage.getItem('sessionId')===null){
+      this.$alert('Please Login First')
+      this.$router.push('/login')
+    }
      this.myName =  localStorage.getItem('myName') //storing userName - myName
      axios
-     .get('http://10.177.68.4:8081/getDetails/userName?userName='+this.myName)// ishika - getting details
+     .get('http://10.177.1.165:8081/getDetails/userName?userName='+this.myName)// ishika - getting details
      .then(res => {
        console.log(res)
         localStorage.setItem('myProfilePic',res.data.img)
@@ -220,7 +215,7 @@ export default {
       console.log(err)
     })
     axios
-      .get(`http://10.177.68.9:8085/feed/fetchFriendList?userName=${this.myName}`) // akhil - getting friendlist
+      .get(`http://10.177.1.53:8085/feed/fetchFriendList?userName=${this.myName}`) // akhil - getting friendlist
       .then((response) => {
         console.log(response);
         this.friendList = response.data; // storing in friendlist
@@ -228,7 +223,7 @@ export default {
         this.myProfilePic=localStorage.getItem('myProfilePic')
         axios
         .post(
-          `http://10.177.68.4:8081/events`, this.friendList) //ishika - for sending friendlist - i will get events
+          `http://10.177.1.165:8081/events`, this.friendList) //ishika - for sending friendlist - i will get events
           .then((response) => {
             console.log(response);
           this.events = response.data;
@@ -243,7 +238,7 @@ export default {
         console.log(error);
       });
     axios
-      .get(`http://10.177.68.9:8085/feed/fetchUserSocial?userName=${this.myName}`) // akhil - getting feed
+      .get(`http://10.177.1.53:8085/feed/fetchUserSocial?userName=${this.myName}`) // akhil - getting feed
       .then((response) => {
         console.log(response);
         this.feeds = response.data; // storing in feeds

@@ -43,6 +43,10 @@ export default {
  methods : {
  },
  mounted(){
+   if(localStorage.getItem('sessionId')===null){
+      this.$alert('Please Login First')
+      this.$router.push('/login')
+    }
    axios
    .get('',{ headers: { Authorization: localStorage.getItem('sessionID') } }) 
    .then(response => {

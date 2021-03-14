@@ -4,8 +4,8 @@
       <div class="userlogin">
         <div class="title">
           <img src="../assets/logo-black.svg" style="width:60%">
-          <h1 style="font-size:40px" v-anime="{targets: 'h1', translateX: 200, rotate: '1turn', backgroundColor: '',color: '#000000', duration: 8000, loop: false}">  Connect with</h1>
-          <h1 style="font-size:80px" v-anime="{targets: 'h1', translateX: 200, rotate: '1turn', backgroundColor: '',color: '#3aed91', duration: 8000, loop: false} ">QuinBook</h1>
+          <h1 style="font-size:40px" v-anime="{targets: 'h1', translateX: 200, rotate: '1turn', backgroundColor: '',color: '#4267B2', duration: 8000, loop: false}">  Connect with</h1>
+          <h1 style="font-size:80px" v-anime="{targets: 'h1', translateX: 200, rotate: '1turn', backgroundColor: '',color: '#4267B2' , duration: 8000, loop: false} ">QuinBook</h1>
         </div>
         <div class="loginPart">
           <h4>Login to Continue</h4>
@@ -89,7 +89,7 @@ export default {
       }
       if (this.validate()) {
          console.log("inside normal login")
-        axios.post('http://10.177.68.4:8090/login', obj) // ishika - login
+        axios.post('http://10.177.1.165:8090/login', obj) // ishika - login
         .then((res) => {
           console.log("dsdss")
           localStorage.setItem('sessionId', res.data.sessionID) // check sessionId - sessionId
@@ -122,7 +122,7 @@ export default {
         password: ''
       }
       console.log('inside onGoogleLogin')
-        axios.post('http://10.177.68.7:8090/login', obj) // noel - login
+        axios.post('http://10.177.1.165:8090/login', obj) // noel - login
         .then((res) => {
           localStorage.setItem('sessionId', res.data.sessionID) // my sessionId
           console.log(localStorage.getItem('sessionID'))
@@ -165,6 +165,7 @@ body{
     /* background: linear-gradient(to right, #f06844 0%, #ee4c54 25%, #d45e95 50%, #9c6ca6 75%, #6583c1 100%); */
     /* background:rgba(128, 128, 128, 0.637); */
     background:#8db9ca;
+    background:#fde8cd;
     /* background: linear-gradient(to right, #39ce4b 0%, #26a18b 25%, #53c6cc 50%, #6da66c 75%, #aac165 100%); */
   }
   .title {

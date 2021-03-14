@@ -70,10 +70,14 @@ export default {
     Navbar
  },
  mounted () {
+   if(localStorage.getItem('sessionId')===null){
+      this.$alert('Please Login First')
+      this.$router.push('/login')
+    }
    this.myProfilePic=localStorage.getItem('myProfilePic')
     let x = localStorage.getItem('searchterm')
     axios
-      .get('http://10.177.68.13:8090/user/getUserName/'+ x,{ headers: { sessionId: localStorage.getItem('sessionID') } })
+      .get('http://10.177.68.13:8090/user/getUserName/'+ x,{ headers: { sessionId: localStorage.getItem('sessionID') } })//swastik
       .then(response => {
         this.$alert('Please Confirm to proceed')
         console.log(x)
@@ -90,7 +94,7 @@ export default {
    search(){
      localStorage.setItem('searchterm',this.searchtext)
      axios
-      .get('http://10.177.68.13:8090/user/getUserName/'+ this.searchtext,{ headers: { Authorization: localStorage.getItem('sessionID') } })
+      .get('http://10.177.68.13:8090/user/getUserName/'+ this.searchtext,{ headers: { Authorization: localStorage.getItem('sessionID') } })//swastik
       .then(response => {
         console.log(response)
         this.friends = response.data
@@ -102,7 +106,7 @@ export default {
    },
    changeImageadddis(id,userName) {
      var obj = {
-       sessionId: localStorage.getItem('sessionID'),
+       sessionId: localStorage.getItem('sessionId'),
        toWhom: userName,
        selfDetails: {
          userName: localStorage.getItem('myName'),
@@ -111,7 +115,7 @@ export default {
        }
      }
      console.log(obj)
-     axios.post('http://10.177.68.2:8089/friendRequest',obj).then(res => {
+     axios.post('http://10.177.2.84:8089/friendRequest',obj).then(res => {//Deepak
        console.log(res.data.message)
      }).catch(err => {
        console.log(err)
@@ -135,7 +139,7 @@ export default {
        }
      }
      console.log(obj)
-      axios.post('http://10.177.68.2:8082/blockUser',obj,{headers: {sessionId: localStorage.getItem('sessionID')}})
+      axios.post('http://10.177.2.84:8082/blockUser',obj,{headers: {sessionId: localStorage.getItem('sessionID')}})//Deepak
       .then(res => {
        console.log(res.data.message)
      }).catch(err => {

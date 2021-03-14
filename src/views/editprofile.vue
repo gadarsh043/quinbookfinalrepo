@@ -225,10 +225,14 @@ export default {
      Navbar
  },
  mounted(){
+   if(localStorage.getItem('sessionId')===null){
+      this.$alert('Please Login First')
+      this.$router.push('/login')
+    }
    this.myName = localStorage.getItem('myName')
    console.log(this.myName)
    axios
-   .get('http://10.177.68.4:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) // ishika - getting my details
+   .get('http://10.177.1.165:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) // ishika - getting my details
    .then(response => {
      console.log(response)
      this.info = response.data

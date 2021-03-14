@@ -1,6 +1,6 @@
 <template>
   <div id="navbar">
-      <div class="logo">
+      <div class="logo" @click="clicklogo">
         <span ><img src="../assets/logo-color.png" alt="logo" srcset="" width="40px" height="40px" id="quinlogo"></span>
       </div>
 
@@ -19,7 +19,7 @@
                     <div class="dropdown-content">
                         <a href="/editprofile">Edit Profile</a>
                         <a href="/about">About</a>
-                        <a @click="logoutUser">Logout</a>
+                        <a @click="logoutUser" style="cursor:pointer">Logout</a>
                     </div>
                 </div>
         </div>
@@ -51,11 +51,14 @@ export default {
       profiletiptext(){
         this.$router.push('/feed')
       },
+      clicklogo(){
+        this.$router.push('/feed')
+      },
       logoutUser(){
          var obj = {
            sessionId : localStorage.getItem('sessionId')
          }
-         axios.post("http://10.177.68.4:8090/logout",obj).then(res => { //ishika - logout
+         axios.post("http://10.177.1.165:8090/logout",obj).then(res => { //ishika - logout
            console.log("loggin out navbar" + res)
            localStorage.removeItem('sessionID')
            localStorage.clear()

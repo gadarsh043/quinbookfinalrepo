@@ -88,7 +88,7 @@
                   </tr>
                   <tr>
                     <th>Job Profile</th>---->
-                    <td>{{info.Profile}}</td>
+                    <td>{{info.jobProfile}}</td>
                   </tr>
                   <tr>
                     <th>Job Start Date</th>---->
@@ -169,9 +169,13 @@ export default {
      profilecover
  },
  mounted(){
+   if(localStorage.getItem('sessionId')===null){
+      this.$alert('Please Login First')
+      this.$router.push('/login')
+    }
    this.myName = localStorage.getItem('myFriendName')
    axios
-   .get('http://10.177.68.4:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) //ishika - for about post
+   .get('http://10.177.1.165:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) //ishika - for about post
    .then(response => {
      console.log(response)
      this.info = response.data

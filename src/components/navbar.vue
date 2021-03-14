@@ -25,7 +25,7 @@
                     <div class="dropdown-content">
                         <a href="/editprofile">Edit Profile</a>
                         <a href="/about">About</a>
-                        <a @click="logoutUser">Logout</a>
+                        <a @click="logoutUser" style="cursor:pointer">Logout</a>
                     </div>
                 </div>
         </div>
@@ -66,7 +66,7 @@ export default {
          var obj = {
            sessionId : localStorage.getItem('sessionId')
          }
-         axios.post("http://10.177.68.4:8090/logout",obj).then(res => { //ishika - logout
+         axios.post("http://10.177.1.165:8090/logout",obj).then(res => { //ishika - logout
            console.log("loggin out navbar" + res)
            localStorage.clear()
             this.$router.push("/login")

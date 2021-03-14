@@ -40,7 +40,7 @@
                                 </span>
                                 <h2><a href="">{{notification.userBaseProfile.fullName}}</a> has sent you a Friend Request</h2>
                                 <!-- <h3>You and {{notificationuser.BaseProfile.fullName}} are friends now!</h3> -->
-                                <button @click="acceptRequest(notification.from)">Accept</button> <button>Reject</button>
+                                <button :disabled='!isActive' @click="acceptRequest(notification.from)">Accept</button> <button>Reject</button>
                             </span>
                             <span v-else-if="notification.eventType === 'FRNDREQACC'">
                                 <br>
@@ -72,6 +72,7 @@ import navbar from "../components/navbar.vue"
 export default {
     data () {
         return{
+            isActive: true,
             notificationHistory:'',
             index: 0,
             image: null,
@@ -95,12 +96,12 @@ export default {
         onsubmit () {
             const obj = {
                 sessionId: localStorage.getItem('sessionId')
-                
             }
             console.log("for old notifications page")
-            axios.post("http://10.177.68.2:8089/notificationHistory",obj).then(res => {
+            axios.post("http://10.177.2.84:8089/notificationHistory",obj).then(res => { // Deepak
                 this.notificationHistory = res.data.notificationHistory
                 console.log(this.notificationHistory)
+                console.log(obj)
                 })
                 .catch(err=> console.log(err))
         },
@@ -110,7 +111,7 @@ export default {
             }
             
             console.log("for latest notifications page")
-            axios.post("http://10.177.68.2:8089/latestNotifications",obj).then(res => {
+            axios.post("http://10.177.2.84:8089/latestNotifications",obj).then(res => { //Deepak
                 this.notificationHistory = res.data.latestNotifications
                  console.log(this.notificationHistory)
                 })
@@ -120,19 +121,24 @@ export default {
             var obj={
                 userName: localStorage.getItem('myName'),
                 friendUserName:friendName,
+
                 selfDetails: {
                     userName: localStorage.getItem('myName'),
                     fullName: localStorage.getItem('myFullName'),
                     profilePic: localStorage.getItem('myProfilePic')
                 }
             }
-            axios.post('http://10.177.68.2:8082/addFriends',obj,{ headers: {sessionId : localStorage.getItem('sessionID')}})
+            axios.post('http://10.177.2.84:8082/addFriends',obj,{ headers: {sessionId : localStorage.getItem('sessionId')}})//Deepak
             .then(console.log('req accepted')).catch(err => {
                 console.log(err)
             })
         }
     },
     mounted() {
+    if(localStorage.getItem('sessionId')===null){
+      this.$alert('Please Login First')
+      this.$router.push('/login')
+    }
         this.onsubmitlatest()
     },
     
