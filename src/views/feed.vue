@@ -71,9 +71,6 @@
             </span>
             <div class="likeanddis" >
               <like-dislike :postId="postId" :fullName="fullName" :myProfilePic="myProfilePic"></like-dislike>
-              <div class="commentinsidediv">
-                  <input type="text" name="How you doing" class="small" />
-                </div>
             </div>
             <div>
               Posted On
@@ -151,7 +148,7 @@ export default {
       }
       console.log(obj)
         axios
-        .post(`http://10.177.68.8:8090/QuinBookPost/qbpost`,obj,{headers: {sessionId: localStorage.getItem('sessionId')}}) // meghana - sending post
+        .post(`http://10.177.1.86:8090/QuinBookPost/qbpost`,obj,{headers: {sessionId: localStorage.getItem('sessionId')}}) // meghana - sending post
         .then((response)=>{
         console.log(response);
         this.$alert('Post created!!')

@@ -12,6 +12,7 @@ import login from '@/views/login.vue'
 import notification from '@/views/notification.vue'
 import friendprofile from '@/views/friendprofile.vue'
 import ownfeed from '@/views/ownfeed.vue'
+import friendfeed from '@/views/friendfeed.vue'
 
 
 Vue.use(VueRouter)
@@ -31,6 +32,11 @@ const routes = [
     path: '/friends',
     name: 'friends',
     component: friends
+  },
+  {
+    path: '/friendfeed',
+    name: 'friendfeed',
+    component: friendfeed
   },
   {
     path: '/search',

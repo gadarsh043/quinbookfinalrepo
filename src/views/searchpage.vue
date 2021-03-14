@@ -13,7 +13,7 @@
       <profilecover class="userdetails"/>
       <div class="userfriends">
         <div style="padding: 12px;">
-          <input type="text"  name="searchtext" v-model="searchtext" :placeholder="this.searchterm" style="padding: 8px 300px;">
+          <input type="text"  name="searchterm" v-model="searchterm" :placeholder="this.searchterm" style="padding: 8px 300px;">
           <button style="padding: 8px;" @click="search">Confirm</button>
         </div>
         <div class="friends" v-for="i in friends" :key="i.id" style="margin: 30px 211px;">
@@ -39,11 +39,11 @@
               <div class="iconsforaddblock" style="display:flex">
                 <div class="AddFriendUnFriend" style="padding: 21px;">
                   <span class="AUtiptext" >AddFriend/Un</span>
-                  <img :id="i" src="http://localhost:8080/img/user-add.5047d004.svg" style="padding: 17px;" @click="changeImageadddis(i,i.userName)">
+                  <img :id="i" src="../assets/user-add.png" style="padding: 17px;" @click="changeImageadddis(i,i.userName)">
                 </div>
                 <div  class="Block/UnBlock" style="padding: 21px;">
                 <span class="BUtiptext" >Block</span>
-                <img :id="i+'i'" src="http://localhost:8080/img/user-block.80ef950f.svg" style="padding: 17px;" @click="changeImageblockun(i,i.userName)">
+                <img :id="i+'i'" src="../assets/user-block.png" style="padding: 17px;" @click="changeImageblockun(i,i.userName)">
                 </div>
               </div>
             </div> 
@@ -77,9 +77,8 @@ export default {
    this.myProfilePic=localStorage.getItem('myProfilePic')
     let x = localStorage.getItem('searchterm')
     axios
-      .get('http://10.177.68.13:8090/user/getUserName/'+ x,{ headers: { sessionId: localStorage.getItem('sessionID') } })//swastik
+      .get('http://10.177.1.200:8090/user/getUserName/'+ x,{ headers: { sessionId: localStorage.getItem('sessionId') } })//swastik
       .then(response => {
-        this.$alert('Please Confirm to proceed')
         console.log(x)
         console.log(response)
         this.friends = response.data
@@ -92,9 +91,9 @@ export default {
   },
  methods : {
    search(){
-     localStorage.setItem('searchterm',this.searchtext)
+     localStorage.setItem('searchterm',this.searchterm)
      axios
-      .get('http://10.177.68.13:8090/user/getUserName/'+ this.searchtext,{ headers: { Authorization: localStorage.getItem('sessionID') } })//swastik
+      .get('http://10.177.1.200:8090/user/getUserName/'+ this.searchterm,{ headers: { Authorization: localStorage.getItem('sessionId') } })//swastik
       .then(response => {
         console.log(response)
         this.friends = response.data
@@ -110,7 +109,7 @@ export default {
        toWhom: userName,
        selfDetails: {
          userName: localStorage.getItem('myName'),
-         fullName: localStorage.getItem('myFullName'),
+         fullName: localStorage.getItem('myName'),
          profilePic: localStorage.getItem('myProfilePic')
        }
      }
@@ -121,16 +120,16 @@ export default {
        console.log(err)
      })
         var image = document.getElementById(id);
-        if (image.src.match("http://localhost:8080/img/user-add.5047d004.svg")) {
-            image.src = "http://localhost:8080/img/user-remove.7fad484d.svg";
+        if (image.src.match("../assets/user-add.png")) {
+            image.src = "../assets/user-remove.png";
         }
         else {
-            image.src = "http://localhost:8080/img/user-add.5047d004.svg";
+            image.src = "../assets/user-add.png";
         }
     },
     changeImageblockun(id,userName) {
       var obj = {
-       sessionId: localStorage.getItem('sessionID'),
+       userName: localStorage.getItem('myName'),
        friendUserName: userName,
        selfDetails: {
          userName: localStorage.getItem('myName'),
@@ -139,18 +138,18 @@ export default {
        }
      }
      console.log(obj)
-      axios.post('http://10.177.2.84:8082/blockUser',obj,{headers: {sessionId: localStorage.getItem('sessionID')}})//Deepak
+      axios.post('http://10.177.2.84:8082/blockUser',obj,{headers: {sessionId: localStorage.getItem('sessionId')}})//Deepak
       .then(res => {
        console.log(res.data.message)
      }).catch(err => {
        console.log(err)
      })
         var image = document.getElementById(id+'i');
-        if (image.src.match("http://localhost:8080/img/user-block.80ef950f.svg")) {
-            image.src = "http://localhost:8080/img/user-check.33597ea2.svg";
+        if (image.src.match("../assets/user-block")) {
+            image.src = "../assets/user-unblock";
         }
         else {
-            image.src = "http://localhost:8080/img/user-block.80ef950f.svg";
+            image.src = "../assets/user-block";
         }
     }
  }

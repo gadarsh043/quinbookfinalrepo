@@ -4,6 +4,10 @@
     <div class="userprofile" style="margin: 3px 0px 0px 0px;">
        <span  v-if="info.img"> 
           <img :src="info.img" alt="Avatar" class="avatar" style="border: solid white 2px">
+          <label class="switch">
+            <input type="checkbox" unchecked @click="makemyaccountprivate">
+            <span class="slider round" style="color:white">Private Account</span>
+          </label>
         </span>
         <span v-else>
           <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
@@ -151,6 +155,9 @@ export default {
     
   },
   methods: {
+    makemyaccountprivate(){
+      //for making account private
+    }
     } ,
     previewImage: function(event) {
             var input = event.target;
@@ -221,4 +228,8 @@ export default {
   .avatar:hover{
     display: none;
   }
+  .feed{
+    border: solid black 2px;
+  }
+  
 </style>

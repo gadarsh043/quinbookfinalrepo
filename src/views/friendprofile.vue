@@ -40,10 +40,6 @@
                     <td>{{info.dateOfBirth}}</td>
                   </tr>
                   <tr>
-                    <th>Password</th>---->
-                    <td> Hidden </td>
-                  </tr>
-                  <tr>
                     <th>Relationship Status</th>---->
                     <td>{{info.relationshipStatus}}</td>
                   </tr>
@@ -110,7 +106,12 @@
            
       </div>
       </div>
-        </div>  
+      <br><br>
+       <div class="">
+         <button @click="gotofriendfeed" >Check Out my Feed</button>
+       </div>
+        </div> 
+
           </div>
     </div>
 </template>
@@ -144,13 +145,13 @@ export default {
      address: '',
      marriageAnniversary: '',
      Hobbies: '',
-     myName:''
+     myFriendName:''
    }
   },
-  validate () {
-    
-  },
   methods: {
+    gotofriendfeed(){
+      this.$router.push('/friendfeed')
+    }
     } ,
     previewImage: function(event) {
             var input = event.target;
@@ -162,7 +163,7 @@ export default {
                 reader.readAsDataURL(input.files[0]);
                 console.log(this.img)
             }
-        },
+    },
   
   components: {
      Navbar,
@@ -173,18 +174,27 @@ export default {
       this.$alert('Please Login First')
       this.$router.push('/login')
     }
-   this.myName = localStorage.getItem('myFriendName')
+   this.myFriendName = localStorage.getItem('myFriendName')
    axios
-   .get('http://10.177.1.165:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) //ishika - for about post
+      .get('http://10.177.1.86:8090/QuinBookPost/getAllPostByUserName/'+localStorage.getItem('myFriendName')) // Deepak - for Checking Block
+      .then(response => {
+        console.log(response)
+        this.canseeprofile = response.data
+      })
+      .catch(error =>{
+        console.log(error)
+      })
+      
+   axios
+   .get('http://10.177.1.165:8081/getDetails/userName?userName='+this.myFriendName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) //ishika - for about post
    .then(response => {
      console.log(response)
      this.info = response.data
-     localStorage.removeItem('myFriendName')
+     localStorage.setItem('myFriendProfilePic',response.data.img)
    })
    .catch(error =>{
      console.log(error)
-   })
-    
+   }) 
  }
 }
 </script>
@@ -219,6 +229,11 @@ export default {
     -webkit-box-shadow: 0 0 10px 1px gray;
     box-shadow: 0 0 10px 1px  #000000;
     text-align: center;
+  }
+  .feed{
+    width: 100%;
+    height: 30%;
+    border: solid black 2px;
   }
   .avatar:hover{
     display: none;
