@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Like -->
-    <img  :display="display" @click="toggle"  v-if="display" src="../assets/like.png" alt="Liked!" width="24px" height="24px">
+    <img  :display="display" @click="toggle"  v-if="display" src="../assets/like.png" alt="Liked!" width="24px" height="24px" style="cursor:pointer">
     <img :display="display" @click="toggle" v-else src="../assets/after-like.png" width="28px" height="28px" >
     <!-- Dislike
     <img  :display2="display2" @click="toggle2" v-if="display2" src="../assets/dislike.png" width="24px" height="24px">
@@ -52,7 +52,8 @@ export default {
         fullName:this.fullName,
         profilePic:this.myProfilePic
       }
-       axios.post('http://10.177.68.8:8090/QuinBookPost/postEngagement', obj,{headers: {sessionId: localStorage.getItem('sessionId')}})
+      console.log(obj)
+       axios.post('http://10.177.68.12:8090/QuinBookPost/postEngagement', obj,{headers: {sessionId: localStorage.getItem('sessionId')}}) //meghana
        .then((response)=>{
         console.log(response.data);
         })

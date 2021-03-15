@@ -52,7 +52,7 @@ export default {
  methods : {
    showfriends(){
      axios
-      .get('http://10.177.2.84:8082/fetchFriendList',{ headers: { sessionId: localStorage.getItem('sessionId') } }) // Deepak - for getting friends
+      .get('http://10.177.68.59:8082/fetchFriendList',{ headers: { sessionId: localStorage.getItem('sessionId') } }) // Deepak - for getting friends
       .then(response => {
         console.log(response)
         this.friends = response.data

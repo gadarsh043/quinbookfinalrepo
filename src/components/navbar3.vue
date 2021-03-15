@@ -15,7 +15,7 @@
                 </div>
                 <div class="profile" @mouseover="showUserMask = true" @mouseleave="showUserMask = false">
                     <img src="../assets/user.svg" id="icon" @click="profiletiptext">
-                    <span class="profiletiptext">Profile</span>
+                    <span class="profiletiptext">Own Feed</span>
                     <div class="dropdown-content">
                         <a href="/editprofile">Edit Profile</a>
                         <a href="/about">About</a>
@@ -58,7 +58,7 @@ export default {
          var obj = {
            sessionId : localStorage.getItem('sessionId')
          }
-         axios.post("http://10.177.1.165:8090/logout",obj).then(res => { //ishika - logout
+         axios.post("http://10.177.68.53:8090/logout",obj).then(res => { //ishika - logout
            console.log("loggin out navbar" + res)
            localStorage.removeItem('sessionID')
            localStorage.clear()

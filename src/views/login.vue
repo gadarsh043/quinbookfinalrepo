@@ -21,7 +21,7 @@
           <button class="btn" @click="onsubmit">Login</button>
           <hr style="width:81%;text-align:left;margin-left:25px">
           <button v-google-signin-button="clientId" class="google-signin-button"><img id = "google" src="../assets/1004px-Google__G__Logo.svg.webp"><div id = "buttonText"> Continue with Google </div></button>
-          <h4>Not Registered Yet?<router-link to="/register" style="color:white"> Register Now!</router-link></h4>
+          <h4>Not Registered Yet?<router-link to="/register" style="color:blue"> Register Now!</router-link></h4>
         </div>
       </div>
     </div>
@@ -89,7 +89,7 @@ export default {
       }
       if (this.validate()) {
          console.log("inside normal login")
-        axios.post('http://10.177.1.165:8090/login', obj) // ishika - login
+        axios.post('http://10.177.68.53:8090/login', obj) // ishika - login
         .then((res) => {
           console.log("dsdss")
           localStorage.setItem('sessionId', res.data.sessionID) // check sessionId - sessionId
@@ -122,10 +122,10 @@ export default {
         password: ''
       }
       console.log('inside onGoogleLogin')
-        axios.post('http://10.177.1.165:8090/login', obj) // noel - login
+        axios.post('http://10.177.68.53:8090/login', obj) // ishika - login
         .then((res) => {
           localStorage.setItem('sessionId', res.data.sessionID) // my sessionId
-          console.log(localStorage.getItem('sessionID'))
+          console.log(localStorage.getItem('sessionId'))
           if (res.data.sessionID === '' && res.data.isRegistered) {
             alert('Invalid Login Credentials!')
             localStorage.removeItem('sessionID') 
@@ -164,8 +164,8 @@ body{
     justify-content: space-evenly;
     /* background: linear-gradient(to right, #f06844 0%, #ee4c54 25%, #d45e95 50%, #9c6ca6 75%, #6583c1 100%); */
     /* background:rgba(128, 128, 128, 0.637); */
-    background:#8db9ca;
-    background:#fde8cd;
+    background:#FFFFFF;
+    /* background:#fde8cd; */
     /* background: linear-gradient(to right, #39ce4b 0%, #26a18b 25%, #53c6cc 50%, #6da66c 75%, #aac165 100%); */
   }
   .title {

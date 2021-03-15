@@ -70,7 +70,7 @@
               {{i.userName}}
             </span>
             <div class="likeanddis" >
-              <like-dislike :postId="postId" :fullName="fullName" :myProfilePic="myProfilePic"></like-dislike>
+              <likedislike :postId="i.postId" :fullName="fullName" :myProfilePic="myProfilePic"></likedislike>
             </div>
             <div>
               Posted On
@@ -96,6 +96,7 @@
 <script>
 import navbar from "../components/navbar.vue";
 import axios from "axios";
+import likedislike from '../components/like-dislike.vue'
 export default {
   data() {
     return {
@@ -114,11 +115,13 @@ export default {
       postCaption: "",
       sessionId: '',
       myName:'',
+      postId:'',
       locTypeImage: false // this should be true
     };
   },
   components: {
     navbar,
+    likedislike
   },
   methods: {
     ordinal(i){
@@ -148,7 +151,7 @@ export default {
       }
       console.log(obj)
         axios
-        .post(`http://10.177.1.86:8090/QuinBookPost/qbpost`,obj,{headers: {sessionId: localStorage.getItem('sessionId')}}) // meghana - sending post
+        .post(`http://10.177.68.12:8090/QuinBookPost/qbpost`,obj,{headers: {sessionId: localStorage.getItem('sessionId')}}) // meghana - sending post
         .then((response)=>{
         console.log(response);
         this.$alert('Post created!!')
@@ -201,7 +204,7 @@ export default {
     }
      this.myName =  localStorage.getItem('myName') //storing userName - myName
      axios
-     .get('http://10.177.1.165:8081/getDetails/userName?userName='+this.myName)// ishika - getting details
+     .get('http://10.177.68.53:8081/getDetails/userName?userName='+this.myName)// ishika - getting details
      .then(res => {
        console.log(res)
         localStorage.setItem('myProfilePic',res.data.img)
@@ -212,7 +215,7 @@ export default {
       console.log(err)
     })
     axios
-      .get(`http://10.177.1.53:8085/feed/fetchFriendList?userName=${this.myName}`) // akhil - getting friendlist
+      .get(`http://10.177.68.25:8085/feed/fetchFriendList?userName=${this.myName}`) // akhil - getting friendlist
       .then((response) => {
         console.log(response);
         this.friendList = response.data; // storing in friendlist
@@ -220,7 +223,7 @@ export default {
         this.myProfilePic=localStorage.getItem('myProfilePic')
         axios
         .post(
-          `http://10.177.1.165:8081/events`, this.friendList) //ishika - for sending friendlist - i will get events
+          `http://10.177.68.53:8081/events`, this.friendList) //ishika - for sending friendlist - i will get events
           .then((response) => {
             console.log(response);
           this.events = response.data;
@@ -235,7 +238,7 @@ export default {
         console.log(error);
       });
     axios
-      .get(`http://10.177.1.53:8085/feed/fetchUserSocial?userName=${this.myName}`) // akhil - getting feed
+      .get(`http://10.177.68.25:8085/feed/fetchUserSocial?userName=${this.myName}`) // akhil - getting feed
       .then((response) => {
         console.log(response);
         this.feeds = response.data; // storing in feeds

@@ -39,11 +39,11 @@
               <div class="iconsforaddblock" style="display:flex">
                 <div class="AddFriendUnFriend" style="padding: 21px;">
                   <span class="AUtiptext" >AddFriend/Un</span>
-                  <img :id="i" src="../assets/user-add.png" style="padding: 17px;" @click="changeImageadddis(i,i.userName)">
+                  <img :id="i" src="http://localhost:8080/img/user-add.5047d004.svg" style="padding: 17px;" @click="changeImageadddis(i,i.userName)">
                 </div>
                 <div  class="Block/UnBlock" style="padding: 21px;">
                 <span class="BUtiptext" >Block</span>
-                <img :id="i+'i'" src="../assets/user-block.png" style="padding: 17px;" @click="changeImageblockun(i,i.userName)">
+                <img :id="i+'i'" src="http://localhost:8080/img/user-block.80ef950f.svg" style="padding: 17px;" @click="changeImageblockun(i,i.userName)">
                 </div>
               </div>
             </div> 
@@ -77,7 +77,7 @@ export default {
    this.myProfilePic=localStorage.getItem('myProfilePic')
     let x = localStorage.getItem('searchterm')
     axios
-      .get('http://10.177.1.200:8090/user/getUserName/'+ x,{ headers: { sessionId: localStorage.getItem('sessionId') } })//swastik
+      .get('http://10.177.68.68:8100/search/'+ x,{ headers: { sessionId: localStorage.getItem('sessionId') } })//swastik
       .then(response => {
         console.log(x)
         console.log(response)
@@ -93,7 +93,7 @@ export default {
    search(){
      localStorage.setItem('searchterm',this.searchterm)
      axios
-      .get('http://10.177.1.200:8090/user/getUserName/'+ this.searchterm,{ headers: { Authorization: localStorage.getItem('sessionId') } })//swastik
+      .get('http://10.177.68.68:8100/search/'+ this.searchterm,{ headers: { Authorization: localStorage.getItem('sessionId') } })//swastik
       .then(response => {
         console.log(response)
         this.friends = response.data
@@ -114,17 +114,17 @@ export default {
        }
      }
      console.log(obj)
-     axios.post('http://10.177.2.84:8089/friendRequest',obj).then(res => {//Deepak
+     axios.post('http://10.177.68.59:8089/friendRequest',obj).then(res => {//Deepak
        console.log(res.data.message)
      }).catch(err => {
        console.log(err)
      })
         var image = document.getElementById(id);
-        if (image.src.match("../assets/user-add.png")) {
-            image.src = "../assets/user-remove.png";
+        if (image.src.match("http://localhost:8080/img/user-add.5047d004.svg")) {
+            image.src = "http://localhost:8080/img/user-remove.7fad484d.svg";
         }
         else {
-            image.src = "../assets/user-add.png";
+            image.src = "http://localhost:8080/img/user-add.5047d004.svg";
         }
     },
     changeImageblockun(id,userName) {
@@ -138,18 +138,18 @@ export default {
        }
      }
      console.log(obj)
-      axios.post('http://10.177.2.84:8082/blockUser',obj,{headers: {sessionId: localStorage.getItem('sessionId')}})//Deepak
+      axios.post('http://10.177.68.59:8082/blockUser',obj,{headers: {sessionId: localStorage.getItem('sessionId')}})//Deepak
       .then(res => {
        console.log(res.data.message)
      }).catch(err => {
        console.log(err)
      })
         var image = document.getElementById(id+'i');
-        if (image.src.match("../assets/user-block")) {
-            image.src = "../assets/user-unblock";
+        if (image.src.match("http://localhost:8080/img/user-block.80ef950f.svg")) {
+            image.src = "http://localhost:8080/img/user-unblock.33597ea2.svg";
         }
         else {
-            image.src = "../assets/user-block";
+            image.src = "http://localhost:8080/img/user-block.80ef950f.svg";
         }
     }
  }
