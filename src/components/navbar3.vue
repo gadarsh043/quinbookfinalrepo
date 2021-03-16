@@ -1,7 +1,7 @@
 <template>
   <div id="navbar">
-      <div class="logo">
-        <span ><img src="../assets/logo.png" alt="logo" srcset="" width="40px" height="40px" id="quinlogo"></span>
+      <div class="logo" @click="clicklogo">
+        <span ><img src="../assets/logo-color.png" alt="logo" srcset="" width="40px" height="40px" id="quinlogo"></span>
       </div>
 
       <!-- <div class="searchbar">
@@ -15,11 +15,11 @@
                 </div>
                 <div class="profile" @mouseover="showUserMask = true" @mouseleave="showUserMask = false">
                     <img src="../assets/user.svg" id="icon" @click="profiletiptext">
-                    <span class="profiletiptext">Profile</span>
+                    <span class="profiletiptext">Own Feed</span>
                     <div class="dropdown-content">
                         <a href="/editprofile">Edit Profile</a>
-                        <a href="#">Settings</a>
-                        <a @click="logoutuser">Logout</a>
+                        <a href="/about">About</a>
+                        <a @click="logoutUser" style="cursor:pointer">Logout</a>
                     </div>
                 </div>
         </div>
@@ -30,6 +30,7 @@
 
 <script> 
 // import search from '../components/search.vue'
+import axios from 'axios'
 export default {
     components:{
         // search
@@ -50,12 +51,15 @@ export default {
       profiletiptext(){
         this.$router.push('/feed')
       },
+      clicklogo(){
+        this.$router.push('/feed')
+      },
       logoutUser(){
          var obj = {
-           sessionId : localStorage.getItem('sessionID')
+           sessionId : localStorage.getItem('sessionId')
          }
-         axios.post("http://10.177.68.4:8090/logout",obj).then(res => {
-           console.log("loggin out navbar 3")
+         axios.post("http://10.177.68.58:8090/logout",obj).then(res => { //ishika - logout
+           console.log("loggin out navbar" + res)
            localStorage.removeItem('sessionID')
            localStorage.clear()
             this.$router.push("/login")
@@ -67,7 +71,7 @@ export default {
 
 <style scoped>
 #navbar {
-    background-color:#7cad3e;
+    background-color:#251d1d;
     height: 60px;
     width: 100%;
     display: flex;
@@ -98,6 +102,7 @@ export default {
     border: solid black 1px;
     margin: 3px;
     height: 30px;
+    background-color: white;
 }
 .notification {
   position: relative;
@@ -107,7 +112,6 @@ export default {
 .notification .notificationtiptext {
   visibility: hidden;
   width: 120px;
-  background-color: black;
   color: #fff;
   text-align: center;
   border-radius: 6px;
@@ -132,7 +136,6 @@ export default {
 .profile .profiletiptext {
   visibility: hidden;
   width: 120px;
-  background-color: black;
   color: #fff;
   text-align: center;
   border-radius: 6px;

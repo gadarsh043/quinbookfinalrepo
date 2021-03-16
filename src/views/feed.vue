@@ -5,69 +5,94 @@
       <h1>Todays Events</h1>
       <!-- //Todo: implement list of events -->
       <div class="events" v-for="i in events" :key="i.id">
-        <!-- {{ i.fullName }}'s {{ i.years }}th {{ i.eventType.substring(6) }}! -->
-        {{ i.fullName }}'s {{ i.years }}th {{ i.eventType }}!
+        {{ i.fullName }}'s {{ ordinal(i.years) }} {{ i.eventType }}!
       </div>
     </div>
     <div class="feed" style="margin: 0px 6px">
       <div class="uploadpost">
-        <img
-          src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png"
-          alt="Avatar"
-          class="avatar"
-        />
-        <div>
-          <input
+        <span  v-if="this.myProfilePic" @click="gotomyphotos"> 
+          <img :src="this.myProfilePic" alt="Avatar" class="avatar" style="border: solid white 2px">
+          <p>{{this.myName}}</p>
+        </span>
+        <span v-else @click="gotomyphotos">
+          <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
+        </span>
+        <div >
+          <textarea
             type="text"
-            name="How you doing"
+            name="postCaption"
+            v-model="postCaption"
             class="timeline"
             placeholder="How you doin' ?"
           />
-          <button class="btn" @click="onsubmit"></button>
+          <br>
+          <br>
           <div style="display: flex">
             <img
-              src="../assets/video.svg"
-              style="margin: 0px 105px"
+              src="../assets/map-pin.svg"
+              style="margin: 0px 105px; cursor: pointer"
               width="30"
               height="30"
+              :locTypeImage="locTypeImage"
+              @click="showLocation"
+              v-if="locTypeImage"
             />
-            <img
+            
+            <input 
+            type="text" 
+            name="location"
+            v-model="location"
+            placeholder="Location..."
+            v-else
+            />
+            <!-- <img
               src="../assets/photo.svg"
               style="margin: 0px 72px"
               width="30"
               height="30"
-            />
-            <button style="margin: 0px 100px">Post</button>
+            /> -->
+            <input type="file" @change="previewImage" accept="image/*">
+            <img class="preview" :src="img" width="120px" height="120px" v-if="img">
+            <button style="margin: 0px 100px" @click="postThis">Post</button>
           </div>
         </div>
       </div>
       <div class="post" v-for="i in feeds" :key="i.id">
         <div class="plaf">
           <div class="pial">
-            <img
-              class="avatar"
-              src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png"
-              alt="Avatar"
-            />
+            <span  v-if="i.postImages"> 
+              <img :src="i.postImages" alt="PostImage" class="avatar" style="border: solid black 2px">
+            </span>
+            <span v-else>
+              <img src="https://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg" alt="Post Image" class="avatar">
+            </span>
+            <span>
+              {{i.userName}}
+            </span>
             <div class="likeanddis" >
-              1<img :id="i" src="../assets/thumbs-upB.svg" style="margin: 24px" @click="changeImagelike(i)">
-              1<img :id="i+'i'" src="http://localhost:8080/img/thumbs-down.76c1523f.svg" style="margin: 24px" @click="changeImagedislike(i)">
-              <div class="commentdiv" style="float">
-                <img
-                  src="../assets/comment.svg"
-                  style="margin: 20px"
-                  width="30"
-                  height="30"
-                  @click="comment"
-                />
-                <div class="commentinsidediv">
-                  <input type="text" name="How you doing" class="small" />
-                </div>
-              </div>
+              {{i.like}}
+              <likedislike :postId="i.postId" :fullName="fullName" :myProfilePic="myProfilePic"></likedislike>
+            </div>
+            <div>
+              Posted On
+              <p></p>
+              <!-- {{i.date.slice(0,10)}} -->
+            </div>
+            <br>
+            <br>
+            <div>
+              From Location
+              <p v-if="i.location === ''">Not Added</p>
+              <p v-else>{{i.location}}</p>
             </div>
           </div>
-          <div class="feed" style="height: 400px">
-            <p>feeds {{ i }}</p>
+          <div style="display:block">
+            <div class="feed" style="height: 100px;width: 500px" >
+              <p> {{ i.postCaption }}</p>
+            </div>
+            <div style="height: 80px;width: 500px" v-for="comments in i.commentList" :key="comments.id">
+              <p> {{ comments.commentText }} - {{ comments.commentedBy }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -77,61 +102,152 @@
 <script>
 import navbar from "../components/navbar.vue";
 import axios from "axios";
+import likedislike from '../components/like-dislike.vue'
 export default {
   data() {
     return {
-      feeds: 100,
+      myProfilePic:'',
+      feeds: 0,
       fullName: "",
       eventType: "",
       img: "",
+      imgList: [],
       years: 0,
-      events: 5,
-      userName: "ravi",
+      events: 0,
+      friendList: [],
+      userName: "",
       date: "",
       location: "",
       postCaption: "",
+      sessionId: '',
+      myName:'',
+      postId:'',
+      locTypeImage: false // this should be true
     };
   },
   components: {
     navbar,
+    likedislike
   },
   methods: {
+    ordinal(i){
+      var j = i % 10,
+              k = i % 100;
+          if (j == 1 && k != 11) {
+              return i + "st";
+          }
+          if (j == 2 && k != 12) {
+              return i + "nd";
+          }
+          if (j == 3 && k != 13) {
+              return i + "rd";
+          }
+          return i + "th";
+    },
+    gotomyphotos(){
+      this.$router.push("/about")
+    },
+    postThis(){
+      this.imgList.push(this.img)
+      console.log(this.imgList)
+      const obj = {
+        postCaption : this.postCaption,
+        postImages: this.imgList,
+        location: this.location
+      }
+      console.log(obj)
+        axios
+        .post(`http://10.177.68.89:8090/QuinBookPost/qbpost`,obj,{headers: {sessionId: localStorage.getItem('sessionId')}}) // meghana - sending post
+        .then((response)=>{
+        console.log(response);
+        this.$alert('Post created!!')
+        this.postCaption ='';
+        this.postImages = '';
+        this.location = ''
+        })
+        .catch((error) => {
+        this.errorMessage = error.errorMessage;
+        console.log(error);
+      });
+    },
     changeImagelike(id) {
         var image = document.getElementById(id);
-        if (image.src.match("http://localhost:8080/img/thumbs-up.7c39be07.svg")) {
-            image.src = "../assets/thumbs-upB.svg";
+        if (image.src.match("http://localhost:8081/img/thumbs-up.7c39be07.svg")) { //like-likeBlue button change
+            image.src = "http://localhost:8081/img/thumbs-upB.9679fb84.svg";
         }
         else {
-            image.src = "http://localhost:8080/img/thumbs-up.7c39be07.svg";
+            image.src = "http://localhost:8081/img/thumbs-up.7c39be07.svg";
         }
     },
     changeImagedislike(id) {
         var image = document.getElementById(id+'i');
-        if (image.src.match("http://localhost:8080/img/thumbs-down.76c1523f.svg")) {
-            image.src = "http://localhost:8080/img/thumbs-upB.9679fb84.svg";
+        if (image.src.match("http://localhost:8081/img/thumbs-down.76c1523f.svg")) { //dislike-dislikeRed button change
+            image.src = "http://localhost:8081/img/thumbs-dred.9e7d0a8c.svg";
         }
         else {
-            image.src = "http://localhost:8080/img/thumbs-down.76c1523f.svg";
+            image.src = "http://localhost:8081/img/thumbs-down.76c1523f.svg";
+        }
+    },
+    showLocation(){
+      this.locTypeImage = false
+    }, 
+    previewImage: function(event) {
+        var input = event.target;
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = (event) => {
+                this.img = event.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+            console.log(this.img)
         }
     }
   },
   mounted() {
+    if(localStorage.getItem('sessionId')===null){
+      this.$alert('Please Login First')
+      this.$router.push('/login')
+    }
+     this.myName =  localStorage.getItem('myName') //storing userName - myName
+     axios
+     .get('http://10.177.68.58:8081/getDetails/userName?userName='+this.myName)// ishika - getting details
+     .then(res => {
+       console.log(res)
+        localStorage.setItem('myProfilePic',res.data.img)
+        this.myProfilePic=localStorage.getItem('myProfilePic')
+      })
+      .catch(
+      err=>{
+      console.log(err)
+    })
     axios
-      .get(
-        `http://10.177.68.6:8089/events?userNameList=test1&userNameList=test2&userNameList=test1`,{ headers: { Authorization: localStorage.getItem('sessionID') } })
+      .get(`http://10.177.68.6:8085/feed/fetchFriendList?userName=${this.myName}`) // akhil - getting friendlist
       .then((response) => {
         console.log(response);
-        this.events = response.data;
+        this.friendList = response.data; // storing in friendlist
+        console.log(this.friendList)
+        this.myProfilePic=localStorage.getItem('myProfilePic')
+        axios
+        .post(
+          `http://10.177.68.58:8081/events`, this.friendList) //ishika - for sending friendlist - i will get events
+          .then((response) => {
+            console.log(response);
+          this.events = response.data;
+        })
+        .catch((error) => {
+          this.errorMessage = error.errorMessage;
+          console.log(error);
+        });
       })
       .catch((error) => {
         this.errorMessage = error.errorMessage;
         console.log(error);
       });
     axios
-      .get(`http://localhost:8085/feed/fetchUserSocial?userName=test1`,{ headers: { Authorization: localStorage.getItem('sessionID') } })
+      .get(`http://10.177.68.6:8085/feed/fetchUserSocial?userName=${this.myName}`) // akhil - getting feed
       .then((response) => {
         console.log(response);
-        this.feeds = response.data;
+        this.feeds = response.data; // storing in feeds
       })
       .catch((error) => {
         this.errorMessage = error.errorMessage;
@@ -170,6 +286,7 @@ export default {
   position: relative;
   top: -26px;
   margin-left: -2px;
+  cursor: pointer;
 }
 .avatar > img:hover {
   transform: scale(1.3);
@@ -220,7 +337,7 @@ export default {
 .post {
   margin: 30px;
   width: 87%;
-  height: 22%;
+  height: 30%;
   padding: 29px 8px 10px;
   text-align: center;
   box-shadow: 7px 4px 5px 1px rgb(0, 0, 0);

@@ -1,6 +1,6 @@
 <template>
   <div id="navbar">
-      <div class="logo">
+      <div class="logo" @click="clicklogo">
         <span ><img src="../assets/logo-color.png" alt="logo" srcset="" width="40px" height="40px" id="quinlogo"></span>
       </div>
       <div class="searchbar" style="padding: 10px 99px;
@@ -21,11 +21,11 @@
                 </div>
                 <div class="profile" @mouseover="showUserMask = true" @mouseleave="showUserMask = false">
                     <img src="../assets/user.svg" id="icon" @click="profiletiptext">
-                    <span class="profiletiptext">Profile</span>
+                    <span class="profiletiptext">Own Feed</span>
                     <div class="dropdown-content">
                         <a href="/editprofile">Edit Profile</a>
-                        <a href="#">Settings</a>
-                        <a @click="logoutUser">Logout</a>
+                        <a href="/about">About</a>
+                        <a @click="logoutUser" style="cursor:pointer">Logout</a>
                     </div>
                 </div>
         </div>
@@ -57,15 +57,23 @@ export default {
         this.$router.push('/notification')
       },
       profiletiptext(){
+        this.$router.push('/ownfeed')
+      },
+      clicklogo(){
         this.$router.push('/feed')
       },
       logoutUser(){
          var obj = {
-           sessionId : localStorage.getItem('sessionID')
+           sessionId : localStorage.getItem('sessionId')
          }
-         axios.post("http://10.177.68.4:8090/logout",obj).then(res => {
+         axios.post("http://10.177.68.58:8090/logout",obj).then(res => { //ishika - logout
            console.log("loggin out navbar" + res)
-           localStorage.removeItem('sessionID')
+         }).catch(err=>console.log(err))
+         axios.get("http://10.177.68.89:8090/QuinBookPost/"+localStorage.getItem('myName')).then(res => { //meghana - logout
+           console.log("loggin out meghana" + res)
+         }).catch(err=>console.log(err))
+         axios.get("http://10.177.68.28:8082/"+localStorage.getItem('myName')).then(res => { //deepk - logout
+           console.log("loggin out deepak" + res)
            localStorage.clear()
             this.$router.push("/login")
          }).catch(err=>console.log(err))

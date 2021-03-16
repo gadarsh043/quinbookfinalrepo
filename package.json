@@ -16,6 +16,7 @@
     "vue-like-dislike-buttons": "^0.2.4",
     "vue-router": "^3.2.0",
     "vue-simple-alert": "^1.1.1",
+    "vue2-google-maps": "^0.10.7",
     "vuex": "^3.4.0"
   },
   "devDependencies": {

@@ -2,7 +2,12 @@
   <div class="container">
     <Navbar style="width: 100.3%;margin-bottom: 3px;" />
     <div class="userprofile"> 
-      <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
+      <span  v-if="this.myProfilePic"> 
+        <img :src="this.myProfilePic" alt="Avatar" class="avatar" style="border: solid white 2px">
+      </span>
+      <span v-else>
+        <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
+      </span>
     </div><br>
     <div class="user">
       <profilecover class="userdetails"/>
@@ -35,8 +40,9 @@ export default {
   name:'friends',
     data () {
         return{
-          
-          friends:''
+          friends:'',
+          img:'',
+          myProfilePic:''
         }
     },
   components: {
@@ -46,21 +52,27 @@ export default {
  methods : {
    showfriends(){
      axios
-      .get('http://10.177.68.2:8082/fetchFriendList',{ headers: { sessionId: localStorage.getItem('sessionID') } })
+      .get('http://10.177.68.28:8082/fetchFriendList',{ headers: { sessionId: localStorage.getItem('sessionId') } }) // Deepak - for getting friends
       .then(response => {
         console.log(response)
         this.friends = response.data
+        this.img = localStorage.getItem('myProfilePic')
       })
       .catch(error =>{
         console.log(error)
       })
    },
    friendprofile (userName) {
-     localStorage.setItem('friendName',userName)
+     localStorage.setItem('myFriendName',userName)
      this.$router.push('/friendprofile')
    }
  },
  mounted () {
+   if(localStorage.getItem('sessionId')===null){
+      this.$alert('Please Login First')
+      this.$router.push('/login')
+    }
+   this.myProfilePic=localStorage.getItem('myProfilePic')
    this.showfriends()
  }
 }

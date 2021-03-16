@@ -2,13 +2,18 @@
   <div class="container">
     <Navbar style="width: 100.3%;margin-bottom: 3px;" />
     <div class="userprofile"> 
-      <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
+      <span  v-if="this.myProfilePic"> 
+        <img :src="this.myProfilePic" alt="Avatar" class="avatar" style="border: solid white 2px">
+      </span>
+      <span v-else>
+        <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
+      </span>
     </div><br>
     <div class="user">
       <profilecover class="userdetails"/>
       <div class="userfriends">
         <div style="padding: 12px;">
-          <input type="text" name="searchtext" v-model="searchtext" placeholder="search friends" style="padding: 8px 300px;">
+          <input type="text"  name="searchterm" v-model="searchterm" :placeholder="this.searchterm" style="padding: 8px 300px;">
           <button style="padding: 8px;" @click="search">Confirm</button>
         </div>
         <div class="friends" v-for="i in friends" :key="i.id" style="margin: 30px 211px;">
@@ -44,21 +49,20 @@
             </div> 
         </div>
       </div>
-
     </div>
     </div>
 </template>
-
 <script scoped>
-import Navbar from '../components/navbar.vue'
+import Navbar from '../components/navbar3.vue'
 import profilecover from '../components/profile-cover.vue'
 import axios from 'axios'
 export default {
   name:'searchpage',
     data () {
         return{
-            friends :100,
-            searchtext: ''
+            friends :0,
+            searchterm: '',
+            myProfilePic:''
         }
     },
   components: {
@@ -66,14 +70,19 @@ export default {
     Navbar
  },
  mounted () {
+   if(localStorage.getItem('sessionId')===null){
+      this.$alert('Please Login First')
+      this.$router.push('/login')
+    }
+   this.myProfilePic=localStorage.getItem('myProfilePic')
     let x = localStorage.getItem('searchterm')
     axios
-      .get('http://10.177.68.13:8090/user/getUserName/'+ x,{ headers: { sessionId: localStorage.getItem('sessionID') } })
+      .get('http://10.177.68.122:8100/search/'+ x,{ headers: { sessionId: localStorage.getItem('sessionId') } })//swastik
       .then(response => {
-        this.$alert('Please Confirm to proceed')
         console.log(x)
         console.log(response)
         this.friends = response.data
+        this.searchterm = localStorage.getItem('searchterm')
       })
       .catch(error => {
         this.errorMessage = error.message
@@ -82,9 +91,9 @@ export default {
   },
  methods : {
    search(){
-     localStorage.setItem('seatchterm',this.searchtext)
+     localStorage.setItem('searchterm',this.searchterm)
      axios
-      .get('http://10.177.68.13:8090/user/getUserName/'+ this.searchtext,{ headers: { Authorization: localStorage.getItem('sessionID') } })
+      .get('http://10.177.68.122:8100/search/'+ this.searchterm,{ headers: { Authorization: localStorage.getItem('sessionId') } })//swastik
       .then(response => {
         console.log(response)
         this.friends = response.data
@@ -96,16 +105,16 @@ export default {
    },
    changeImageadddis(id,userName) {
      var obj = {
-       sessionId: localStorage.getItem('sessionID'),
+       sessionId: localStorage.getItem('sessionId'),
        toWhom: userName,
        selfDetails: {
          userName: localStorage.getItem('myName'),
-         fullName: localStorage.getItem('myFullName'),
+         fullName: localStorage.getItem('myName'),
          profilePic: localStorage.getItem('myProfilePic')
        }
      }
      console.log(obj)
-     axios.post('http://10.177.68.2:8089/friendRequest',obj).then(res => {
+     axios.post('http://10.177.68.28:8089/friendRequest',obj).then(res => {//Deepak
        console.log(res.data.message)
      }).catch(err => {
        console.log(err)
@@ -120,7 +129,7 @@ export default {
     },
     changeImageblockun(id,userName) {
       var obj = {
-       sessionId: localStorage.getItem('sessionID'),
+       userName: localStorage.getItem('myName'),
        friendUserName: userName,
        selfDetails: {
          userName: localStorage.getItem('myName'),
@@ -129,7 +138,7 @@ export default {
        }
      }
      console.log(obj)
-      axios.post('http://10.177.68.2:8082/blockUser',obj,{headers: {sessionId: localStorage.getItem('sessionID')}})
+      axios.post('http://10.177.68.28:8082/blockUser',obj,{headers: {sessionId: localStorage.getItem('sessionId')}})//Deepak
       .then(res => {
        console.log(res.data.message)
      }).catch(err => {
@@ -137,7 +146,7 @@ export default {
      })
         var image = document.getElementById(id+'i');
         if (image.src.match("http://localhost:8080/img/user-block.80ef950f.svg")) {
-            image.src = "http://localhost:8080/img/user-check.33597ea2.svg";
+            image.src = "http://localhost:8080/img/user-unblock.33597ea2.svg";
         }
         else {
             image.src = "http://localhost:8080/img/user-block.80ef950f.svg";
@@ -146,7 +155,6 @@ export default {
  }
 }
 </script>
-
 <style scoped>
 .friendrequest{
   display: flex;
@@ -170,5 +178,4 @@ export default {
 .avatar:hover{
     display: none;
 }
-
 </style>
