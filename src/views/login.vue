@@ -134,6 +134,7 @@ export default {
           if (res.data.sessionID === '' && !res.data.isRegistered ) {
             alert('Not a registered user. Please register!')
             localStorage.removeItem('sessionID')
+            
             this.$router.push('/register')
           }
           // if sessionId and isRegister exits

@@ -88,6 +88,7 @@ const routes = [
     name: 'errorpage',
     component: errorpage
   }
+ 
 ]
 
 const router = new VueRouter({

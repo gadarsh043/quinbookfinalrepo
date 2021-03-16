@@ -121,7 +121,6 @@ export default {
             var obj={
                 userName: localStorage.getItem('myName'),
                 friendUserName:friendName,
-
                 selfDetails: {
                     userName: localStorage.getItem('myName'),
                     fullName: localStorage.getItem('myFullName'),
