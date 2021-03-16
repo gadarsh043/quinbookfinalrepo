@@ -7,27 +7,46 @@
           <button class="signup" @click="onsubmit">Old</button>
       </div>
       <div class="feed" id ="feed" style="margin: 0px 6px;">
-            <div id="notifications-container"  v-if="notificationHistory.length">
+            <div id="notifications-container" v-if="notificationHistory.length">
                 <div class="post" v-for="notification in notificationHistory" :key="notification.id">
                     <div class="plaf" >
-                        <span v-if="notification.postedBy.profilePic">
+                        <!-- <span v-if="notification.postedBy.profilePic">
                             <img class = "avatar" :src='notification.postedBy.profilePic' alt="avatar">
                         </span>
                         <span v-else>
                         <img class="avatar" src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar">    
-                        </span>
+                        </span> -->
                         
                         <div class="feed" style="height: 100px; ">
+                            
                             <p> Notification</p>
                             <span v-if="notification.eventType === 'NEWPOST' ">
+                                <span v-if="notification.postedBy.profilePic">
+                                        <img class = "avatar" :src='notification.postedBy.profilePic' alt="avatar" width="23" height="23">
+                                </span>
+                                <span v-else>
+                                    <img class="avatar" src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar">    
+                                </span>
                                 <h2>{{notification.postedBy.fullName}} made a new post</h2>
                             </span>
                             <span v-else-if="notification.eventType === 'FRNDREQ'">
+                                 <span v-if="notification.userBaseProfile.profilePic">
+                                        <img class = "avatar" :src='notification.userBaseProfile.profilePic' alt="avatar" width="23" height="23">
+                                </span>
+                                <span v-else>
+                                    <img class="avatar" src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar">    
+                                </span>
                                 <h2><a href="">{{notification.userBaseProfile.fullName}}</a> has sent you a Friend Request</h2>
                                 <!-- <h3>You and {{notificationuser.BaseProfile.fullName}} are friends now!</h3> -->
-                                <button @click="acceptRequest(notification.from)">Accept</button> <button>Reject</button>
+                                <button :disabled="!isActive" @click="acceptRequest(notification.from)">Accept</button> <button>Reject</button>
                             </span>
                             <span v-else-if="notification.eventType === 'FRNDREQACC'">
+                                 <span v-if="notification.acceptedBy.profilePic">
+                                        <img class = "avatar" :src='notification.acceptedBy.profilePic' alt="avatar" width="23" height="23">
+                                </span>
+                                <span v-else>
+                                    <img class="avatar" src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar">    
+                                </span>
                                 <h2>{{notification.acceptedBy.fullName}} has accepted your friend Request</h2>
                             </span>
                             
@@ -50,6 +69,7 @@ import navbar from "../components/navbar.vue"
 export default {
     data () {
         return{
+            isActive: true,
             notificationHistory:'',
             index: 0,
             image: null,
@@ -102,6 +122,7 @@ export default {
                     userName: localStorage.getItem('myName'),
                     fullName: localStorage.getItem('myFullName'),
                     profilePic: localStorage.getItem('myProfilePic')
+
                 }
             }
             axios.post('http://10.177.68.2:8082/addFriends',obj,{ headers: {sessionId : localStorage.getItem('sessionID')}})

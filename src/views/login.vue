@@ -89,7 +89,7 @@ export default {
       }
       if (this.validate()) {
          console.log("dsdss")
-        axios.post('http://10.177.68.7:8090/login', obj, { headers: { Authorization: localStorage.getItem('sessionID') } }).then((res) => {
+        axios.post('http://10.177.68.4:8090/login', obj, { headers: { Authorization: localStorage.getItem('sessionID') } }).then((res) => {
           console.log("dsdss")
           localStorage.setItem('sessionID', res.data.sessionID) // check sessionID or sessionId
           this.$store.dispatch('setLoginAction', res.data.sessionID)
@@ -132,7 +132,7 @@ export default {
         password: ''
       }
       console.log('inside onGoogleLogin')
-        axios.post('http://10.177.68.66:8090/login', obj,{ headers: { Authorization: localStorage.getItem('sessionID') } }).then((res) => {
+        axios.post('http://10.177.68.4:8090/login', obj,{ headers: { Authorization: localStorage.getItem('sessionID') } }).then((res) => {
           localStorage.setItem('sessionID', res.data.sessionID)
           console.log(localStorage.getItem('sessionID'))
           if (res.data.sessionID === '' && res.data.isRegistered) {
