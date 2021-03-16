@@ -98,7 +98,7 @@ export default {
                 sessionId: localStorage.getItem('sessionId')
             }
             console.log("for old notifications page")
-            axios.post("http://10.177.68.59:8089/notificationHistory",obj).then(res => { // Deepak
+            axios.post("http://10.177.68.28:8089/notificationHistory",obj).then(res => { // Deepak
                 this.notificationHistory = res.data.notificationHistory
                 console.log(this.notificationHistory)
                 console.log(obj)
@@ -111,7 +111,7 @@ export default {
             }
             
             console.log("for latest notifications page")
-            axios.post("http://10.177.68.59:8089/latestNotifications",obj).then(res => { //Deepak
+            axios.post("http://10.177.68.28:8089/latestNotifications",obj).then(res => { //Deepak
                 this.notificationHistory = res.data.latestNotifications
                  console.log(this.notificationHistory)
                 })
@@ -128,7 +128,7 @@ export default {
                     profilePic: localStorage.getItem('myProfilePic')
                 }
             }
-            axios.post('http://10.177.68.59:8082/addFriends',obj,{ headers: {sessionId : localStorage.getItem('sessionId')}})//Deepak
+            axios.post('http://10.177.68.28:8082/addFriends',obj,{ headers: {sessionId : localStorage.getItem('sessionId')}})//Deepak
             .then(console.log('req accepted')).catch(err => {
                 console.log(err)
             })

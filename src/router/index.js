@@ -79,6 +79,11 @@ const routes = [
     component: login
   },
   {
+    path: '/',
+    name: 'login',
+    component: login
+  },
+  {
     path: '*',
     name: 'errorpage',
     component: errorpage

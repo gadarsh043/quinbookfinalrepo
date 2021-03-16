@@ -16,7 +16,7 @@
                         <img src="https://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg" alt="Post Image" class="avatar">
                     </span>
                     <div>
-                        <input type="text" name="How you doing" :placeholder="i.postCaption" v-model="postCaption" class="timeline">
+                        <textarea type="text" name="How you doing" :placeholder="i.postCaption" v-model="postCaption" class="timeline" />
                     <div style="display:flex">
                         <input type="text" id="location" v-model="location" name="location" :placeholder="i.location" style="height: 19px;">
                         <input type="file" @change="previewImage" accept="image/*">
@@ -63,7 +63,7 @@ export default {
             }
             console.log(update)
             axios
-                .put('http://10.177.68.12:8090/QuinBookPost/updatePost/'+id,update, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
+                .put('http://10.177.68.89:8090/QuinBookPost/updatePost/'+id,update, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
                 .then(response => {
                     console.log(response)
                     this.postCaption='',
@@ -76,7 +76,7 @@ export default {
         },
         ondelete(id){
             axios
-                .delete('http://10.177.68.12:8090/QuinBookPost/deleteqb/'+id, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
+                .delete('http://10.177.68.89:8090/QuinBookPost/deleteqb/'+id, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
                 .then(response => {
                     console.log(response)
                     this.postCaption='',

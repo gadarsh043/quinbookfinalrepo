@@ -60,7 +60,7 @@ export default {
   name:'searchpage',
     data () {
         return{
-            friends :100,
+            friends :0,
             searchterm: '',
             myProfilePic:''
         }
@@ -77,7 +77,7 @@ export default {
    this.myProfilePic=localStorage.getItem('myProfilePic')
     let x = localStorage.getItem('searchterm')
     axios
-      .get('http://10.177.68.68:8100/search/'+ x,{ headers: { sessionId: localStorage.getItem('sessionId') } })//swastik
+      .get('http://10.177.68.122:8100/search/'+ x,{ headers: { sessionId: localStorage.getItem('sessionId') } })//swastik
       .then(response => {
         console.log(x)
         console.log(response)
@@ -93,7 +93,7 @@ export default {
    search(){
      localStorage.setItem('searchterm',this.searchterm)
      axios
-      .get('http://10.177.68.68:8100/search/'+ this.searchterm,{ headers: { Authorization: localStorage.getItem('sessionId') } })//swastik
+      .get('http://10.177.68.122:8100/search/'+ this.searchterm,{ headers: { Authorization: localStorage.getItem('sessionId') } })//swastik
       .then(response => {
         console.log(response)
         this.friends = response.data
@@ -114,7 +114,7 @@ export default {
        }
      }
      console.log(obj)
-     axios.post('http://10.177.68.59:8089/friendRequest',obj).then(res => {//Deepak
+     axios.post('http://10.177.68.28:8089/friendRequest',obj).then(res => {//Deepak
        console.log(res.data.message)
      }).catch(err => {
        console.log(err)
@@ -138,7 +138,7 @@ export default {
        }
      }
      console.log(obj)
-      axios.post('http://10.177.68.59:8082/blockUser',obj,{headers: {sessionId: localStorage.getItem('sessionId')}})//Deepak
+      axios.post('http://10.177.68.28:8082/blockUser',obj,{headers: {sessionId: localStorage.getItem('sessionId')}})//Deepak
       .then(res => {
        console.log(res.data.message)
      }).catch(err => {

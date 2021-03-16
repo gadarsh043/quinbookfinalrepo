@@ -21,7 +21,7 @@
           <div class="education">
             <!-- <img class='beautify-user-img' src='../assets/beautify.jpg'> -->
              <!-- <img class="preview" :src="img" width="120px" height="120px"> -->
-             <p style="font-style: italic; font-size: xxx-large; font-family: cursive;">Personal Details</p><br>
+             <p style="font-style: italic; font-size: xxx-large; font-family: PT Serif;">Personal Details</p><br>
                 <table>
                   <tr>
                     <th>First Name</th>---->
@@ -66,7 +66,7 @@
                 
                 </table>
                 
-                <p style="font-style: italic; font-size: xxx-large; font-family: cursive;">Education</p><br>
+                <p style="font-style: italic; font-size: xxx-large; font-family: PT Serif;">Education</p><br>
                 
                 <table>
                   <tr>
@@ -83,7 +83,7 @@
                   </tr>
                   </table>
                   
-                  <p style="font-style: italic; font-size: xxx-large; font-family: cursive;">Co-orporate Life</p><br>
+                  <p style="font-style: italic; font-size: xxx-large; font-family: PT Serif;">Co-orporate Life</p><br>
                   
                   <table>
                   <tr>
@@ -182,7 +182,7 @@ export default {
     }
    this.myName = localStorage.getItem('myName')
    axios
-   .get('http://10.177.68.53:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) //ishika - for about post
+   .get('http://10.177.68.58:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) //ishika - for about post
    .then(response => {
      console.log(response)
      this.info = response.data

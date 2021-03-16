@@ -99,17 +99,20 @@ export default {
         lastName: this.lastName,
         email: this.email,
         password: this.password,
-        dob: this.dob,
+        dateOfBirth : this.dob,
         gender: this.gender,
       };
       console.log("onsubmit")
       if (this.validate()) {
         console.log("on submit")
-        axios.post("http://10.177.68.53:8081/register", obj) // ishika ip
+        axios.post("http://10.177.68.58:8081/register", obj) // ishika ip
         .then((res) => {
           console.log(res);
           if(res.data.message === 'Email already exists'){
             this.$alert('Email already exists')
+          }
+          else if(res.data.message === 'Username already Exists'){
+            this.$alert('UserName already Exists')
           }
           else{
             let username=res.data.userName

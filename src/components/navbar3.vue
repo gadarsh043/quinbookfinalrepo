@@ -58,7 +58,7 @@ export default {
          var obj = {
            sessionId : localStorage.getItem('sessionId')
          }
-         axios.post("http://10.177.68.53:8090/logout",obj).then(res => { //ishika - logout
+         axios.post("http://10.177.68.58:8090/logout",obj).then(res => { //ishika - logout
            console.log("loggin out navbar" + res)
            localStorage.removeItem('sessionID')
            localStorage.clear()

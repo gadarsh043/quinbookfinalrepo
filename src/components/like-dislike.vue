@@ -7,14 +7,9 @@
     <img  :display2="display2" @click="toggle2" v-if="display2" src="../assets/dislike.png" width="24px" height="24px">
     <img :display2="display2" @click="toggle2" v-else src="../assets/after-dislike.png" width="24px" height="24px"> -->
     <div class="commentdiv" style="float">
-                <img
-                  src="../assets/comment.svg"
-                  style="margin: 20px"
-                  width="30"
-                  height="30"
-                />
                 <div class="commentinsidediv">
-                  <input type="text" name="How you doing" class="small" />
+                  <input type="text" name="How you doing" class="small" v-model="commentText" placeholder="Comment Something" />
+                  <button @click="comment">Comment</button>
                 </div>
               </div>
   </div>
@@ -26,12 +21,30 @@ export default {
   data(){
     return {
       display: true,
-      like:0
+      like:0,
+      commentText:''
       // dislike:0,
       // display2: true
     }
   },
   methods: {
+    comment(){
+      const obj = {
+        postId: this.postId,
+        commentText: this.commentText,
+        commentedBy:localStorage.getItem('myName'),
+      }
+      axios.post('http://10.177.68.89:8090/QuinBookPost/postComment', obj) //meghana
+       .then((response)=>{
+        console.log(response.data);
+        console.log(obj)
+        this.commentText=''
+        })
+        .catch((error) => {
+        this.errorMessage = error.errorMessage;
+        console.log(error);
+      })
+    },
      toggle()
      {
        if(this.display)
@@ -49,13 +62,13 @@ export default {
         like:this.like,
         dislike:0,
         postId:this.postId,
-        fullName:this.fullName,
-        profilePic:this.myProfilePic
+        userName:localStorage.getItem('myName'),
+        profilepic:this.myProfilePic
       }
-      console.log(obj)
-       axios.post('http://10.177.68.12:8090/QuinBookPost/postEngagement', obj,{headers: {sessionId: localStorage.getItem('sessionId')}}) //meghana
+       axios.post('http://10.177.68.89:8090/QuinBookPost/postEngagement', obj) //meghana
        .then((response)=>{
         console.log(response.data);
+        console.log(obj)
         })
         .catch((error) => {
         this.errorMessage = error.errorMessage;

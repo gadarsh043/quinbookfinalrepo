@@ -66,8 +66,14 @@ export default {
          var obj = {
            sessionId : localStorage.getItem('sessionId')
          }
-         axios.post("http://10.177.68.53:8090/logout",obj).then(res => { //ishika - logout
+         axios.post("http://10.177.68.58:8090/logout",obj).then(res => { //ishika - logout
            console.log("loggin out navbar" + res)
+         }).catch(err=>console.log(err))
+         axios.get("http://10.177.68.89:8090/QuinBookPost/"+localStorage.getItem('myName')).then(res => { //meghana - logout
+           console.log("loggin out meghana" + res)
+         }).catch(err=>console.log(err))
+         axios.get("http://10.177.68.28:8082/"+localStorage.getItem('myName')).then(res => { //deepk - logout
+           console.log("loggin out deepak" + res)
            localStorage.clear()
             this.$router.push("/login")
          }).catch(err=>console.log(err))

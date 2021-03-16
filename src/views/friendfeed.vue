@@ -9,14 +9,17 @@
             </div>
             <div class="post" v-for="i in info" :key="i.id" :id="i.postId">
                 <div class="plaf">
+                    <div>
                     <span  v-if="i.postImages[0]" class="avatar"> 
-                        <img :src="i.postImages[0]" alt="PostImage" class="avatar" style="border: solid white 2px;margin: 25px;">
+                       <img :src="i.postImages[0]" alt="PostImage" class="avatar" style="border: solid white 2px;margin: 25px;">
+                        {{i.like}} 
+                       <img src="../assets/like.png" alt="" width="24px" height="24px">
                     </span>
                     <span v-else>
                         <img src="https://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg" alt="Post Image" class="avatar">
                     </span>
-                    <div>
-                        <input type="text" readonly name="How you doing" :placeholder="i.postCaption" v-model="postCaption" class="timeline">
+                        <textarea type="text" readonly name="How you doing" :value="i.postCaption" class="timeline"> 
+                        </textarea>
                     <div style="display:flex">
                         <input type="text" readonly id="location" v-model="location" name="location" :placeholder="i.location" style="height: 19px;">
                         <button style="margin: 0px 100px; height: 25px; display:none" @click="onupdate(i.postId)">Update</button>
@@ -44,7 +47,9 @@ export default {
             postId: '',
             imgList:[],
             img:'',
-            myFriendProfilePic:''
+            myFriendProfilePic:'',
+            fullName:'',
+            myProfilePic:''
     }},
     
     components:{
@@ -62,7 +67,7 @@ export default {
             }
             console.log(update)
             axios
-                .put('http://10.177.68.12:8090/QuinBookPost/updatePost/'+id,update, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
+                .put('http://10.177.68.89:8090/QuinBookPost/updatePost/'+id,update, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
                 .then(response => {
                     console.log(response)
                     this.postCaption='',
@@ -75,7 +80,7 @@ export default {
         },
         ondelete(id){
             axios
-                .delete('http://10.177.68.12:8090/QuinBookPost/deleteqb/'+id, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
+                .delete('http://10.177.68.89:8090/QuinBookPost/deleteqb/'+id, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
                 .then(response => {
                     console.log(response)
                     this.postCaption='',
@@ -105,7 +110,7 @@ export default {
     }
 
      axios
-      .get('http://10.177.68.12:8090/QuinBookPost/getAllPostByUserName/'+localStorage.getItem('myFriendName')) // meghana - for getting my post
+      .get('http://10.177.68.89:8090/QuinBookPost/getAllPostByUserName/'+localStorage.getItem('myFriendName')) // meghana - for getting my post
       .then(response => {
         console.log(response)
         this.info = response.data
@@ -157,7 +162,7 @@ export default {
     /* float: right; */
     height: 83px;
     margin: 0px;
-    border: grey 2px solid;
+    /* border: grey 2px solid; */
     margin-right: 100px
 }
 .avatar {
