@@ -87,12 +87,8 @@ const routes = [
     path: '*',
     name: 'errorpage',
     component: errorpage
-  },
-  {
-    path: '/comments',
-    name:'comments',
-    component: comments
   }
+ 
 ]
 
 const router = new VueRouter({
