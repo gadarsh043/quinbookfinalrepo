@@ -18,7 +18,7 @@
             name="postCaption"
             v-model="postCaption"
             class="timeline"
-            placeholder="How you doin' ?"
+            placeholder="Tell your friends what special about today"
           />
           <br>
           <br>
@@ -44,43 +44,60 @@
     </div>
     <div class="feed" style="margin: 0px 6px">
       <div class="post" v-for="i in feeds" :key="i.id">
+
         <div class="plaf">
-          <div class="pial">
             <span  v-if="i.postImages"> 
-              <img :src="i.postImages" alt="PostImage" class="avatar" style="border: solid black 2px">
+              <div style="display:flex">
+                <img :src="i.postImages" alt="UserImage" style="border: black 1px; border-radius:50%" width="50px" height="50px">
+                <div style="margin: 15px;">
+                  <!-- {{i.userName}} -->
+                  G Adarsh
+                </div>
+              </div>
             </span>
             <span v-else>
-              <img src="https://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg" alt="Post Image" class="avatar">
+              <div style="display:flex">
+                <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" style="border: black 1px; border-radius:50%" alt="Post Image" width="50px" height="50px">
+                <div style="margin: 15px;">
+                  <!-- {{i.userName}} -->
+                  G Adarsh
+                </div>
+              </div>
             </span>
-            <span>
-              {{i.userName}}
-            </span>
+        </div>
+        <div class="postcaption" style="height: 50px" >
+              <p> {{ i.postCaption }}</p>
+            </div>
+        <div class="pic">
+          <span  v-if="i.postImages"> 
+            <img :src="i.postImages" alt="PostImage" style="height:300px;width:600px">
+          </span>
+          <span v-else>
+            <img src="https://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg" alt="PostImage" style="height:300px;width:600px">
+          </span>
+        </div>
+          <div class="pial">
             <div class="likeanddis" >
               {{i.like}}
               <likedislike :postId="i.postId" :fullName="fullName" :myProfilePic="myProfilePic"></likedislike>
-            </div>
-            <div>
-              Posted On
-              <p></p>
-              <!-- {{i.date.slice(0,10)}} -->
-            </div>
-            <br>
-            <br>
-            <div>
-              From Location
-              <p v-if="i.location === ''">Not Added</p>
-              <p v-else>{{i.location}}</p>
+              <div class="postDate" style="margin: 27px 0px 0px 235px;">
+                18/04/2000<!-- {{i.date.slice(0,10)}} -->
+              </div>
+              <div class="postLocation" style="margin: 27px 0px 0px 12px;">
+                Bangalore<!-- {{i.location}} -->
+              </div>
             </div>
           </div>
-          <div style="display:block">
-            <div class="feed" style="height: 100px;width: 500px" >
-              <p> {{ i.postCaption }}</p>
-            </div>
-            <div style="height: 80px;width: 500px" v-for="comments in i.commentList" :key="comments.id">
-              <p> {{ comments.commentText }} - {{ comments.commentedBy }}</p>
+          <div>
+            <p class="commentheading" style="font-size: xx-large;font-style: oblique;font-weight: bold;font-family: unset;color: #0B84ED;margin: 0px 0px 0px -360px">Comments ↓</p>
+          </div>
+          <div class="comm" style="display:block">
+            <br>
+            <br>
+            <div style="border: solid black 1px;margin: 0px 0px 8px 0px;font-size: 20px;color: brown;" v-for="comments in i.commentList" :key="comments.id">
+              {{ comments.commentText }} - by {{ comments.commentedBy }}
             </div>
           </div>
-        </div>
       </div>
     </div>
   </div>
@@ -266,10 +283,22 @@ export default {
 }
 .likeanddis {
   display: flex;
+  width: 30%;
 }
 .plaf {
   display: flex;
-  justify-content: space-between;
+  width: 600px;
+  height: 50px;
+  /* border: solid black 1px; */
+  /* justify-content: space-between; */
+}
+.pic{
+  width: 600px;
+  height: 300px;
+  border: solid black 1px;
+}
+.pial{
+  display: flex;
 }
 .avatar {
   vertical-align: middle;
@@ -277,8 +306,8 @@ export default {
   height: 100px;
   border-radius: 50%;
   position: relative;
-  top: -26px;
-  margin-left: -2px;
+  top: -15px;
+  margin-left: 10px;
   cursor: pointer;
 }
 .avatar > img:hover {
@@ -331,8 +360,8 @@ export default {
 .post {
   margin: 40px;
   width: 87%;
-  height: 70%;
-  padding: 29px 8px 10px;
+  height: 75%;
+  padding: 10px 0px 0px 7px;
   text-align: center;
   box-shadow: 0px 0px 0px 1px #000000;
   overflow: scroll;
@@ -349,5 +378,8 @@ export default {
 }
 .commentinsidediv {
   display: none;
+}
+.detail{
+  width: 230px;
 }
 </style>

@@ -1,18 +1,26 @@
 <template>
-  <div>
+<div class="main">
+  <div class="l" style="display:flex">
     <!-- Like -->
-    <img  :display="display" @click="toggle"  v-if="display" src="../assets/like.png" alt="Liked!" width="24px" height="24px" style="cursor:pointer">
-    <img :display="display" @click="toggle" v-else src="../assets/after-like.png" width="28px" height="28px" >
+    <img  :display="display" @click="toggle"  v-if="display" src="../assets/like.png" alt="Liked!"  style="cursor:pointer; width: 40px;height: 40px;margin: 15px;">
+    <img :display="display" @click="toggle" v-else src="../assets/after-like.png" style="cursor:pointer; width: 40px;height: 40px;margin: 15px;" >
+    <div class="commentdiv">
+      <div class="commentinsidediv" style="margin: -1px 0px 0px -26px;">
+        <input type="text" name="How you doing" class="small" v-model="commentText" placeholder="Comment Something" style="height: 40px;margin: 15px;width: 345px;"/>
+      </div>
+      <div>
+        <button @click="comment" style="margin: 0px 0px 0px 252px;">Comment</button>
+      </div>
     <!-- Dislike
     <img  :display2="display2" @click="toggle2" v-if="display2" src="../assets/dislike.png" width="24px" height="24px">
     <img :display2="display2" @click="toggle2" v-else src="../assets/after-dislike.png" width="24px" height="24px"> -->
-    <div class="commentdiv" style="float">
-                <div class="commentinsidediv">
-                  <input type="text" name="How you doing" class="small" v-model="commentText" placeholder="Comment Something" />
-                  <button @click="comment">Comment</button>
-                </div>
-              </div>
+    
+    </div>
+              
+              
   </div>
+  
+          </div>
 </template>
 <script>
 import axios from 'axios'
@@ -54,7 +62,7 @@ export default {
        }
        else{
          this.display=true
-         this.like=0
+         this.like=-1
        }
        console.log('likes:'+this.like)
       
@@ -159,5 +167,15 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+.main{
+  width: 100%;
+}
+.l{
+width: 30%;
+}
+.detail{
+width: 50%;
+}
+
 </style>

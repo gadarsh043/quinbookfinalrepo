@@ -14,7 +14,7 @@
                 <li> <a class="tooltip active" data-tooltip="Search" href="/search" id="search"> <img src="../assets/search.gif" alt="" width="40px" height="40px"> </a> </li>
                 <li> <a class="tooltip active" data-tooltip="Edit_My_Profile" href="/editprofile" id="EditMyProfile"><img src="../assets/edit.gif" alt="" width="35px" height="35px"> </a></li>
                 <li>  <a class="tooltip active" data-tooltip="Notification" href="/notification" id="notification"><img src="../assets/notification.gif" alt="" width="35px" height="35px"> </a></li>
-                <li>  <a class="tooltip active" data-tooltip="Logout" id="notification"><img @click="logoutUser" src="../assets/logout.gif" alt="" width="35px" height="35px"> </a></li>
+                <li>  <a class="tooltip active" data-tooltip="Logout" id="logout"><img @click="logoutUser" src="../assets/logout.gif" alt="" width="35px" height="35px"> </a></li>
             </ul>
         </nav>
     </header>
