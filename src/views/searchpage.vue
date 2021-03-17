@@ -53,14 +53,14 @@
     </div>
 </template>
 <script scoped>
-import Navbar from '../components/navbar3.vue'
+import Navbar from '../components/navbar5.vue'
 import profilecover from '../components/profile-cover.vue'
 import axios from 'axios'
 export default {
   name:'searchpage',
     data () {
         return{
-            friends :0,
+            friends :100,
             searchterm: '',
             myProfilePic:''
         }

@@ -33,7 +33,7 @@
 </template>
 <script>
 import axios from 'axios'
-import navbar from "../components/navbar.vue"
+import navbar from "../components/navbar5.vue"
 export default {
     data () {
         return{

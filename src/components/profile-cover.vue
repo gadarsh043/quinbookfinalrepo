@@ -4,7 +4,7 @@
       <div > <br><h1 style="text-align: center;">{{this.myFullName}}</h1> 
       <div class="afp buttons">
         <br>
-        <button class="btn123" @click="onsubmit">About</button>
+        <button class="btn123" @click="onsubmit">My Profile</button>
         <br>
         <br>
         <br>

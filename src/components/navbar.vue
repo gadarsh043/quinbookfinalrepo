@@ -60,7 +60,7 @@ export default {
         this.$router.push('/ownfeed')
       },
       clicklogo(){
-        this.$router.push('/feed')
+        this.$router.push('/feed', (error) => {console.log(error)})
       },
       logoutUser(){
          var obj = {

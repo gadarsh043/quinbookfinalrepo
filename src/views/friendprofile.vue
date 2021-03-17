@@ -117,7 +117,7 @@
 </template>
 <script>
 import axios from 'axios'
-import Navbar from '../components/navbar.vue'
+import Navbar from '../components/navbar5.vue'
 import profilecover from '../components/profile-cover.vue'
 export default {
   name: 'about',

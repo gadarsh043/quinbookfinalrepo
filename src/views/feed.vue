@@ -2,13 +2,8 @@
   <div class="container">
     <navbar style="margin-bottom: 12px;" />
     <div class="today" style="margin: 0px 10px">
-      <h1>Todays Events</h1>
       <!-- //Todo: implement list of events -->
-      <div class="events" v-for="i in events" :key="i.id">
-        {{ i.fullName }}'s {{ ordinal(i.years) }} {{ i.eventType }}!
-      </div>
-    </div>
-    <div class="feed" style="margin: 0px 6px">
+      <h1>Make A Post Today</h1>
       <div class="uploadpost">
         <span  v-if="this.myProfilePic" @click="gotomyphotos"> 
           <img :src="this.myProfilePic" alt="Avatar" class="avatar" style="border: solid white 2px">
@@ -52,11 +47,17 @@
               height="30"
             /> -->
             <input type="file" @change="previewImage" accept="image/*">
-            <img class="preview" :src="img" width="120px" height="120px" v-if="img">
-            <button style="margin: 0px 100px" @click="postThis">Post</button>
           </div>
+            <button style="margin: 0px 350px" @click="postThis">Post</button>
+            <img class="preview" :src="img" width="240px" height="240px" v-if="img" style="padding: 4px 60px">
         </div>
       </div>
+      <h1>Todays Events</h1>
+      <div class="events" v-for="i in events" :key="i.id" style="margin: 0px 78px 12px;">
+        {{ i.fullName }}'s {{ ordinal(i.years) }} {{ i.eventType }}!
+      </div>
+    </div>
+    <div class="feed" style="margin: 0px 6px">
       <div class="post" v-for="i in feeds" :key="i.id">
         <div class="plaf">
           <div class="pial">
@@ -100,20 +101,20 @@
   </div>
 </template>
 <script>
-import navbar from "../components/navbar.vue";
+import navbar from "../components/navbar5.vue";
 import axios from "axios";
 import likedislike from '../components/like-dislike.vue'
 export default {
   data() {
     return {
       myProfilePic:'',
-      feeds: 0,
+      feeds: 10,
       fullName: "",
       eventType: "",
       img: "",
       imgList: [],
       years: 0,
-      events: 0,
+      events: 4,
       friendList: [],
       userName: "",
       date: "",
@@ -268,8 +269,9 @@ export default {
   align-items: center;
   text-align: center;
   padding: 25px 50px 0px;
-  border-radius: 8px;
-  box-shadow: 7px 4px 5px 1px rgb(0, 0, 0);
+  border-radius: 20px;
+  border: solid black 1px;
+  box-shadow: 0 0 3px 1px #000000;
 }
 .likeanddis {
   display: flex;
@@ -302,45 +304,45 @@ export default {
   margin: 0px;
 }
 .feed {
-  width: 900px;
+  width: 700px;
   float: right;
   height: 700px;
   position: inherit;
-  box-shadow: 0 0 10px 1px #000000;
+  box-shadow: 0 0 3px 0px #000000;
   overflow: scroll;
+  border-radius: 5%;
 }
 .today {
-  width: 30%;
+  width: 40%;
   float: left;
   height: 700px;
-  box-shadow: 7px 4px 5px 1px rgb(0, 0, 0);
   overflow: scroll;
-  box-shadow: 0 0 10px 1px #000000;
+  /* box-shadow: 0 0 10px 1px #000000; */
 }
 .uploadpost {
+  resize: vertical;
   width: 87%;
-  height: 170px;
+  height: 270px;
   display: inline-flex;
-  margin: 30px;
+  margin: 0px 47px;
   padding: 29px 8px 10px;
   overflow: scroll;
-  box-shadow: 7px 4px 5px 1px rgb(0, 0, 0);
+  border: solid black 1px;
 }
 .timeline {
-  width: 550px;
+  width: 350px;
   /* float: right; */
   height: 83px;
   margin: 0px;
   padding: 20px;
-  box-shadow: 7px 4px 5px 1px rgb(0, 0, 0);
 }
 .post {
-  margin: 30px;
+  margin: 40px;
   width: 87%;
-  height: 30%;
+  height: 70%;
   padding: 29px 8px 10px;
   text-align: center;
-  box-shadow: 7px 4px 5px 1px rgb(0, 0, 0);
+  box-shadow: 0px 0px 0px 1px #000000;
   overflow: scroll;
 }
 .btn {
