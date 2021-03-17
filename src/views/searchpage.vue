@@ -13,7 +13,7 @@
       <profilecover class="userdetails"/>
       <div class="userfriends">
         <div style="padding: 12px;">
-          <input type="text"  name="searchterm" v-model="searchterm" :placeholder="this.searchterm" style="padding: 8px 300px;">
+          <input type="text"  name="searchterm" v-model="searchterm" :placeholder="this.searchterm" style="padding: 8px 300px;border: solid black 1px">
           <button style="padding: 8px;" @click="search">Confirm</button>
         </div>
         <div class="friends" v-for="i in friends" :key="i.id" style="margin: 30px 211px;">
@@ -157,7 +157,7 @@ export default {
 .friends{
   margin: 2%;
   width: 50%;
-  height: 20%;
+  height: 15%;
   text-align: center;
   border: solid black 2px;
   box-shadow: 3px 3px gray;

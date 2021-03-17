@@ -38,7 +38,7 @@
         </div>
       </div>
       <h1>Todays Events</h1>
-      <div class="events" v-for="i in events" :key="i.id" style="margin: 0px 78px 12px;">
+      <div class="events" v-for="i in events" :key="i.id" style="margin: 0px 78px 24px;">
         {{ i.fullName }}'s {{ ordinal(i.years) }} {{ i.eventType }}!
       </div>
     </div>

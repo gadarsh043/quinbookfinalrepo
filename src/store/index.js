@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     firstName: '',
     lastName: '',
-    searchtext:''
+    items:[]
   },
   getters: {
     getfirstName (state){
