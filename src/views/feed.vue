@@ -6,11 +6,11 @@
       <h1>Make A Post Today</h1>
       <div class="uploadpost">
         <span  v-if="this.myProfilePic" @click="gotomyphotos"> 
-          <img :src="this.myProfilePic" alt="Avatar" class="avatar" style="border: solid white 2px">
+          <img :src="this.myProfilePic" alt="Avatar" class="avatar" style="border: solid white 2px;margin: 35px 0px 0px 0px;">
           <p>{{this.myName}}</p>
         </span>
         <span v-else @click="gotomyphotos">
-          <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
+          <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar" style="margin: 35px 0px 0px 0px;">
         </span>
         <div >
           <textarea
@@ -23,32 +23,17 @@
           <br>
           <br>
           <div style="display: flex">
-            <img
-              src="../assets/map-pin.svg"
-              style="margin: 0px 105px; cursor: pointer"
-              width="30"
-              height="30"
-              :locTypeImage="locTypeImage"
-              @click="showLocation"
-              v-if="locTypeImage"
-            />
-            
             <input 
             type="text" 
             name="location"
             v-model="location"
             placeholder="Location..."
-            v-else
             />
-            <!-- <img
-              src="../assets/photo.svg"
-              style="margin: 0px 72px"
-              width="30"
-              height="30"
-            /> -->
-            <input type="file" @change="previewImage" accept="image/*">
+            <input type="file" @change="previewImage" accept="image/*" style="display:none" ref="fileInput">
+            <a class="tooltip active" data-tooltip="Photos" id="search"> <img @click="clickedonphoto" src="../assets/image.png" alt="" width="40px" height="40px"> </a> 
           </div>
-            <button style="margin: 0px 350px" @click="postThis">Post</button>
+            <button style="margin: 0px 350px;display:none" @click="postThis" ref="postEverything">Post</button>
+            <a class="tooltip active" data-tooltip="Post" id="search"> <img style="margin: 0px 300px;" @click="clickedonpost" src="../assets/postThis.png" alt="" width="50px" height="50px"></a>
             <img class="preview" :src="img" width="240px" height="240px" v-if="img" style="padding: 4px 60px">
         </div>
       </div>
@@ -148,6 +133,12 @@ export default {
     gotomyphotos(){
       this.$router.push("/about")
     },
+    clickedonphoto(){
+      this.$refs.fileInput.click()
+    },
+    clickedonpost(){
+      this.$refs.postEverything.click()
+    },
     postThis(){
       this.imgList.push(this.img)
       console.log(this.imgList)
@@ -207,7 +198,7 @@ export default {
   mounted() {
     if(localStorage.getItem('sessionId')===null){
       this.$alert('Please Login First')
-      this.$router.push('/login')
+      this.$router.push('/')
     }
      this.myName =  localStorage.getItem('myName') //storing userName - myName
      axios
@@ -328,6 +319,7 @@ export default {
   padding: 29px 8px 10px;
   overflow: scroll;
   border: solid black 1px;
+  background-color: rgba(211, 211, 211, 0.151);
 }
 .timeline {
   width: 350px;
@@ -356,9 +348,6 @@ export default {
   cursor: pointer;
 }
 .commentinsidediv {
-  display: none;
-}
-.commentdiv:hover .commentinsidediv {
   display: none;
 }
 </style>

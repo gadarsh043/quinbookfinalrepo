@@ -102,7 +102,7 @@ export default {
    mounted(){
     if(localStorage.getItem('sessionId')===null){
       this.$alert('Please Login First')
-      this.$router.push('/login')
+      this.$router.push('/')
     }
      axios
       .get('http://10.177.68.12:8090/QuinBookPost/getAllPostByUserName/'+localStorage.getItem('myName')) // meghana - for getting my post

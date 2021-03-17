@@ -209,7 +209,7 @@ export default {
  mounted(){
    if(localStorage.getItem('sessionId')===null){
       this.$alert('Please Login First')
-      this.$router.push('/login')
+      this.$router.push('/')
     }
    this.myName = localStorage.getItem('myName')
    console.log(this.myName)
@@ -249,7 +249,7 @@ export default {
 .editdetails{
   width: 60%;
   float: right;
-  height: 450px;
+  height: 680px;
   border: rgb(0, 0, 0) 2px solid;
   overflow: hidden;
 }
@@ -273,7 +273,4 @@ export default {
     box-shadow: 0 0 10px 1px gray;
   }
   
-  .avatar:hover{
-    display: none;
-  }
 </style>

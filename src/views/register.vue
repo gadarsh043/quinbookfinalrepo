@@ -117,7 +117,7 @@ export default {
           else{
             let username=res.data.userName
             this.$alert('Thanks your username is '+username)
-            this.$router.push("/login");
+            this.$router.push("/");
           }
           
         });

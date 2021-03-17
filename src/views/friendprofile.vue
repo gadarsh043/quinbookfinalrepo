@@ -172,7 +172,7 @@ export default {
  mounted(){
    if(localStorage.getItem('sessionId')===null){
       this.$alert('Please Login First')
-      this.$router.push('/login')
+      this.$router.push('/')
     }
    this.myFriendName = localStorage.getItem('myFriendName')
    axios
@@ -202,7 +202,7 @@ export default {
 .about{
   width: 60%;
   float: right;
-  height: 450px;
+  height: 680px;
   border: rgb(0, 0, 0) 2px solid;
   overflow: hidden;
 }
@@ -234,8 +234,5 @@ export default {
     width: 100%;
     height: 30%;
     border: solid black 2px;
-  }
-  .avatar:hover{
-    display: none;
   }
 </style>

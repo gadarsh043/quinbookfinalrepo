@@ -62,7 +62,7 @@ export default {
            console.log("loggin out navbar" + res)
            localStorage.removeItem('sessionID')
            localStorage.clear()
-            this.$router.push("/login")
+            this.$router.push("/")
          }).catch(err=>console.log(err))
       }
     }

@@ -97,7 +97,7 @@ export default {
           if (res.data.sessionID === '' && res.data.isRegistered) {
             this.$alert('Invalid Login Credentials!')
             localStorage.removeItem('sessionID') 
-            this.$router.push('/login').catch(()=>{console.log('exception')})
+            this.$router.push('/').catch(()=>{console.log('exception')})
           }
           if (res.data.sessionID === '' && !res.data.isRegistered ) {
             this.$alert('Not a registered user. Please register!')
@@ -109,7 +109,7 @@ export default {
             localStorage.setItem('myName', res.data.userName) //Login person username - myName
             this.$router.push('/feed')
           } else {
-            this.$router.push('/login')
+            this.$router.push('/')
           }
         })
       }
@@ -129,7 +129,7 @@ export default {
           if (res.data.sessionID === '' && res.data.isRegistered) {
             alert('Invalid Login Credentials!')
             localStorage.removeItem('sessionID') 
-            this.$router.push('/login').catch(()=>{})
+            this.$router.push('/').catch(()=>{})
           }
           if (res.data.sessionID === '' && !res.data.isRegistered ) {
             alert('Not a registered user. Please register!')
@@ -141,7 +141,7 @@ export default {
             localStorage.setItem('myName', res.data.userName) //Login person username - storing in localstorage
             this.$router.push('/feed')
           } else {
-            this.$router.push('/login')
+            this.$router.push('/')
           }
         })
       

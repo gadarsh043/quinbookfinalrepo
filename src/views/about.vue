@@ -178,7 +178,7 @@ export default {
  mounted(){
    if(localStorage.getItem('sessionId')===null){
       this.$alert('Please Login First')
-      this.$router.push('/login')
+      this.$router.push('/')
     }
    this.myName = localStorage.getItem('myName')
    axios
@@ -197,7 +197,7 @@ export default {
 .about{
   width: 60%;
   float: right;
-  height: 450px;
+  height: 680px;
   border: rgb(0, 0, 0) 2px solid;
   overflow: hidden;
 }
@@ -224,9 +224,6 @@ export default {
     -webkit-box-shadow: 0 0 10px 1px gray;
     box-shadow: 0 0 10px 1px  #000000;
     text-align: center;
-  }
-  .avatar:hover{
-    display: none;
   }
   .feed{
     border: solid black 2px;

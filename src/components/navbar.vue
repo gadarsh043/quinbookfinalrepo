@@ -75,7 +75,7 @@ export default {
          axios.get("http://10.177.68.28:8082/"+localStorage.getItem('myName')).then(res => { //deepk - logout
            console.log("loggin out deepak" + res)
            localStorage.clear()
-            this.$router.push("/login")
+            this.$router.push("/")
          }).catch(err=>console.log(err))
       }
     }

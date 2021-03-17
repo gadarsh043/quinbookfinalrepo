@@ -137,7 +137,7 @@ export default {
     mounted() {
     if(localStorage.getItem('sessionId')===null){
       this.$alert('Please Login First')
-      this.$router.push('/login')
+      this.$router.push('/')
     }
         this.onsubmitlatest()
     },
@@ -164,11 +164,12 @@ export default {
 .feed{
   width: 1000px;
   float: center;
-  height: 700px;
+  height: 680px;
   position: inherit;
   border: grey 2px solid;
   overflow: scroll;
-  box-shadow: 7px 4px 5px 1px rgb(0, 0, 0);
+  box-shadow: 0px 3px 5px 0px rgb(0, 0, 0);
+  border-radius: 5%;
 }
 .post{
     margin: 30px;
@@ -192,8 +193,7 @@ export default {
    height:30px;
    width: 100px;
    margin: 10px;
-   color: green;
-    box-shadow: 7px 4px 5px 1px rgb(0, 0, 0);
+   color: black;
     
 }
 </style>

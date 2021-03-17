@@ -106,7 +106,7 @@ export default {
    mounted(){
     if(localStorage.getItem('sessionId')===null){
       this.$alert('Please Login First')
-      this.$router.push('/login')
+      this.$router.push('/')
     }
 
      axios

@@ -72,22 +72,9 @@ export default {
  mounted () {
    if(localStorage.getItem('sessionId')===null){
       this.$alert('Please Login First')
-      this.$router.push('/login')
+      this.$router.push('/')
     }
    this.myProfilePic=localStorage.getItem('myProfilePic')
-    let x = localStorage.getItem('searchterm')
-    axios
-      .get('http://10.177.68.122:8100/search/'+ x,{ headers: { sessionId: localStorage.getItem('sessionId') } })//swastik
-      .then(response => {
-        console.log(x)
-        console.log(response)
-        this.friends = response.data
-        this.searchterm = localStorage.getItem('searchterm')
-      })
-      .catch(error => {
-        this.errorMessage = error.message
-        console.log(error)
-      })
   },
  methods : {
    search(){
@@ -161,6 +148,7 @@ export default {
 }
 .userfriends{
     width: 60%;
+    height: 680px;
     display: flex;
     flex-wrap: wrap;
     border: solid black 2px;
@@ -171,11 +159,8 @@ export default {
   width: 50%;
   height: 20%;
   text-align: center;
-  border: solid green 2px;
-  box-shadow: 3px 4px #7cad3e;
+  border: solid black 2px;
+  box-shadow: 3px 3px gray;
   
-}
-.avatar:hover{
-    display: none;
 }
 </style>

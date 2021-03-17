@@ -3,16 +3,18 @@
       <header>
         <nav>
             <ul>
-                <li> <a href="/feed" id="fb"><img src="../assets/logo-color.png" alt="" width="50px" height="50px"> </a> </li>
-                
+                <li> <a class="tooltip" data-tooltip="Feed" href="/feed" id="tv"> <img src="../assets/logo-color.jpeg" alt="" width="50px" height="50px"> </a> </li>
                 <li id="space1"></li>
                 
+                <li> <a class="tooltip" data-tooltip="Own_Feed" href="/ownfeed" id="tv"> <img src="../assets/ownfeed.png" alt="" width="35px" height="35px" style="border:solid black .5px;border-radius:50%"> </a> </li>
                 <li> <a class="tooltip active" data-tooltip="Profile" href="/about" id="home"> <img src="../assets/profile.png" alt="" width="45px" height="45px"> </a> </li>
                 <li> <a class="tooltip" data-tooltip="Friends" href="/friends" id="tv"> <img src="../assets/friends.png" alt="" width="35px" height="35px" style="border:solid black .5px;border-radius:50%"> </a> </li>
+                
                 <li id="space1"></li>
                 <li> <a class="tooltip active" data-tooltip="Search" href="/search" id="search"> <img src="../assets/search.gif" alt="" width="40px" height="40px"> </a> </li>
                 <li> <a class="tooltip active" data-tooltip="Edit_My_Profile" href="/editprofile" id="EditMyProfile"><img src="../assets/edit.gif" alt="" width="35px" height="35px"> </a></li>
-                <li>  <a class="tooltip active" data-tooltip="Notification" href="/notification" id="notification"><img src="../assets/bell.svg" alt="" width="35px" height="35px"> </a></li>
+                <li>  <a class="tooltip active" data-tooltip="Notification" href="/notification" id="notification"><img src="../assets/notification.gif" alt="" width="35px" height="35px"> </a></li>
+                <li>  <a class="tooltip active" data-tooltip="Logout" id="notification"><img @click="logoutUser" src="../assets/logout.gif" alt="" width="35px" height="35px"> </a></li>
             </ul>
         </nav>
     </header>
@@ -20,12 +22,31 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     name: 'quinbooknavbar',
     data(){
         return{
 
         }
+    },
+    methods:{
+        logoutUser(){
+         var obj = {
+           sessionId : localStorage.getItem('sessionId')
+         }
+         axios.post("http://10.177.68.58:8090/logout",obj).then(res => { //ishika - logout
+           console.log("loggin out navbar" + res)
+         }).catch(err=>console.log(err))
+         axios.get("http://10.177.68.89:8090/QuinBookPost/"+localStorage.getItem('myName')).then(res => { //meghana - logout
+           console.log("loggin out meghana" + res)
+         }).catch(err=>console.log(err))
+         axios.get("http://10.177.68.28:8082/"+localStorage.getItem('myName')).then(res => { //deepk - logout
+           console.log("loggin out deepak" + res)
+           localStorage.clear()
+            this.$router.push("/")
+         }).catch(err=>console.log(err))
+      }
     }
 }
 </script>

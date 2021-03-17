@@ -70,7 +70,7 @@ export default {
  mounted () {
    if(localStorage.getItem('sessionId')===null){
       this.$alert('Please Login First')
-      this.$router.push('/login')
+      this.$router.push('/')
     }
    this.myProfilePic=localStorage.getItem('myProfilePic')
    this.showfriends()
@@ -81,6 +81,7 @@ export default {
 <style scoped>
 .userfriends{
     width: 60%;
+    height: 680px;
     display: flex;
     flex-wrap: wrap;
     border: solid black 2px;
@@ -94,9 +95,6 @@ export default {
   border: solid green 2px;
   box-shadow: 3px 4px #7cad3e;
   
-}
-.avatar:hover{
-    display: none;
 }
 .friends:hover {
   animation: shake 0.5s;

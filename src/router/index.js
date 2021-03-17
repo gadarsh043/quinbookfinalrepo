@@ -74,11 +74,6 @@ const routes = [
     component: ownfeed
   },
   {
-    path: '/login',
-    name: 'login',
-    component: login
-  },
-  {
     path: '/',
     name: 'login',
     component: login

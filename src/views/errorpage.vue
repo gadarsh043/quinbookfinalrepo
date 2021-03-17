@@ -7,7 +7,7 @@
     <br>
     <br>
     <p>
-    <a href="/login"><strong>Let's stay in your room and connect with people using QuinBook.</strong></a>
+    <a href="/"><strong>Let's stay in your room and connect with people using QuinBook.</strong></a>
     </p>
   </div>
  </div>
