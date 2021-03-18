@@ -94,7 +94,13 @@
           <div class="comm" style="display:block">
             <br>
             <br>
-            <div style="border: solid black 1px;margin: 0px 0px 8px 0px;font-size: 20px;color: brown;" v-for="comments in i.commentList" :key="comments.id">
+            <div style="margin: 0px 0px 8px 0px;font-size: 20px;color: brown;">
+              Nic Pic Adarsh - by Noel
+            </div>
+            <div style="margin: 0px 0px 8px 0px;font-size: 20px;color: brown;">
+              Nice Try Adarsh - by DJ
+            </div>
+            <div style="margin: 0px 0px 8px 0px;font-size: 20px;color: brown;" v-for="comments in i.commentList" :key="comments.id">
               {{ comments.commentText }} - by {{ comments.commentedBy }}
             </div>
           </div>
@@ -349,6 +355,7 @@ export default {
   overflow: scroll;
   border: solid black 1px;
   background-color: rgba(211, 211, 211, 0.151);
+  cursor: pointer;
 }
 .timeline {
   width: 350px;

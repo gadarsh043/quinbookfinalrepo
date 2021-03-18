@@ -2,13 +2,14 @@
   <div>
       <header>
         <nav>
-            <ul>
+            <ul class="navbarpointer">
                 <li> <a class="tooltip" data-tooltip="Feed" href="/feed" id="tv"> <img src="../assets/logo-color.jpeg" alt="" width="50px" height="50px"> </a> </li>
                 <li id="space1"></li>
                 
-                <li> <a class="tooltip" data-tooltip="Own_Feed" href="/ownfeed" id="tv"> <img src="../assets/ownfeed.png" alt="" width="35px" height="35px" style="border:solid black .5px;border-radius:50%"> </a> </li>
+                <li> <a class="tooltip" data-tooltip="Feed" href="/ownfeed" id="tv"> <img src="../assets/ownfeed.png" alt="" width="35px" height="35px" style="border:solid black .5px;border-radius:50%"> </a> </li>
                 <li> <a class="tooltip active" data-tooltip="Profile" href="/about" id="home"> <img src="../assets/profile.png" alt="" width="45px" height="45px"> </a> </li>
                 <li> <a class="tooltip" data-tooltip="Friends" href="/friends" id="tv"> <img src="../assets/friends.png" alt="" width="35px" height="35px" style="border:solid black .5px;border-radius:50%"> </a> </li>
+                <li> <a class="tooltip" data-tooltip="Photos" href="/userphotos" id="tv"> <img src="../assets/myPhotos.png" alt="" width="35px" height="35px" style="border:solid black .5px;border-radius:50%"> </a> </li>
                 
                 <li id="space1"></li>
                 <li> <a class="tooltip active" data-tooltip="Search" href="/search" id="search"> <img src="../assets/search.gif" alt="" width="40px" height="40px"> </a> </li>
@@ -52,6 +53,9 @@ export default {
 </script>
 
 <style scoped>
+.navbarpointer{
+    cursor: pointer;
+}
 *{
         box-sizing: border-box;
     }

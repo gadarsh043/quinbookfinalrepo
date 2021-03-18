@@ -89,9 +89,9 @@ mounted(){
 .userprofile{
   width: 0%;
   height: 0px;
-  border: rgb(0, 0, 0) 2px solid;
+  /* border: rgb(0, 0, 0) 2px solid; */
   
-  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ01SZD8LTME-CsgwCipl6i5Fx79F20D6S-cw&usqp=CAU");
+  /* background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ01SZD8LTME-CsgwCipl6i5Fx79F20D6S-cw&usqp=CAU"); */
   background-repeat: no-repeat;
   /* background-size: cover; */
   background-repeat: round;

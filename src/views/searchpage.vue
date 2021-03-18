@@ -13,7 +13,7 @@
       <profilecover class="userdetails"/>
       <div class="userfriends">
         <div style="padding: 12px;">
-          <input type="text"  name="searchterm" v-model="searchterm" :placeholder="this.searchterm" style="padding: 8px 300px;border: solid black 1px">
+          <input type="text"  name="searchterm" v-model="searchterm" placeholder="Search New Friends" style="padding: 8px 300px;border: solid black 1px">
           <button style="padding: 8px;" @click="search">Confirm</button>
         </div>
         <div class="friends" v-for="i in friends" :key="i.id" style="margin: 30px 211px;">
@@ -60,7 +60,7 @@ export default {
   name:'searchpage',
     data () {
         return{
-            friends :100,
+            friends :0,
             searchterm: '',
             myProfilePic:''
         }
