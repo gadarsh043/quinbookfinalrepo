@@ -16,16 +16,16 @@
         <div class="nandp" style="padding: 13px;padding-left: 254px;">
             <div class="icons">
                 <div class="notification" @mouseover="showUserMask = true" @mouseleave="showUserMask = false">
-                    <img src="../assets/bell.svg" id="icon" @click="notificationtiptext">
+                    <img src="../assets/bell.svg" id="icon1" @click="notificationtiptext">
                     <span class="notificationtiptext" >Notifications</span>
                 </div>
                 <div class="profile" @mouseover="showUserMask = true" @mouseleave="showUserMask = false">
-                    <img src="../assets/user.svg" id="icon" @click="profiletiptext">
+                    <img src="../assets/user.svg" id="icon2" @click="profiletiptext">
                     <span class="profiletiptext">Own Feed</span>
                     <div class="dropdown-content">
                         <a href="/editprofile">Edit Profile</a>
                         <a href="/about">About</a>
-                        <a @click="logoutUser" style="cursor:pointer">Logout</a>
+                        <a @click="logoutUser" id="logout" style="cursor:pointer">Logout</a>
                     </div>
                 </div>
         </div>
@@ -60,7 +60,7 @@ export default {
         this.$router.push('/ownfeed')
       },
       clicklogo(){
-        this.$router.push('/feed', (error) => {console.log(error)})
+        this.$router.push('/feed')
       },
       logoutUser(){
          var obj = {
