@@ -8,7 +8,7 @@
             <br><br>
             <div class="card-todo">
               <div class="flex">
-                <input class="inputTodo" v-model="newItem" @keyup.enter="addItem" placeholder="Add new todo" />
+                <input class="inputTodo" v-model="newItem" @keyup.enter="addItem" id="addItem" placeholder="Add new todo" />
                 <button class="buttonTodo" @click="addItem" :disabled="newItem.length === 0">Add</button>
               </div>
             </div>
@@ -59,15 +59,6 @@ methods:{
   },
   removeItem: function ( item ) {
     this.items = this.items.filter( ( newItem ) => newItem.name !== item.name );
-  },
-  onsubmit () {
-    this.$router.push('/about')
-  },
-   onsubmit1 () {
-     this.$router.push('/friends')
-  },
-   onsubmit2 () {
-      this.$router.push('/userphotos')
   }
 },
 mounted(){

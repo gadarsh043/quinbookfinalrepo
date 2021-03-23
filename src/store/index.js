@@ -32,7 +32,5 @@ export default new Vuex.Store({
     setlastNameAction ({commit}, value){
       commit('setlastName', value)
     }
-  },
-  modules: {
   }
 })

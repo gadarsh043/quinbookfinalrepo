@@ -50,8 +50,8 @@
               <div style="display:flex">
                 <img :src="i.postImages" alt="UserImage" style="border: black 1px; border-radius:50%" width="50px" height="50px">
                 <div style="margin: 15px;">
-                  <!-- {{i.userName}} -->
-                  G Adarsh
+                  {{i.userName}}
+                  <!-- G Adarsh -->
                 </div>
               </div>
             </span>
@@ -59,8 +59,8 @@
               <div style="display:flex">
                 <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" style="border: black 1px; border-radius:50%" alt="Post Image" width="50px" height="50px">
                 <div style="margin: 15px;">
-                  <!-- {{i.userName}} -->
-                  G Adarsh
+                  {{i.userName}}
+                  <!-- G Adarsh -->
                 </div>
               </div>
             </span>
@@ -84,7 +84,7 @@
                 18/04/2000<!-- {{i.date.slice(0,10)}} -->
               </div>
               <div class="postLocation" style="margin: 27px 0px 0px 12px;">
-                Bangalore<!-- {{i.location}} -->
+                {{i.location}}
               </div>
             </div>
           </div>
@@ -94,12 +94,12 @@
           <div class="comm" style="display:block">
             <br>
             <br>
-            <div style="margin: 0px 0px 8px 0px;font-size: 20px;color: brown;">
+            <!-- <div style="margin: 0px 0px 8px 0px;font-size: 20px;color: brown;">
               Nic Pic Adarsh - by Noel
             </div>
             <div style="margin: 0px 0px 8px 0px;font-size: 20px;color: brown;">
               Nice Try Adarsh - by DJ
-            </div>
+            </div> -->
             <div style="margin: 0px 0px 8px 0px;font-size: 20px;color: brown;" v-for="comments in i.commentList" :key="comments.id">
               {{ comments.commentText }} - by {{ comments.commentedBy }}
             </div>
@@ -122,7 +122,7 @@ export default {
       img: "",
       imgList: [],
       years: 0,
-      events: 4,
+      events: 0,
       friendList: [],
       userName: "",
       date: "",
@@ -172,7 +172,7 @@ export default {
       }
       console.log(obj)
         axios
-        .post(`http://10.177.68.89:8090/QuinBookPost/qbpost`,obj,{headers: {sessionId: localStorage.getItem('sessionId')}}) // meghana - sending post
+        .post(`http://10.177.68.70:8090/QuinBookPost/qbpost`,obj,{headers: {sessionId: localStorage.getItem('sessionId')}}) // meghana - sending post
         .then((response)=>{
         console.log(response);
         this.$alert('Post created!!')
@@ -225,7 +225,7 @@ export default {
     }
      this.myName =  localStorage.getItem('myName') //storing userName - myName
      axios
-     .get('http://10.177.68.58:8081/getDetails/userName?userName='+this.myName)// ishika - getting details
+     .get('http://10.177.68.27:8081/getDetails/userName?userName='+this.myName)// ishika - getting details
      .then(res => {
        console.log(res)
         localStorage.setItem('myProfilePic',res.data.img)
@@ -236,7 +236,7 @@ export default {
       console.log(err)
     })
     axios
-      .get(`http://10.177.68.6:8085/feed/fetchFriendList?userName=${this.myName}`) // akhil - getting friendlist
+      .get(`http://10.177.68.66:8085/feed/fetchFriendList?userName=${this.myName}`) // akhil - getting friendlist
       .then((response) => {
         console.log(response);
         this.friendList = response.data; // storing in friendlist
@@ -244,7 +244,7 @@ export default {
         this.myProfilePic=localStorage.getItem('myProfilePic')
         axios
         .post(
-          `http://10.177.68.58:8081/events`, this.friendList) //ishika - for sending friendlist - i will get events
+          `http://10.177.68.27:8081/events`, this.friendList) //ishika - for sending friendlist - i will get events
           .then((response) => {
             console.log(response);
           this.events = response.data;
@@ -259,7 +259,7 @@ export default {
         console.log(error);
       });
     axios
-      .get(`http://10.177.68.6:8085/feed/fetchUserSocial?userName=${this.myName}`) // akhil - getting feed
+      .get(`http://10.177.68.66:8085/feed/fetchUserSocial?userName=${this.myName}`) // akhil - getting feed
       .then((response) => {
         console.log(response);
         this.feeds = response.data; // storing in feeds

@@ -63,7 +63,7 @@ export default {
             }
             console.log(update)
             axios
-                .put('http://10.177.68.89:8090/QuinBookPost/updatePost/'+id,update, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
+                .put('http://10.177.68.70:8090/QuinBookPost/updatePost/'+id,update, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
                 .then(response => {
                     console.log(response)
                     this.postCaption='',
@@ -76,7 +76,7 @@ export default {
         },
         ondelete(id){
             axios
-                .delete('http://10.177.68.89:8090/QuinBookPost/deleteqb/'+id, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
+                .delete('http://10.177.68.70:8090/QuinBookPost/deleteqb/'+id, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
                 .then(response => {
                     console.log(response)
                     this.postCaption='',
@@ -105,7 +105,7 @@ export default {
       this.$router.push('/')
     }
      axios
-      .get('http://10.177.68.12:8090/QuinBookPost/getAllPostByUserName/'+localStorage.getItem('myName')) // meghana - for getting my post
+      .get('http://10.177.68.70:8090/QuinBookPost/getAllPostByUserName/'+localStorage.getItem('myName')) // meghana - for getting my post
       .then(response => {
         console.log(response)
         this.info = response.data

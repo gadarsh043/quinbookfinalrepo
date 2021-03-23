@@ -182,7 +182,7 @@ export default {
     }
    this.myName = localStorage.getItem('myName')
    axios
-   .get('http://10.177.68.58:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) //ishika - for about post
+   .get('http://10.177.68.27:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) //ishika - for about post
    .then(response => {
      console.log(response)
      this.info = response.data

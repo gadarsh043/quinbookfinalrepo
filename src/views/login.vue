@@ -89,7 +89,7 @@ export default {
       }
       if (this.validate()) {
          console.log("inside normal login")
-        axios.post('http://10.177.68.58:8090/login', obj) // ishika - login
+        axios.post('http://10.177.68.27:8090/login', obj) // ishika - login
         .then((res) => {
           console.log("dsdss")
           localStorage.setItem('sessionId', res.data.sessionID) // check sessionId - sessionId
@@ -122,7 +122,7 @@ export default {
         password: ''
       }
       console.log('inside onGoogleLogin')
-        axios.post('http://10.177.68.58:8090/login', obj) // ishika - login
+        axios.post('http://10.177.68.27:8090/login', obj) // ishika - login
         .then((res) => {
           localStorage.setItem('sessionId', res.data.sessionID) // my sessionId
           console.log(localStorage.getItem('sessionId'))

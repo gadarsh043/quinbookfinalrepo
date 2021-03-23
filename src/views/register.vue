@@ -105,7 +105,7 @@ export default {
       console.log("onsubmit")
       if (this.validate()) {
         console.log("on submit")
-        axios.post("http://10.177.68.58:8081/register", obj) // ishika ip
+        axios.post("http://10.177.68.27:8081/register", obj) // ishika ip
         .then((res) => {
           console.log(res);
           if(res.data.message === 'Email already exists'){

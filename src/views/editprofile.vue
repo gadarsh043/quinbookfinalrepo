@@ -173,7 +173,7 @@ export default {
         console.log(profile)
         this.myName = localStorage.getItem('myName')
         localStorage.setItem('myProfilePic',this.img)
-        axios.put('http://10.177.68.58:8081/update/userName?userName='+this.myName,profile,{ headers: { sessionId: localStorage.getItem('sessionId') } }) // ishika - for edit profile
+        axios.put('http://10.177.68.27:8081/update/userName?userName='+this.myName,profile,{ headers: { sessionId: localStorage.getItem('sessionId') } }) // ishika - for edit profile
           .then(response =>{
             console.log(response)
           })
@@ -214,7 +214,7 @@ export default {
    this.myName = localStorage.getItem('myName')
    console.log(this.myName)
    axios
-   .get('http://10.177.68.58:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) // ishika - getting my details
+   .get('http://10.177.68.27:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) // ishika - getting my details
    .then(response => {
      console.log(response)
 

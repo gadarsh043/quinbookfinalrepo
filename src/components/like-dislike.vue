@@ -2,8 +2,8 @@
 <div class="main">
   <div class="l" style="display:flex">
     <!-- Like -->
-    <img  :display="display" @click="toggle"  v-if="display" src="../assets/like.png" alt="Liked!"  style="cursor:pointer; width: 40px;height: 40px;margin: 15px;">
-    <img :display="display" @click="toggle" v-else src="../assets/after-like.png" style="cursor:pointer; width: 40px;height: 40px;margin: 15px;" >
+    <img  :display="display" @click="toggle" id="like" v-if="display" src="../assets/like.png" alt="Liked!"  style="cursor:pointer; width: 40px;height: 40px;margin: 15px;">
+    <img :display="display" @click="toggle" id="liked" v-else src="../assets/after-like.png" style="cursor:pointer; width: 40px;height: 40px;margin: 15px;" >
     <div class="commentdiv">
       <div class="commentinsidediv" style="margin: -1px 0px 0px -26px;">
         <input type="text" name="How you doing" class="small" v-model="commentText" placeholder="Comment Something" style="height: 40px;margin: 15px;width: 345px;"/>
@@ -11,13 +11,7 @@
       <div>
         <button @click="comment" style="margin: 0px 0px 0px 252px;">Comment</button>
       </div>
-    <!-- Dislike
-    <img  :display2="display2" @click="toggle2" v-if="display2" src="../assets/dislike.png" width="24px" height="24px">
-    <img :display2="display2" @click="toggle2" v-else src="../assets/after-dislike.png" width="24px" height="24px"> -->
-    
-    </div>
-              
-              
+    </div>        
   </div>
   
           </div>
@@ -31,8 +25,7 @@ export default {
       display: true,
       like:0,
       commentText:''
-      // dislike:0,
-      // display2: true
+      
     }
   },
   methods: {
@@ -42,10 +35,9 @@ export default {
         commentText: this.commentText,
         commentedBy:localStorage.getItem('myName'),
       }
-      axios.post('http://10.177.68.89:8090/QuinBookPost/postComment', obj) //meghana
+      axios.post('http://10.177.68.70:8090/QuinBookPost/postComment', obj) //meghana
        .then((response)=>{
-        console.log(response.data);
-        console.log(obj)
+         console.log(response)
         this.commentText=''
         })
         .catch((error) => {
@@ -73,9 +65,10 @@ export default {
         userName:localStorage.getItem('myName'),
         profilepic:this.myProfilePic
       }
-       axios.post('http://10.177.68.89:8090/QuinBookPost/postEngagement', obj) //meghana
+       axios.post('http://10.177.68.70:8090/QuinBookPost/postEngagement', obj) //meghana
        .then((response)=>{
         console.log(response.data);
+        location.reload(3000);
         console.log(obj)
         })
         .catch((error) => {
@@ -84,86 +77,6 @@ export default {
       })
 
      }
-    // toggle() {
-    //           // this.display=this.display?false:true
-    //           // if(!this.display2){
-    //           //   this.dislike=-1
-    //           // }
-              
-    //           if(this.display) // liked
-    //           {
-    //             this.display=false
-    //             this.like=1
-    //             this.dislike=0
-    //             if(!this.display2)
-    //             {
-    //               this.dislike=-1
-    //             }
-    //           }
-    //           else // unliked
-    //           {
-    //             if(!this.display2)
-    //             {
-    //               this.display2=true
-    //               this.display2=false
-    //               this.dislike=-1
-    //               this.like=1
-    //             }
-    //             else
-    //             {
-    //             this.display=true
-    //             this.like=-1
-    //             this.unlike=0
-    //             }
-    //           }
-
-    //           // if(this.display === false && this.display2 === false)
-    //           // {
-    //           //     this.display=true;
-    //           //     this.display2=true;
-    //           // }
-    //           console.log('likes:'+this.like+' dislikes'+this.dislike)
-              
-
-    //       },
-    //       toggle2() {
-    //         // this.display2=this.display2?false:true
-    //         if(this.display2) // disliked
-    //         {
-    //           this.display2=false
-    //           this.dislike=1
-    //           this.like=0
-    //           if(!this.display)
-    //           {
-    //             this.like=-1
-    //           }
-    //         }
-    //         else
-    //         {
-    //           if(!this.display)
-    //           {
-    //             this.display=true
-                
-    //             this.display2=false
-    //             this.like=-1
-    //             this.dislike=1
-    //           }
-    //           else 
-    //           {
-    //           this.display2=true
-              
-    //           this.dislike=-1
-    //           this.like=0
-    //           }
-    //         }
-
-    //         // if(this.display === false && this.display2 === false)
-    //         // {
-    //         //     this.display=true;
-    //         //     this.display2=true;
-    //         // }
-    //         console.log('likes:'+this.like+' dislikes'+this.dislike)
-    //     }
   }
 }
 </script>

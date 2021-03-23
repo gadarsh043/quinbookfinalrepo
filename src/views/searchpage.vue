@@ -80,7 +80,7 @@ export default {
    search(){
      localStorage.setItem('searchterm',this.searchterm)
      axios
-      .get('http://10.177.68.122:8100/search/'+ this.searchterm,{ headers: { Authorization: localStorage.getItem('sessionId') } })//swastik
+      .get('http://10.177.68.130:8100/search/'+ this.searchterm,{ headers: { Authorization: localStorage.getItem('sessionId') } })//priyank
       .then(response => {
         console.log(response)
         this.friends = response.data
@@ -101,7 +101,7 @@ export default {
        }
      }
      console.log(obj)
-     axios.post('http://10.177.68.28:8089/friendRequest',obj).then(res => {//Deepak
+     axios.post('http://10.177.68.67:8089/friendRequest',obj).then(res => {//Deepak
        console.log(res.data.message)
      }).catch(err => {
        console.log(err)
@@ -125,7 +125,7 @@ export default {
        }
      }
      console.log(obj)
-      axios.post('http://10.177.68.28:8082/blockUser',obj,{headers: {sessionId: localStorage.getItem('sessionId')}})//Deepak
+      axios.post('http://10.177.68.67:8082/blockUser',obj,{headers: {sessionId: localStorage.getItem('sessionId')}})//Deepak
       .then(res => {
        console.log(res.data.message)
      }).catch(err => {

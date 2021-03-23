@@ -22,9 +22,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.29% </span>
+                <span class="strong">42.86% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/14</span>
+                <span class='fraction'>6/14</span>
             </div>
         
             
@@ -36,16 +36,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">12.5% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/8</span>
+                <span class='fraction'>2/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.29% </span>
+                <span class="strong">42.86% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/14</span>
+                <span class='fraction'>6/14</span>
             </div>
         
             
@@ -276,24 +276,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -439,21 +439,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
-  &lt;div&gt;
+  &lt;div class="navbar"&gt;
       &lt;header&gt;
         &lt;nav&gt;
             &lt;ul class="navbarpointer"&gt;
-                &lt;li&gt; &lt;a class="tooltip" data-tooltip="Feed" href="/feed" id="tv"&gt; &lt;img src="../assets/logo-color.jpeg" alt="" width="50px" height="50px"&gt; &lt;/a&gt; &lt;/li&gt;
+                &lt;li&gt; &lt;a class="tooltip" data-tooltip="Feed" href="/feed"&gt; &lt;img id="logo" src="../assets/logo-color.jpeg" alt="" width="50px" height="50px"&gt; &lt;/a&gt; &lt;/li&gt;
                 &lt;li id="space1"&gt;&lt;/li&gt;
                 
-                &lt;li&gt; &lt;a class="tooltip" data-tooltip="Feed" href="/ownfeed" id="tv"&gt; &lt;img src="../assets/ownfeed.png" alt="" width="35px" height="35px" style="border:solid black .5px;border-radius:50%"&gt; &lt;/a&gt; &lt;/li&gt;
-                &lt;li&gt; &lt;a class="tooltip active" data-tooltip="Profile" href="/about" id="home"&gt; &lt;img src="../assets/profile.png" alt="" width="45px" height="45px"&gt; &lt;/a&gt; &lt;/li&gt;
-                &lt;li&gt; &lt;a class="tooltip" data-tooltip="Friends" href="/friends" id="tv"&gt; &lt;img src="../assets/friends.png" alt="" width="35px" height="35px" style="border:solid black .5px;border-radius:50%"&gt; &lt;/a&gt; &lt;/li&gt;
-                &lt;li&gt; &lt;a class="tooltip" data-tooltip="Photos" href="/userphotos" id="tv"&gt; &lt;img src="../assets/myPhotos.png" alt="" width="35px" height="35px" style="border:solid black .5px;border-radius:50%"&gt; &lt;/a&gt; &lt;/li&gt;
+                &lt;li&gt; &lt;a class="tooltip" data-tooltip="Feed" href="/ownfeed" &gt; &lt;img id="ownFeed" src="../assets/ownfeed.png" alt="" width="35px" height="35px" style="border:solid black .5px;border-radius:50%"&gt; &lt;/a&gt; &lt;/li&gt;
+                &lt;li&gt; &lt;a class="tooltip active" data-tooltip="Profile" href="/about" id="about"&gt; &lt;img src="../assets/profile.png" alt="" width="45px" height="45px"&gt; &lt;/a&gt; &lt;/li&gt;
+                &lt;li&gt; &lt;a class="tooltip" data-tooltip="Friends" href="/friends" id="friends"&gt; &lt;img src="../assets/friends.png" alt="" width="35px" height="35px" style="border:solid black .5px;border-radius:50%"&gt; &lt;/a&gt; &lt;/li&gt;
+                &lt;li&gt; &lt;a class="tooltip" data-tooltip="Photos" href="/userphotos" id="friends"&gt; &lt;img src="../assets/myPhotos.png" alt="" width="35px" height="35px" style="border:solid black .5px;border-radius:50%"&gt; &lt;/a&gt; &lt;/li&gt;
                 
                 &lt;li id="space1"&gt;&lt;/li&gt;
                 &lt;li&gt; &lt;a class="tooltip active" data-tooltip="Search" href="/search" id="search"&gt; &lt;img src="../assets/search.gif" alt="" width="40px" height="40px"&gt; &lt;/a&gt; &lt;/li&gt;
-                &lt;li&gt; &lt;a class="tooltip active" data-tooltip="Edit_My_Profile" href="/editprofile" id="EditMyProfile"&gt;&lt;img src="../assets/edit.gif" alt="" width="35px" height="35px"&gt; &lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt; &lt;a class="tooltip active" data-tooltip="Edit_My_Profile" href="/editprofile" id="editmyrofile"&gt;&lt;img src="../assets/edit.gif" alt="" width="35px" height="35px"&gt; &lt;/a&gt;&lt;/li&gt;
                 &lt;li&gt;  &lt;a class="tooltip active" data-tooltip="Notification" href="/notification" id="notification"&gt;&lt;img src="../assets/notification.gif" alt="" width="35px" height="35px"&gt; &lt;/a&gt;&lt;/li&gt;
                 &lt;li&gt;  &lt;a class="tooltip active" data-tooltip="Logout"&gt;&lt;img @click="logoutUser" id="logout" src="../assets/logout.gif" alt="" width="35px" height="35px"&gt; &lt;/a&gt;&lt;/li&gt;
             &lt;/ul&gt;
@@ -472,19 +472,19 @@ export default {
         }
     },
     methods:{
-<span class="fstat-no" title="function not covered" >        logoutUser(){</span>
-<span class="cstat-no" title="statement not covered" >         var obj = {</span>
+        logoutUser(){
+         var obj = {
            sessionId : localStorage.getItem('sessionId')
          }
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >         axios.post("http://10.177.68.58:8090/logout",obj).then(res =&gt; { //ishika - logout</span></span>
+<span class="fstat-no" title="function not covered" >         axios.post("http://10.177.68.27:8090/logout",obj).then(res =&gt; { //ishika - logout</span>
 <span class="cstat-no" title="statement not covered" >           console.log("loggin out navbar" + res)</span>
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >         })</span></span>
          .catch(err=&gt;console.log(err))
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >         axios.get("http://10.177.68.89:8090/QuinBookPost/"+localStorage.getItem('myName')).then(res =&gt; { //meghana - logout</span></span>
+<span class="fstat-no" title="function not covered" >         axios.get("http://10.177.68.70:8090/QuinBookPost/"+localStorage.getItem('myName')).then(res =&gt; { //meghana - logout</span>
 <span class="cstat-no" title="statement not covered" >           console.log("loggin out meghana" + res)</span>
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >         })</span></span>
         .catch(err=&gt;console.log(err))
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >         axios.get("http://10.177.68.28:8082/"+localStorage.getItem('myName')).then(res =&gt; { //deepak - logout</span></span>
+<span class="fstat-no" title="function not covered" >         axios.get("http://10.177.68.67:8082/"+localStorage.getItem('myName')).then(res =&gt; { //deepak - logout</span>
 <span class="cstat-no" title="statement not covered" >           console.log("loggin out deepak" + res)</span>
 <span class="cstat-no" title="statement not covered" >           localStorage.clear()</span>
 <span class="cstat-no" title="statement not covered" >            this.$router.push("/")</span>
@@ -636,7 +636,7 @@ export default {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Mar 18 2021 17:46:13 GMT+0530 (India Standard Time)
+                at Fri Mar 19 2021 16:26:26 GMT+0530 (India Standard Time)
             </div>
         </div>
         <script src="prettify.js"></script>

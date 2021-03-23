@@ -176,7 +176,7 @@ export default {
     }
    this.myFriendName = localStorage.getItem('myFriendName')
    axios
-      .get('http://10.177.68.28:8090/QuinBookPost/getAllPostByUserName/'+localStorage.getItem('myFriendName')) // Deepak - for Checking Block
+      .get('http://10.177.68.67:8090/QuinBookPost/getAllPostByUserName/'+localStorage.getItem('myFriendName')) // Deepak - for Checking Block
       .then(response => {
         console.log(response)
         this.canseeprofile = response.data
@@ -186,7 +186,7 @@ export default {
       })
       
    axios
-   .get('http://10.177.68.58:8081/getDetails/userName?userName='+this.myFriendName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) //ishika - for about post
+   .get('http://10.177.68.27:8081/getDetails/userName?userName='+this.myFriendName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) //ishika - for about post
    .then(response => {
      console.log(response)
      this.info = response.data
