@@ -4,8 +4,8 @@
       <div class="userlogin">
         <div class="title">
           <img src="../assets/logo-black.svg" style="width:60%">
-          <h1 style="font-size:40px" v-anime="{targets: 'h1', translateX: 200, rotate: '1turn', backgroundColor: '',color: '#000000', duration: 8000, loop: false}">  Connect with</h1>
-          <h1 style="font-size:80px" v-anime="{targets: 'h1', translateX: 200, rotate: '1turn', backgroundColor: '',color: '#3aed91', duration: 8000, loop: false} ">QuinBook</h1>
+          <h1 style="font-size:40px" v-anime="{targets: 'h1', translateX: 200, rotate: '1turn', backgroundColor: '',color: '#4267B2', duration: 8000, loop: false}">  Connect with</h1>
+          <h1 style="font-size:80px" v-anime="{targets: 'h1', translateX: 200, rotate: '1turn', backgroundColor: '',color: '#4267B2' , duration: 8000, loop: false} ">QuinBook</h1>
         </div>
         <div class="loginPart">
           <h4>Login to Continue</h4>
@@ -21,7 +21,7 @@
           <button class="btn" @click="onsubmit">Login</button>
           <hr style="width:81%;text-align:left;margin-left:25px">
           <button v-google-signin-button="clientId" class="google-signin-button"><img id = "google" src="../assets/1004px-Google__G__Logo.svg.webp"><div id = "buttonText"> Continue with Google </div></button>
-          <h4>Not Registered Yet?<router-link to="/register" style="color:white"> Register Now!</router-link></h4>
+          <h4>Not Registered Yet?<router-link to="/register" style="color:blue"> Register Now!</router-link></h4>
         </div>
       </div>
     </div>
@@ -88,15 +88,16 @@ export default {
         password: this.password
       }
       if (this.validate()) {
-         console.log("dsdss")
-        axios.post('http://10.177.68.66:8090/login', obj, { headers: { Authorization: localStorage.getItem('sessionID') } }).then((res) => {
+         console.log("inside normal login")
+        axios.post('http://10.177.68.27:8090/login', obj) // ishika - login
+        .then((res) => {
           console.log("dsdss")
-          localStorage.setItem('sessionID', res.data.sessionID) // check sessionID or sessionId
+          localStorage.setItem('sessionId', res.data.sessionID) // check sessionId - sessionId
           this.$store.dispatch('setLoginAction', res.data.sessionID)
           if (res.data.sessionID === '' && res.data.isRegistered) {
             this.$alert('Invalid Login Credentials!')
             localStorage.removeItem('sessionID') 
-            this.$router.push('/login').catch(()=>{console.log('exception')})
+            this.$router.push('/').catch(()=>{console.log('exception')})
           }
           if (res.data.sessionID === '' && !res.data.isRegistered ) {
             this.$alert('Not a registered user. Please register!')
@@ -105,10 +106,10 @@ export default {
           }
           if (res.data.sessionID !== '' && res.data.isRegistered) {
             console.log('inThis')
-            localStorage.setItem('myName', res.data.userName) 
+            localStorage.setItem('myName', res.data.userName) //Login person username - myName
             this.$router.push('/feed')
           } else {
-            this.$router.push('/login')
+            this.$router.push('/')
           }
         })
       }
@@ -121,13 +122,14 @@ export default {
         password: ''
       }
       console.log('inside onGoogleLogin')
-        axios.post('http://10.177.68.66:8090/login', obj,{ headers: { Authorization: localStorage.getItem('sessionID') } }).then((res) => {
-          localStorage.setItem('sessionID', res.data.sessionID)
-          console.log(localStorage.getItem('sessionID'))
+        axios.post('http://10.177.68.27:8090/login', obj) // ishika - login
+        .then((res) => {
+          localStorage.setItem('sessionId', res.data.sessionID) // my sessionId
+          console.log(localStorage.getItem('sessionId'))
           if (res.data.sessionID === '' && res.data.isRegistered) {
             alert('Invalid Login Credentials!')
             localStorage.removeItem('sessionID') 
-            this.$router.push('/login').catch(()=>{})
+            this.$router.push('/').catch(()=>{})
           }
           if (res.data.sessionID === '' && !res.data.isRegistered ) {
             alert('Not a registered user. Please register!')
@@ -136,18 +138,18 @@ export default {
           }
           // if sessionId and isRegister exits
           if (res.data.sessionID !== '' && res.data.isRegistered) {
-            localStorage.setItem('myName', res.data.userName) 
+            localStorage.setItem('myName', res.data.userName) //Login person username - storing in localstorage
             this.$router.push('/feed')
           } else {
-            this.$router.push('/login')
+            this.$router.push('/')
           }
         })
       
     }
   },
   created () {
-    if (localStorage.getItem('sessionID') !== null) {
-      this.$router.push('/login')
+    if (localStorage.getItem('sessionId') !== null) {
+      this.$router.push('/feed')
     }
   }
 }
@@ -162,7 +164,8 @@ body{
     justify-content: space-evenly;
     /* background: linear-gradient(to right, #f06844 0%, #ee4c54 25%, #d45e95 50%, #9c6ca6 75%, #6583c1 100%); */
     /* background:rgba(128, 128, 128, 0.637); */
-    background:#8db9ca;
+    background:#FFFFFF;
+    /* background:#fde8cd; */
     /* background: linear-gradient(to right, #39ce4b 0%, #26a18b 25%, #53c6cc 50%, #6da66c 75%, #aac165 100%); */
   }
   .title {

@@ -2,6 +2,10 @@
   <div id="main">
   <div class="fof">
     <h1>This page is quarantined</h1>
+    <br>
+    <br>
+    <br>
+    <br>
     <p>
     <a href="/"><strong>Let's stay in your room and connect with people using QuinBook.</strong></a>
     </p>

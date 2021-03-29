@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     firstName: '',
     lastName: '',
-    searchtext:''
+    items:[]
   },
   getters: {
     getfirstName (state){
@@ -32,7 +32,5 @@ export default new Vuex.Store({
     setlastNameAction ({commit}, value){
       commit('setlastName', value)
     }
-  },
-  modules: {
   }
 })

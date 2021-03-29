@@ -2,7 +2,12 @@
     <div class="container">
       <Navbar style="width:100.3%"/>
     <div class="userprofile" style="margin: 3px 0px 0px 0px;">
-       <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
+       <span  v-if="info.img"> 
+          <img :src="info.img" alt="Avatar" class="avatar" style="border: solid white 2px">
+        </span>
+        <span v-else>
+          <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
+        </span>
     </div>
     <div class="user" style="padding: 15px 1px;height: 430px;">
       <profilecover class="userdetails"/>
@@ -10,19 +15,19 @@
         <br>
         <div>
           <div class="education">
-            <p style="font-style: italic; font-size: xxx-large; font-family: cursive;">Personal Details</p><br>
+            <p style="font-style: italic; font-size: xxx-large; font-family: PT Serif;">Personal Details</p><br>
                 <table>
                   <tr>
                     <th>First Name</th>
-                    <td><input type="text" id="firstName"  class="inputfield" required v-model="firstName" placeholder="Adarsh"></td>
+                    <td>{{info.firstName}}</td>
                   </tr>
                   <tr>
                     <th>Last Name</th>
-                    <td><input type="text" id="lastName"  class="inputfield" required v-model="lastName" placeholder="Khatri"></td>
+                    <td>{{info.lastName}}</td>
                   </tr>
                   <tr>
                     <th>Phone Number</th>
-                    <td><input type="text" id="phoneNo"  class="inputfield" v-model="phoneNo" placeholder="xxxx-xxx-xxx"></td>
+                    <td><input type="text" id="phoneNo" v-model="phoneNo" class="inputfield" placeholder="xxxx-xxx-xxx"></td>
                   </tr>
                   <tr>
                     <th>Gender</th>
@@ -31,10 +36,6 @@
                   <tr>
                     <th>Date Of Birth</th>
                     <td><input class="inputfield" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" required id="dateOfBirth" v-model="dateOfBirth" placeholder="dd/mm/yy"></td>
-                  </tr>
-                  <tr>
-                    <th>Password</th>
-                    <td><input type="password" id="password"  class="inputfield" required v-model="password" placeholder="......."></td>
                   </tr>
                   <tr>
                     <th>Relationship Status</th>
@@ -50,12 +51,12 @@
                   </tr>
                   <tr>
                     <th>Hobbies</th>
-                    <td><input type="text" id="fname" name="hobbies" class="inputfield" v-model="hobbies" placeholder="Collecting Coins"></td>
+                    <td><input type="text" id="fname" name="Hobbies" class="inputfield" v-model="Hobbies" placeholder="Collecting Coins"></td>
                   </tr>
                 
                 </table>
                 
-                <p style="font-style: italic; font-size: xxx-large; font-family: cursive;">Education</p><br>
+                <p style="font-style: italic; font-size: xxx-large; font-family: PT Serif;">Education</p><br>
                 
                 <table>
                   <tr>
@@ -72,7 +73,7 @@
                   </tr>
                   </table>
                   
-                  <p style="font-style: italic; font-size: xxx-large; font-family: cursive;">Co-orporate Life</p><br>
+                  <p style="font-style: italic; font-size: xxx-large; font-family: PT Serif;">Co-orporate Life</p><br>
                   
                   <table>
                   <tr>
@@ -89,11 +90,11 @@
                   </tr>
                   <tr>
                     <th>Job End Date</th>
-                    <td><input class="inputfield" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="jobEndDate" v-model="jobEndDate" placeholder="dd/mm/yy"></td>
+                    <td>Present</td>
                   </tr>
                   <tr>
                     <th>Years of Experience</th>
-                    <td><input type="text" id="Experience" class="inputfield" v-model="Experience" placeholder="Work Experience"></td>
+                    <td><input type="text" id="Experience" class="inputfield" v-model="yearsOfExp" placeholder="Work Experience"></td>
                   </tr>
                   <tr>
                     <th>Job Location</th>
@@ -111,7 +112,7 @@
 </template>
 <script>
 import axios from 'axios'
-import Navbar from '../components/navbar.vue'
+import Navbar from '../components/navbar5.vue'
 import profilecover from '../components/profile-cover.vue'
 export default {
   name: 'editprofile',
@@ -138,7 +139,9 @@ export default {
      jobLocation: '',
      address: '',
      marriageAnniversary: '',
-     Hobbies: ''
+     Hobbies: '',
+     myName:'',
+     imagechange:''
    }
   },
   validate () {
@@ -153,15 +156,13 @@ export default {
           education10: this.education10,
           education12: this.education12,
           educationUni: this.educationUni,
-          firstName: this.firstName,
           gender: this.gender,
-          hobbies: this.hobbies,
+          hobbies: this.Hobbies,
           img: this.img,
           jobEndDate: this.jobEndDate,
           jobLocation: this.jobLocation,
           jobProfile: this.jobProfile,
           jobStartDate: this.jobStartDate,
-          lastName: this.lastName,
           marriageAnniversary: this.marriageAnniversary,
           password: this.password,
           phoneNo: this.phoneNo,
@@ -170,7 +171,9 @@ export default {
           yearsOfExp: this.yearsOfExp
         }
         console.log(profile)
-        axios.put('http://10.177.68.6:8081/update/userName?userName=test1',profile,{ headers: { Authorization: localStorage.getItem('sessionID') } })
+        this.myName = localStorage.getItem('myName')
+        localStorage.setItem('myProfilePic',this.img)
+        axios.put('http://10.177.68.27:8081/update/userName?userName='+this.myName,profile,{ headers: { sessionId: localStorage.getItem('sessionId') } }) // ishika - for edit profile
           .then(response =>{
             console.log(response)
           })
@@ -180,6 +183,7 @@ export default {
     } ,
     previewImage: function(event) {
             var input = event.target;
+            console.log(input.files[0])
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = (event) => {
@@ -203,11 +207,37 @@ export default {
      Navbar
  },
  mounted(){
+   if(localStorage.getItem('sessionId')===null){
+      this.$alert('Please Login First')
+      this.$router.push('/')
+    }
+   this.myName = localStorage.getItem('myName')
+   console.log(this.myName)
    axios
-   .get('http://10.177.68.6:8081/getDetails/userName?userName=test1',{ headers: { Authorization: localStorage.getItem('sessionID') } }) 
+   .get('http://10.177.68.27:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) // ishika - getting my details
    .then(response => {
      console.log(response)
+
      this.info = response.data
+     this.phoneNo= this.info.phoneNo,
+      this.password= this.info.password,
+      this.userName= this.info.userName,
+      this.gender= this.info.gender,
+      this.dateOfBirth= this.info.dateOfBirth,
+      this.img= this.info.img,
+      this.relationshipStatus= this.info.relationshipStatus,
+      this.education10= this.info.education10,
+      this.education12= this.info.education12,
+      this.educationUni= this.info.educationUni,
+      this.jobProfile= this.info.jobProfile,
+      this.companyName= this.info.companyName,
+      this.jobStartDate= this.info.jobStartDate,
+      this.jobEndDate= this.info.jobEndDate,
+      this.yearsOfExp= this.info.yearsOfExp,
+      this.jobLocation= this.info.jobLocation,
+      this.address= this.info.address,
+      this.marriageAnniversary= this.info.marriageAnniversary,
+      this.Hobbies= this.info.hobbies
    })
    .catch(error =>{
      console.log(error)
@@ -219,7 +249,7 @@ export default {
 .editdetails{
   width: 60%;
   float: right;
-  height: 450px;
+  height: 680px;
   border: rgb(0, 0, 0) 2px solid;
   overflow: hidden;
 }
@@ -243,7 +273,4 @@ export default {
     box-shadow: 0 0 10px 1px gray;
   }
   
-  .avatar:hover{
-    display: none;
-  }
 </style>

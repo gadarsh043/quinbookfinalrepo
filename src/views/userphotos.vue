@@ -2,7 +2,12 @@
   <div class="container">
     <Navbar style="width: 100.3%;margin-bottom: 3px;" />
     <div class="userprofile"> 
-      <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
+      <span  v-if="this.myProfilePic"> 
+          <img :src="this.myProfilePic" alt="Avatar" class="avatar" style="border: solid white 2px">
+        </span>
+        <span v-else>
+          <img src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar" class="avatar">
+        </span>
     </div><br>
     <div class="user">
       <profilecover class="userdetails"/>
@@ -18,16 +23,17 @@
 </template>
 
 <script scoped>
-import Navbar from '../components/navbar.vue'
+import Navbar from '../components/navbar5.vue'
 import profilecover from '../components/profile-cover.vue'
-import axios from 'axios'
+// import axios from 'axios'
 export default {
   name:'userphotos',
     data () {
         return{
-            photos: {
-              id: 100
-            }
+          photos: {
+            id: 100
+          },
+          myProfilePic : localStorage.getItem('myProfilePic')
         }
     },
   components: {
@@ -37,15 +43,19 @@ export default {
  methods : {
  },
  mounted(){
-   axios
-   .get('',{ headers: { Authorization: localStorage.getItem('sessionID') } }) 
-   .then(response => {
-     console.log(response)
-     this.info = response.data
-   })
-   .catch(error =>{
-     console.log(error)
-   })
+   if(localStorage.getItem('sessionId')===null){
+      this.$alert('Please Login First')
+      this.$router.push('/')
+    }
+  //  axios
+  //  .get('',{ headers: { Authorization: localStorage.getItem('sessionID') } }) 
+  //  .then(response => {
+  //    console.log(response)
+  //    this.info = response.data
+  //  })
+  //  .catch(error =>{
+  //    console.log(error)
+  //  })
  }
 }
 </script>
@@ -64,6 +74,7 @@ export default {
 }
 .userphotos{
     width: 60%;
+    height: 680px;
     display: flex;
     flex-wrap: wrap;
     border: solid black 2px;
@@ -72,14 +83,11 @@ export default {
 .photos{
   margin: 2%;
   width: 28%;
-  height: 40%;
+  height: 30%;
   text-align: center;
   border: solid green 2px;
   box-shadow: 3px 4px #7cad3e;
   
-}
-.avatar:hover{
-    display: none;
 }
 .photos:hover {
   animation: shake 0.5s;

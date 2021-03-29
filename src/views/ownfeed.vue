@@ -3,40 +3,118 @@
       <navbar />
       <br>
       <center>
-      <div class="feed" id ="feed" style="margin: 0px 6px;">
-          <div class="post" v-for="i in feeds" :key="i.id">
-              <div class="plaf">
-                    <img class="avatar" src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png" alt="Avatar">
-                  <div>
-              <input type="text" name="How you doing" class="timeline">
-              <div style="display:flex">
-                <img src="../assets/video.svg" style="margin: 0px 105px" width="30" height="30">
-                <img src="../assets/photo.svg" style="margin: 0px 72px;" width="30" height="30">
-                <button style="margin: 0px 100px;">Update</button>
-                <button style="margin: 0px 99px 0px -88px;">Delete</button>
-              </div>
+        <div class="feed" id ="feed" style="margin: 0px 6px;">
+            <div class="profilepic">
+                <img :src="this.myProfilePic" alt="" width="150px" height="150px">
+            </div>
+            <div class="post" v-for="i in info" :key="i.id" :id="i.postId">
+                <div class="plaf">
+                    <span  v-if="i.postImages[0]" class="avatar"> 
+                        <img :src="i.postImages[0]" alt="PostImage" class="avatar" style="border: solid white 2px;margin: 25px;">
+                    </span>
+                    <span v-else>
+                        <img src="https://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg" alt="Post Image" class="avatar">
+                    </span>
+                    <div>
+                        <textarea type="text" name="How you doing" :placeholder="i.postCaption" v-model="postCaption" class="timeline" />
+                    <div style="display:flex">
+                        <input type="text" id="location" v-model="location" name="location" :placeholder="i.location" style="height: 19px;">
+                        <input type="file" @change="previewImage" accept="image/*">
+                        <button style="margin: 0px 100px; height: 25px;" @click="onupdate(i.postId)">Update</button>
+                        <button style="margin: 0px 99px 0px -88px; height: 25px;" @click="ondelete(i.postId)">Delete</button>
+                        <button style="margin: 0px 199px 0px -88px; height: 25px;display:none" @click="ondelete">Delete</button>
+                    </div>
+                </div>
+            </div>
           </div>
-              </div>
-          </div>
-      </div>
-      <div class="butn"></div>
+        </div>
       </center>
   </div>
 </template>
 <script>
-import navbar from "../components/navbar.vue"
+import axios from 'axios'
+import navbar from "../components/navbar5.vue"
 export default {
     data () {
         return{
-            feeds:100
+            postchange:[],
+            info: '',
+            location: '',
+            postCaption: '',
+            postImages: '',
+            postId: '',
+            imgList:[],
+            myProfilePic:'',
+            img:''
     }},
     
     components:{
         navbar
     },
-    methods: {
-    },
     
+    methods : {
+        onupdate(id){
+            this.imgList.push(this.img)
+            console.log(this.imgList)
+            const update = {
+                postCaption : this.postCaption,
+                postImages: this.imgList,
+                location: this.location
+            }
+            console.log(update)
+            axios
+                .put('http://10.177.68.70:8090/QuinBookPost/updatePost/'+id,update, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
+                .then(response => {
+                    console.log(response)
+                    this.postCaption='',
+                    this.imgList=[],
+                    this.location=''
+                })
+                .catch(error =>{
+                    console.log(error)
+                })
+        },
+        ondelete(id){
+            axios
+                .delete('http://10.177.68.70:8090/QuinBookPost/deleteqb/'+id, { headers: { sessionId: localStorage.getItem('sessionId') } }) // meghana - got updating my post - send session Id
+                .then(response => {
+                    console.log(response)
+                    this.postCaption='',
+                    this.imgList=[],
+                    this.location=''
+                })
+                .catch(error =>{
+                    console.log(error)
+                })
+        },
+        previewImage: function(event) {
+            var input = event.target;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = (event) => {
+                    this.img = event.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+                console.log(this.postImages)
+            }
+        }
+    },
+   mounted(){
+    if(localStorage.getItem('sessionId')===null){
+      this.$alert('Please Login First')
+      this.$router.push('/')
+    }
+     axios
+      .get('http://10.177.68.70:8090/QuinBookPost/getAllPostByUserName/'+localStorage.getItem('myName')) // meghana - for getting my post
+      .then(response => {
+        console.log(response)
+        this.info = response.data
+        this.myProfilePic = localStorage.getItem('myProfilePic')
+      })
+      .catch(error =>{
+        console.log(error)
+      })
+   },
 }
 </script>
 <style scoped>
@@ -79,23 +157,26 @@ export default {
     height: 83px;
     margin: 0px;
     border: grey 2px solid;
+    margin-right: 100px
 }
-.butn{
-    height: 200px;
-    width:300px;
-    float:right;
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-}
-.signup{
-   height:30px;
-   width: 100px;
-   margin: 10px;
-   color: green;
-    background-color: wheat;
+.profilepic{
+    width: 100%;
+    height: 20%;
     
+}
+.avatar {
+  vertical-align: middle;
+  width: 104px;
+  height: 100px;
+  border-radius: 50%;
+  position: relative;
+  top: -26px;
+  margin-left: -2px;
+  cursor: pointer;
+}
+.avatar > img:hover {
+  transform: scale(1.3);
+  transition: transform 0.5s;
+  border: solid #000000 2px;
 }
 </style>
