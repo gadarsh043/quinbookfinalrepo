@@ -3,7 +3,7 @@
     <div class="container">
     <center>
       <div class="signup_body">
-        <p class="acc_crt">Sign up with QuinBook</p>
+        <p class="acc_crt" style="color:#000000">Sign up with QuinBook</p>
         <p class="free_hint">It's free and always will be.</p>
         <div class="signup_form">
           <div>
@@ -35,7 +35,7 @@
               name=""
               placeholder="Password"
             />
-            <h4 style="padding-top:10px;color:white;font-size:24px">Birthday</h4>
+            <h4 style="padding-top:10px;color:black;font-size:24px">Birthday</h4>
             <input class="birthday" v-model="dob" type="date" name="date" @click="setdate()"/>
           </div>
           <br />
@@ -99,16 +99,27 @@ export default {
         lastName: this.lastName,
         email: this.email,
         password: this.password,
-        dob: this.dob,
+        dateOfBirth : this.dob,
         gender: this.gender,
       };
       console.log("onsubmit")
       if (this.validate()) {
         console.log("on submit")
-        axios.post("http://10.177.68.4:8081/register", obj) // ishika ip
+        axios.post("http://10.177.68.58:8081/register", obj) // ishika ip
         .then((res) => {
           console.log(res);
-          this.$router.push("/login");
+          if(res.data.message === 'Email already exists'){
+            this.$alert('Email already exists')
+          }
+          else if(res.data.message === 'Username already Exists'){
+            this.$alert('UserName already Exists')
+          }
+          else{
+            let username=res.data.userName
+            this.$alert('Thanks your username is '+username)
+            this.$router.push("/login");
+          }
+          
         });
       }
     },
@@ -133,7 +144,9 @@ body{
 .container{
   /* background: linear-gradient(to right, #f06844 0%, #ee4c54 25%, #d45e95 50%, #9c6ca6 75%, #6583c1 100%); */
   /* background:rgba(128, 128, 128, 0.637); */
-  background:#8db9ca;
+  /* background:#8db9ca; */
+  /* background:#fde8cd; */
+  /* background:#FFFFFF; */
   padding-bottom: 115px;
 }
 .signup_body {

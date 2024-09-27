@@ -52,7 +52,7 @@ export default {
  methods : {
    showfriends(){
      axios
-      .get('http://10.177.68.2:8082/fetchFriendList',{ headers: { sessionId: localStorage.getItem('sessionId') } }) // Deepak - for getting friends
+      .get('http://10.177.68.28:8082/fetchFriendList',{ headers: { sessionId: localStorage.getItem('sessionId') } }) // Deepak - for getting friends
       .then(response => {
         console.log(response)
         this.friends = response.data
@@ -68,6 +68,10 @@ export default {
    }
  },
  mounted () {
+   if(localStorage.getItem('sessionId')===null){
+      this.$alert('Please Login First')
+      this.$router.push('/login')
+    }
    this.myProfilePic=localStorage.getItem('myProfilePic')
    this.showfriends()
  }

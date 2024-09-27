@@ -51,7 +51,10 @@ body{
   // background:rgba(128, 128, 128, 0.637);
   // background:#8db9ca;
   // background:#58cced;
-  background:#bfe6ff;
+  // // background:#bfe6ff;
+  // background:#fde8cd;
+  // background: linear-gradient(to right, #f39e86 0%, #e47076 25%, #cc7ba1 50%, #9c6ca6 75%, #6681b8 100%);
+  background: #FFFFFF;
 }
 
 </style>

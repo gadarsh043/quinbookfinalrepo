@@ -15,7 +15,7 @@
         <br>
         <div>
           <div class="education">
-            <p style="font-style: italic; font-size: xxx-large; font-family: cursive;">Personal Details</p><br>
+            <p style="font-style: italic; font-size: xxx-large; font-family: PT Serif;">Personal Details</p><br>
                 <table>
                   <tr>
                     <th>First Name</th>
@@ -27,7 +27,7 @@
                   </tr>
                   <tr>
                     <th>Phone Number</th>
-                    <td><input type="text" id="phoneNo"  class="inputfield" v-model="phoneNo" placeholder="xxxx-xxx-xxx"></td>
+                    <td><input type="text" id="phoneNo" v-model="phoneNo" class="inputfield" placeholder="xxxx-xxx-xxx"></td>
                   </tr>
                   <tr>
                     <th>Gender</th>
@@ -51,12 +51,12 @@
                   </tr>
                   <tr>
                     <th>Hobbies</th>
-                    <td><input type="text" id="fname" name="hobbies" class="inputfield" v-model="Hobbies" placeholder="Collecting Coins"></td>
+                    <td><input type="text" id="fname" name="Hobbies" class="inputfield" v-model="Hobbies" placeholder="Collecting Coins"></td>
                   </tr>
                 
                 </table>
                 
-                <p style="font-style: italic; font-size: xxx-large; font-family: cursive;">Education</p><br>
+                <p style="font-style: italic; font-size: xxx-large; font-family: PT Serif;">Education</p><br>
                 
                 <table>
                   <tr>
@@ -73,7 +73,7 @@
                   </tr>
                   </table>
                   
-                  <p style="font-style: italic; font-size: xxx-large; font-family: cursive;">Co-orporate Life</p><br>
+                  <p style="font-style: italic; font-size: xxx-large; font-family: PT Serif;">Co-orporate Life</p><br>
                   
                   <table>
                   <tr>
@@ -157,7 +157,7 @@ export default {
           education12: this.education12,
           educationUni: this.educationUni,
           gender: this.gender,
-          Hobbies: this.Hobbies,
+          hobbies: this.Hobbies,
           img: this.img,
           jobEndDate: this.jobEndDate,
           jobLocation: this.jobLocation,
@@ -173,27 +173,8 @@ export default {
         console.log(profile)
         this.myName = localStorage.getItem('myName')
         localStorage.setItem('myProfilePic',this.img)
-        axios.put('http://10.177.68.4:8081/update/userName?userName='+this.myName,profile,{ headers: { sessionId: localStorage.getItem('sessionId') } }) // ishika - for edit profile
+        axios.put('http://10.177.68.58:8081/update/userName?userName='+this.myName,profile,{ headers: { sessionId: localStorage.getItem('sessionId') } }) // ishika - for edit profile
           .then(response =>{
-            this.phoneNo= '',
-            this.password= '',
-            this.userName= '',
-            this.gender= '',
-            this.dateOfBirth= '',
-            this.img= '',
-            this.relationshipStatus= '',
-            this.education10= '',
-            this.education12= '',
-            this.educationUni= '',
-            this.jobProfile= '',
-            this.companyName= '',
-            this.jobStartDate= '',
-            this.jobEndDate= '',
-            this.yearsOfExp= 0,
-            this.jobLocation= '',
-            this.address= '',
-            this.marriageAnniversary= '',
-            this.Hobbies= '',
             console.log(response)
           })
           .catch(error =>{
@@ -225,13 +206,37 @@ export default {
      Navbar
  },
  mounted(){
+   if(localStorage.getItem('sessionId')===null){
+      this.$alert('Please Login First')
+      this.$router.push('/login')
+    }
    this.myName = localStorage.getItem('myName')
    console.log(this.myName)
    axios
-   .get('http://10.177.68.4:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) // ishika - getting my details
+   .get('http://10.177.68.58:8081/getDetails/userName?userName='+this.myName,{ headers: { sessionId: localStorage.getItem('sessionId') } }) // ishika - getting my details
    .then(response => {
      console.log(response)
+
      this.info = response.data
+     this.phoneNo= this.info.phoneNo,
+      this.password= this.info.password,
+      this.userName= this.info.userName,
+      this.gender= this.info.gender,
+      this.dateOfBirth= this.info.dateOfBirth,
+      this.img= this.info.img,
+      this.relationshipStatus= this.info.relationshipStatus,
+      this.education10= this.info.education10,
+      this.education12= this.info.education12,
+      this.educationUni= this.info.educationUni,
+      this.jobProfile= this.info.jobProfile,
+      this.companyName= this.info.companyName,
+      this.jobStartDate= this.info.jobStartDate,
+      this.jobEndDate= this.info.jobEndDate,
+      this.yearsOfExp= this.info.yearsOfExp,
+      this.jobLocation= this.info.jobLocation,
+      this.address= this.info.address,
+      this.marriageAnniversary= this.info.marriageAnniversary,
+      this.Hobbies= this.info.hobbies
    })
    .catch(error =>{
      console.log(error)

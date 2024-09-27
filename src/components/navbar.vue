@@ -1,35 +1,30 @@
 <template>
   <div id="navbar">
-      <div class="logo" @click="clicklogo">
-        <span ><img src="../assets/logo-color.png" alt="logo" srcset="" width="40px" height="40px" id="quinlogo"></span>
+      <div class="logo navbar-div" @click="clicklogo">
+        <span id="quinlogo"><img src="../assets/logo-color.png" alt="logo" srcset="" width="40px" height="40px" ></span>
       </div>
-      <div class="searchbar" style="padding: 10px 99px;
-    font-family: cursive;
-    font-style: italic;
-    font-size: 14px;">
-          <input type="text" name="searchtext" v-model="searchtext" placeholder="search friends" style="padding: 8px 300px;">
-          <button style="padding: 8px;" @click="search">search</button>
+      <div class="searchbar navbar-div">
+          <input type="text" name="searchtext" v-model="searchtext" placeholder="search friends" id="searchbox">
+          <button @click="search" id="searchBtn">search</button>
       </div>
-      <!-- <div class="searchbar">
-        <search />
-     </div> -->
-        <div class="nandp" style="padding: 13px;padding-left: 254px;">
-            <div class="icons">
-                <div class="notification" @mouseover="showUserMask = true" @mouseleave="showUserMask = false">
-                    <img src="../assets/bell.svg" id="icon" @click="notificationtiptext">
-                    <span class="notificationtiptext" >Notifications</span>
-                </div>
-                <div class="profile" @mouseover="showUserMask = true" @mouseleave="showUserMask = false">
-                    <img src="../assets/user.svg" id="icon" @click="profiletiptext">
-                    <span class="profiletiptext">Profile</span>
-                    <div class="dropdown-content">
+    
+        <div class="nandp navbar-div" >
+            <div class="icons" >
+                <!-- <div class="notification" id="notification-div"> -->
+                    <span id="notificationicon"><img src="../assets/bell.svg" id="notifyicon" @click="notificationtiptext"></span>
+                    <!-- <span class="notificationtiptext" >Notifications</span> -->
+                <!-- </div> -->
+                <div class="profile" id="profile-div">
+                    <span id="profile"><img src="../assets/user.svg" id="icon" @click="profiletiptext"></span>
+                    <!-- <span class="profiletiptext">Own Feed</span> -->
+                    <div class="dropdown-content" id="profile-content-div">
                         <a href="/editprofile">Edit Profile</a>
                         <a href="/about">About</a>
-                        <a @click="logoutUser">Logout</a>
+                        <a @click="logoutUser" style="cursor:pointer">Logout</a>
                     </div>
                 </div>
+          </div>
         </div>
-      </div>
       <div v-if="showUserMask" class="user-mask"></div>
   </div>
 </template>
@@ -66,8 +61,14 @@ export default {
          var obj = {
            sessionId : localStorage.getItem('sessionId')
          }
-         axios.post("http://10.177.68.4:8090/logout",obj).then(res => { //ishika - logout
+         axios.post("http://10.177.68.58:8090/logout",obj).then(res => { //ishika - logout
            console.log("loggin out navbar" + res)
+         }).catch(err=>console.log(err))
+         axios.get("http://10.177.68.89:8090/QuinBookPost/"+localStorage.getItem('myName')).then(res => { //meghana - logout
+           console.log("loggin out meghana" + res)
+         }).catch(err=>console.log(err))
+         axios.get("http://10.177.68.28:8082/"+localStorage.getItem('myName')).then(res => { //deepk - logout
+           console.log("loggin out deepak" + res)
            localStorage.clear()
             this.$router.push("/login")
          }).catch(err=>console.log(err))
@@ -77,119 +78,135 @@ export default {
 </script>
 
 <style scoped>
-#navbar {
-    background-color:#251d1d;
-    height: 60px;
-    width: 100%;
-    display: flex;
-    position: sticky;
-    top: 0;
-    align-content: space-between;
-    flex-wrap: wrap;
-    /* justify-content: flex-start; */
-}
-.logo {
-    padding-top: 8px;
-    margin-left: 30px; 
-    display: inline-block;
-}
-#quinlogo{
-    box-shadow: 1px 1px 1px 1px rgb(24, 23, 23);
-}
-
-/* .searchbar{
-     padding-left: 20%;
-
+/* .icons{
+  display: inline-block;
+  justify-content: space-between;
 } */
-.icons{
+*{
+    box-sizing: border-box;
+    margin:0;
+}
+
+#navbar{
     display: flex;
+    justify-content: space-evenly;
+    z-index: 1;
+}
+.navbar-div{
+
+    height: 50px;
 }
 
-#icon{
-    border: solid black 1px;
-    background-color: white;
-    margin: 3px;
-    height: 30px;
-}
-.notification {
-  position: relative;
-  display: inline-block;
+.logo{
+    /* background-color: orange; */
+    width: calc(100% - 90%);
+    position: relative;
+    
 }
 
-.notification .notificationtiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: rgb(255, 255, 255);
-  color: rgb(0, 0, 0);
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-  top: -5px;
-  right: 105%;
+.searchbar{
+    /* background-color: aqua; */
+    width: calc(100%  - 30%);
+    padding-left: 8%;
+    padding-top: 10px;
+    text-align: right;
+    padding-right: 15px;
 }
 
-.notification:hover .notificationtiptext {
-  visibility: visible;
+.nandp{
+    
+    /* background-color: green; */
+    width: calc(100% - 90%);
+    text-align: center;
+    
+    
 }
 
-.profile {
-  position: relative;
-  display: inline-block;
+#quinlogo{
+    position: absolute;
+    left:calc(100% - 85%);
+    top: 5px;
+    /* padding: calc(100% - 85%); */
 }
 
-.profile .profiletiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: rgb(245, 245, 245);
-  color: rgb(0, 0, 0);
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  
-  /* Position the tooltip */
-  /* position: absolute;
-  z-index: 1;
-  top: 100%;
-  left: 50%;
-  margin-left: -60px; */
-  position: absolute;
-  z-index: 1;
-  top: -5px;
-  right: 105%;
+#searchbox{
+    width: 15%;
+    padding: 5px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: black;
+    outline: none;
+    transition: ease-in-out 1s;
 }
 
-.profile:hover .profiletiptext {
-  visibility: visible;
+#searchBtn{
+    padding: 6px;
+    background-color: purple;
+    color: white;
+    border-radius: 10px;
+    border-color: purple;
+    outline: none;
 }
 
-.user-mask {
-  position: fixed;
-  top: 70px;
-  bottom: 0px;
-  width: 100%;
-  background-color: rgba(0,0,0, 0.9);
-  z-index: 5;
+#searchBtn:hover{
+    background-color:white;
+    border-color: purple;
+    color: purple;
 }
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+
+
+#searchbox:focus{
+    border-color: purple;
+    width: 40%;
+    
 }
-.dropdown-content {
-  display: none;
-  position: absolute;
-  right: 0;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 6;
+
+.profile{
+    /* padding-top: 3px; */
+    position: relative;
+    display: inline-block;
+    
 }
-.profile:hover .dropdown-content {
+
+
+#profile-content-div{
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 10%;
+    width: 300%;
+    height: 20vh;
+    background-color: purple;
+    border: 1px solid violet;
+    border-radius: 10px;
+    text-align: center;
+    
+}
+
+#profile-content-div>a{
     display: block;
+}
+#profile-div:hover #profile-content-div{
+    display: block;   
+    z-index:3;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    
+}
+
+
+#profile-content-div > a{
+    display: block;
+    text-decoration: none;
+    color: white;
+    margin: 10px 0px;
+}
+
+#icon, #notifyicon{
+  margin-top: 20px;
+}
+
+#notification.div, #profile-div{
+  width: 50%;
 }
 </style>

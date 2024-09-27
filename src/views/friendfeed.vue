@@ -5,23 +5,25 @@
       <center>
         <div class="feed" id ="feed" style="margin: 0px 6px;">
             <div class="profilepic">
-                <img :src="this.myProfilePic" alt="" width="150px" height="150px">
+                <img :src="this.myFriendProfilePic" alt="Your Friend's Dp" width="150px" height="150px">
             </div>
             <div class="post" v-for="i in info" :key="i.id" :id="i.postId">
                 <div class="plaf">
+                    <div>
                     <span  v-if="i.postImages[0]" class="avatar"> 
-                        <img :src="i.postImages[0]" alt="PostImage" class="avatar" style="border: solid white 2px;margin: 25px;">
+                       <img :src="i.postImages[0]" alt="PostImage" class="avatar" style="border: solid white 2px;margin: 25px;">
+                        {{i.like}} 
+                       <img src="../assets/like.png" alt="" width="24px" height="24px">
                     </span>
                     <span v-else>
                         <img src="https://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg" alt="Post Image" class="avatar">
                     </span>
-                    <div>
-                        <textarea type="text" name="How you doing" :placeholder="i.postCaption" v-model="postCaption" class="timeline" />
+                        <textarea type="text" readonly name="How you doing" :value="i.postCaption" class="timeline"> 
+                        </textarea>
                     <div style="display:flex">
-                        <input type="text" id="location" v-model="location" name="location" :placeholder="i.location" style="height: 19px;">
-                        <input type="file" @change="previewImage" accept="image/*">
-                        <button style="margin: 0px 100px; height: 25px;" @click="onupdate(i.postId)">Update</button>
-                        <button style="margin: 0px 99px 0px -88px; height: 25px;" @click="ondelete(i.postId)">Delete</button>
+                        <input type="text" readonly id="location" v-model="location" name="location" :placeholder="i.location" style="height: 19px;">
+                        <button style="margin: 0px 100px; height: 25px; display:none" @click="onupdate(i.postId)">Update</button>
+                        <button style="margin: 0px 99px 0px -88px; height: 25px; display:none" @click="ondelete(i.postId)">Delete</button>
                         <button style="margin: 0px 199px 0px -88px; height: 25px;display:none" @click="ondelete">Delete</button>
                     </div>
                 </div>
@@ -44,8 +46,10 @@ export default {
             postImages: '',
             postId: '',
             imgList:[],
-            myProfilePic:'',
-            img:''
+            img:'',
+            myFriendProfilePic:'',
+            fullName:'',
+            myProfilePic:''
     }},
     
     components:{
@@ -104,12 +108,14 @@ export default {
       this.$alert('Please Login First')
       this.$router.push('/login')
     }
+
      axios
-      .get('http://10.177.68.12:8090/QuinBookPost/getAllPostByUserName/'+localStorage.getItem('myName')) // meghana - for getting my post
+      .get('http://10.177.68.89:8090/QuinBookPost/getAllPostByUserName/'+localStorage.getItem('myFriendName')) // meghana - for getting my post
       .then(response => {
         console.log(response)
         this.info = response.data
-        this.myProfilePic = localStorage.getItem('myProfilePic')
+        this.myFriendProfilePic = localStorage.getItem('myFriendProfilePic')
+        // localStorage.removeItem('myFriendProfilePic') // removing friend profile pic
       })
       .catch(error =>{
         console.log(error)
@@ -156,13 +162,8 @@ export default {
     /* float: right; */
     height: 83px;
     margin: 0px;
-    border: grey 2px solid;
+    /* border: grey 2px solid; */
     margin-right: 100px
-}
-.profilepic{
-    width: 100%;
-    height: 20%;
-    
 }
 .avatar {
   vertical-align: middle;
